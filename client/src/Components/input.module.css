@@ -1,0 +1,70 @@
+/*Input Styles*/
+.inputParent {
+	margin: 12px 0;
+	width: 100%;
+	/* background-color: var(--input-background); */
+	background-color: #eff0f6;
+	height: 63px;
+	border: 2px solid transparent;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	transition: 0.3s border ease;
+}
+
+.inputParent svg {
+	margin: 0 20px;
+}
+.inputParent:hover {
+	border: 2px solid #6399f6b5;
+}
+
+.inputParent:focus-within {
+	background-color: transparent;
+	border: 2px solid #2974F1;
+}
+
+.formInput {
+	border: none;
+	background: transparent;
+	outline: none;
+	font-size: 14px;
+	font-family: inherit;
+	font-weight: 500;
+	color: black;
+	margin: 0;
+	width: 100%;
+	height: 20px;
+	padding: 0;
+	position: relative;
+}
+
+.formInput:focus {
+	border: none;
+}
+
+.formInput::placeholder {
+	/* color: var(--input-placeholder); */
+	color: #6e7191;
+	border: none;
+}
+
+svg {
+	color: #A0A3BD;
+}
+
+.inputHeading {
+	font-size: 13px;
+	/* color: var(--input-placeholder); */
+	color: #6e7191;
+}
+
+.inputWidth{
+	width: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+	.inputParent {
+	  max-width: 100% !important;
+	}
+  }

@@ -1,0 +1,30 @@
+{
+  "name": "e-commerce-warranty-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon server",
+    "start": "node server.js",
+    "client": "npm start --prefix client",
+    "both": "concurrently \"npm run nodemon\" \" npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raghavmathur1/E-Commerce-Warranty-System.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raghavmathur1/E-Commerce-Warranty-System/issues"
+  },
+  "homepage": "https://github.com/raghavmathur1/E-Commerce-Warranty-System#readme",
+  "dependencies": {
+    "concurrently": "^7.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19"
+  }
+}
