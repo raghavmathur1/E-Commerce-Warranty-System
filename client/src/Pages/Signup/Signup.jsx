@@ -5,6 +5,7 @@ import Card from "../../Components/Card";
 
 import { UilEyeSlash } from "@iconscout/react-unicons";
 import { UilUser } from "@iconscout/react-unicons";
+import Button from "../../Components/Button";
 function Signup() {
 	const [rePassword, setRePassword] = useState("");
 	return (
@@ -82,6 +83,7 @@ function Signup() {
 						<UilEyeSlash />
 					</Input>
 				</div>
+				<Button />
 			</Card>
 		</div>
 	);
