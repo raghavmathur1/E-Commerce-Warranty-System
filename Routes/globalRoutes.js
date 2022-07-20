@@ -3,11 +3,23 @@ const homeRoute = "/";
 const mainUserRoutes = "/user";
 
 //User Routes
-const data = "/data";
+const user = "/user";
+const consumer = "/consumer";
+const retailer = "/retailer";
+const signup = "/signup";
+const login = "/auth/login";
+const userData = "/data";
+const logout = "/logout";
 
 //Export Statement
 module.exports = {
 	mainUserRoutes,
-	data,
+	consumer,
+	signup,
+	login,
 	homeRoute,
+	userData,
+	logout,
+	retailer,
+	user,
 };

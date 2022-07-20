@@ -3,10 +3,10 @@ const router = express.Router();
 const globalRoutes = require("./globalRoutes");
 
 //Import functions from controller
-const { getData, logout } = require("../Controllers/user");
+const { retailerSignup, retailerLogin } = require("../Controllers/retailer");
 
 //Assigning routes
-router.route(globalRoutes.userData).get(getData);
-router.route(globalRoutes.logout).get(logout);
+router.route(globalRoutes.signup).post(retailerSignup);
+router.route(globalRoutes.login).post(retailerLogin);
 
 module.exports = router;

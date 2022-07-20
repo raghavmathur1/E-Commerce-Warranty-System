@@ -8,6 +8,7 @@ function Card(props) {
 				padding: props.padding,
 				margin: props.margin,
 				width: props.width,
+				height: props.height,
 				minWidth: props.minWidth,
 			}}
 		>
