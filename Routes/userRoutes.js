@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const globalRoutes = require("./globalRoutes");
+const { userData, logout } = require("./globalRoutes");
 
 //Import functions from controller
-const { getData, logout } = require("../Controllers/user");
+const { getData, logoutFunc } = require("../Controllers/user");
 
 //Assigning routes
-router.route(globalRoutes.userData).get(getData);
-router.route(globalRoutes.logout).get(logout);
+router.route(userData).get(getData);
+router.route(logout).get(logoutFunc);
 
 module.exports = router;

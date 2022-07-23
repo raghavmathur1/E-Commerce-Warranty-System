@@ -16,6 +16,7 @@ const Input = (props) => {
 					placeholder={props.placeholder}
 					onChange={(e) => props.update(e.target.value)}
 					value={props.value}
+					list={props.list}
 				/>
 			</div>
 		</div>

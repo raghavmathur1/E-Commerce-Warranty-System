@@ -10,7 +10,7 @@ function App() {
 			<wc-toast position="top-right"></wc-toast>
 			<Routes>
 				<Route path="/" element={<Landing />}></Route>
-				<Route path="/dashboard" element={<Home />}></Route>
+				<Route path="/dashboard/*" element={<Home />}></Route>
 				<Route
 					path="/consumer/signup"
 					element={<Signup user="consumer" />}

@@ -15,7 +15,7 @@ exports.getData = async (req, res, next) => {
 	@desc: Logout from application
 	@access: Private
 */
-exports.logout = async (req, res, next) => {
+exports.logoutFunc = async (req, res, next) => {
 	try {
 		req.logout();
 		res.redirect(host + "/");

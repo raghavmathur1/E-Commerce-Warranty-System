@@ -1,12 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const globalRoutes = require("./globalRoutes");
+const { signup, login, update, id } = require("./globalRoutes");
 
 //Import functions from controller
-const { consumerSignup, consumerLogin } = require("../Controllers/consumer");
+const {
+	consumerSignup,
+	consumerLogin,
+	updateConsumerProfile,
+} = require("../Controllers/consumer");
 
 //Assigning routes
-router.route(globalRoutes.signup).post(consumerSignup);
-router.route(globalRoutes.login).post(consumerLogin);
+router.route(signup).post(consumerSignup);
+router.route(login).post(consumerLogin);
+
+router.route(update + id).put(updateConsumerProfile);
 
 module.exports = router;

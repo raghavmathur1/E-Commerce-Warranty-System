@@ -10,6 +10,7 @@ function Card(props) {
 				width: props.width,
 				height: props.height,
 				minWidth: props.minWidth,
+				minHeight: props.minHeight,
 			}}
 		>
 			{props.blue === "true" && (

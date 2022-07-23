@@ -10,12 +10,11 @@ const Context = (props) => {
 	const [isConsumer, setIsConsumer] = useState(null);
 	const updateContext = () => {
 		axios
-			.get(api_endpoint + "/user/data", {
+			.get(api_endpoint + "/api/user/data", {
 				withCredentials: true,
 			})
 			.then((response) => {
 				if (response.data) {
-					console.log(response.data);
 					setUserObject(response.data);
 					setIsAuthenticated(true);
 				} else {

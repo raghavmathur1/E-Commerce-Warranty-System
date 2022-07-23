@@ -1,0 +1,27 @@
+import React, { useState, useContext, useEffect } from "react";
+import Content from "../../../Components/Content";
+import { userObjectContext } from "../../../Context";
+import axios from "axios";
+const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
+export default function Myproduct() {
+	const [data, setData] = useState([]);
+	const userObject = useContext(userObjectContext)[0];
+	const getData = async () => {
+		let a = userObject._id;
+		const response = await axios.get(
+			api_endpoint + `/api/products/retmy/${a}`,
+			{
+				withCredentials: true,
+			}
+		);
+		setData(response.data);
+	};
+
+	useEffect(() => {
+		console.log(data.data);
+	}, [data]);
+	useEffect(() => {
+		getData();
+	}, []);
+	return <Content heading="My Products"></Content>;
+}

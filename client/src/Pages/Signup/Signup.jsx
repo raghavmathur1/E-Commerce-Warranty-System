@@ -5,7 +5,6 @@ import Card from "../../Components/Card";
 import validator from "validator";
 import axios from "axios";
 
-import { UilEyeSlash } from "@iconscout/react-unicons";
 import { UilUser } from "@iconscout/react-unicons";
 import { UilPhone } from "@iconscout/react-unicons";
 import { UilEnvelope } from "@iconscout/react-unicons";
@@ -13,7 +12,8 @@ import { UilLocationPoint } from "@iconscout/react-unicons";
 import { UilMap } from "@iconscout/react-unicons";
 import { UilCompass } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
-import { findAllByAltText } from "@testing-library/react";
+import { UilMoneyWithdraw } from "@iconscout/react-unicons";
+import { UilGold } from "@iconscout/react-unicons";
 
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function Signup(props) {
@@ -38,9 +38,8 @@ function Signup(props) {
 			pincode: pincode,
 			city: city,
 			password: password,
-			consumer: "consumer",
 		};
-		const post = "/" + props.user;
+		const post = "/api/" + props.user;
 		if (props.user === "retailer") {
 			data.gst = gst;
 			data.pan = pan;
@@ -140,22 +139,22 @@ function Signup(props) {
 						<Input
 							heading="GSTIN Number"
 							type="text"
-							placeholder="Enter Address"
+							placeholder="Enter GST Number"
 							update={setGST}
 							width="48%"
 						>
-							<UilLocationPoint />
+							<UilGold />
 						</Input>
 					)}
 					{props.user === "retailer" && (
 						<Input
 							heading="PAN Number"
 							type="text"
-							placeholder="Enter Address"
+							placeholder="Enter PAN Number"
 							update={setPAN}
 							width="48%"
 						>
-							<UilLocationPoint />
+							<UilMoneyWithdraw />
 						</Input>
 					)}
 					<Input

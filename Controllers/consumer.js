@@ -58,3 +58,24 @@ exports.consumerLogin = async (req, res, next) => {
 		sendError(res, next, err, "Error", "Login Error");
 	}
 };
+
+/*
+	@desc: Update Consumer Profile
+	@access: Private
+*/
+
+exports.updateConsumerProfile = async (req, res, next) => {
+	try {
+		const consumer = await Consumer.findByIdAndUpdate(
+			req.params.id,
+			req.body,
+			{ new: true }
+		);
+		res.status(200).json({
+			success: true,
+			data: consumer,
+		});
+	} catch (err) {
+		sendError(res, next, err, "Error", "Update Profile Error");
+	}
+};
