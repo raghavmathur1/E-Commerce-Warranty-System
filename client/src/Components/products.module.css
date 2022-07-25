@@ -59,13 +59,17 @@
 	text-decoration: line-through;
 	color: #333;
 	font-weight: 400;
-	margin: 0 10px;
+	font-size: 11px;
+	position: absolute;
+	left: 0;
+	top: -5px;
 }
 
 .discount{
 	color: #00BA88;
 	font-weight: 400;
 	font-size: 12px;
+	margin:0 5px ;
 }
 
 
