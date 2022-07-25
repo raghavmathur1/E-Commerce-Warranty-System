@@ -51,6 +51,7 @@ function Sidebar() {
 						id={classes["test"]}
 						text="Logout"
 						link="logout"
+						navigation="false"
 					/>
 				</a>
 			</Card>

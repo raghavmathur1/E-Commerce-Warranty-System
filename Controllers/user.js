@@ -18,8 +18,14 @@ exports.getData = async (req, res, next) => {
 */
 exports.logoutFunc = async (req, res, next) => {
 	try {
-		req.logout();
-		res.redirect(host + "/");
+		const host = process.env.HOST;
+		if (req.user.type === "consumer") {
+			req.logout();
+			res.redirect(host + "/consumer/login");
+		} else {
+			req.logout();
+			res.redirect(host + "/retailer/login");
+		}
 	} catch (err) {
 		res.json(err);
 	}

@@ -36,8 +36,7 @@ exports.addProduct = async (req, res, next) => {
 			message: "Product Added to DB",
 		});
 	} catch (err) {
-		console.log(err);
-		// sendError(res, next, err, "Error", "Product Add Error");
+		sendError(res, next, err, "Error", "Product Add Error");
 	}
 };
 

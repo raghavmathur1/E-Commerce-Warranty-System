@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../../../Components/Product";
 import classes from "../../../Components/products.module.css";
+import Topbar from "../../../Components/Topbar";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function AllProducts() {
 	const [products, setProducts] = useState([]);

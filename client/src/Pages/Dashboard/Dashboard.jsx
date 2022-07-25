@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { userObjectContext } from "../../Context";
 import Consumer from "./Consumer/Consumer";
 import Retailer from "./Retailer/Retailer";
-function Home() {
+function Dashboard() {
 	const isConsumer = useContext(userObjectContext)[5];
 	const userObject = useContext(userObjectContext)[0];
 	if (userObject.size === 0) {
@@ -18,4 +18,4 @@ function Home() {
 	}
 }
 
-export default React.memo(Home);
+export default React.memo(Dashboard);

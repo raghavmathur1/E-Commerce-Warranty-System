@@ -53,6 +53,7 @@ function Sidebarlink(props) {
 	}
 
 	const navigationLink = () => {
+		if (props.navigation === "false") return;
 		navigate("./" + props.link, { replace: true });
 	};
 	return (
