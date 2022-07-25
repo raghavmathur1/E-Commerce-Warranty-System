@@ -3,17 +3,17 @@ const homeRoute = "/";
 const mainUserRoutes = "/user";
 
 //Api Routes
-const api = "/api";
+const INITIAL_URL = "/api";
 const id = "/:id";
 
 //Signup Routes
-const signup = api + "/signup";
+const signup = INITIAL_URL + "/signup";
 
 //Login Routes
-const login = api + "/login";
+const login = INITIAL_URL + "/login";
 
 //User Routes
-const user = api + "/user";
+const user = INITIAL_URL + "/user";
 const userData = "/data";
 const logout = "/logout";
 const update = "/update";
@@ -25,7 +25,7 @@ const consumer = "/consumer";
 const retailer = "/retailer";
 
 //Product Routes
-const product = api + "/products";
+const product = INITIAL_URL + "/products";
 const add = "/add";
 const all = "/all";
 const retmy = "/retmy";
@@ -46,5 +46,5 @@ module.exports = {
 	retmy,
 	id,
 	update,
-	api,
+	INITIAL_URL,
 };

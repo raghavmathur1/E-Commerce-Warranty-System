@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const { all, add, retmy, id } = require("./globalRoutes");
+const { all, add, retmy, id } = require("../globalRoutes");
 const passport = require("passport");
 const {
 	checkAuthenticatedRetailer,
 	checkAuthenticated,
-} = require("../helpers/helper");
+} = require("../../Helper/auth");
 //Import functions from controller
 const {
 	addProduct,
 	getAllProducts,
 	retailerProducts,
-} = require("../Controllers/product");
+} = require("../../Controllers/Product/product");
 
 //Assigning routes
 router.route(add).post(checkAuthenticatedRetailer, addProduct);

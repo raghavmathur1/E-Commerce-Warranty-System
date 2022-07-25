@@ -1,7 +1,8 @@
-const { sendError } = require("../Error/error");
+const { sendError } = require("../../Error/error");
 const passport = require("passport");
-const Retailer = require("../Models/retailer");
+const Retailer = require("../../Models/Retailer/retailer");
 /*
+	@route: 
 	@desc: Update Retailer Profile
 	@access: Private
 */

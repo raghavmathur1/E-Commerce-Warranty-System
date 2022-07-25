@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { userData, logout } = require("./globalRoutes");
-const { checkAuthenticated } = require("../helpers/helper");
+const { checkAuthenticated } = require("../Helper/auth");
 //Import functions from controller
 const { getData, logoutFunc } = require("../Controllers/user");
 

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { update, id } = require("./globalRoutes");
+const { update, id } = require("../globalRoutes");
 
 //Import functions from controller
-const { updateRetailerProfile } = require("../Controllers/retailer");
-const { checkAuthenticatedRetailer } = require("../helpers/helper");
+const { updateRetailerProfile } = require("../../Controllers/Retailer/retailer");
+const { checkAuthenticatedRetailer } = require("../../Helper/auth");
 //Assigning routes to functions
 
 router
