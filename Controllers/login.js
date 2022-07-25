@@ -29,14 +29,20 @@ exports.consumerLogin = async (req, res, next) => {
 	@access: Private
 */
 exports.retailerLogin = async (req, res, next) => {
+	console.log(req.body);
+
 	try {
-		passport.authenticate("retailer-local", (err, user, info) => {
+		passport.authenticate("retailer-local", (err, user) => {
 			if (err) throw err;
-			if (!user) res.send(false);
+			if (!user) return sendError(res, next, err, "Error in retailerLogin function", "Invalid credentials");
 			else {
 				req.logIn(user, (err) => {
 					if (err) throw err;
-					res.send(true);
+					return res.status(200).json({
+						success: true,
+						message: "Login sucessfull!",
+						errMsg: "",
+					});
 				});
 			}
 		})(req, res, next);

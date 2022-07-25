@@ -8,6 +8,7 @@ const dotenv = require("dotenv");
 const passport = require("passport");
 const localauth = require("./Middlewares/localauth");
 const session = require("cookie-session");
+const connectDb = require("./Database/database");
 dotenv.config({
 	path: "./utils/config.env",
 });
@@ -21,14 +22,16 @@ app.use(
 );
 app.use(express.json());
 
+//Connect to mongodb
+connectDb();
+
+
 //Initialize Passport
 app.use(session({ secret: "secret" }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Connect to mongodb atlas
-const url = process.env.MONGO;
-mongoose.connect(url).then(() => console.log("Connected to DB"));
+
 
 //Import all route files
 const globalRoutes = require("./Routes/globalRoutes");
@@ -39,6 +42,7 @@ const productRoutes = require("./Routes/productRoutes");
 const userRoutes = require("./Routes/userRoutes");
 const signupRoutes = require("./Routes/signupRoutes");
 const loginRoutes = require("./Routes/loginRoutes");
+const { connect } = require("http2");
 //Using all the routes
 app.use(globalRoutes.signup, signupRoutes);
 app.use(globalRoutes.login, loginRoutes);
@@ -48,6 +52,5 @@ app.use(globalRoutes.user, userRoutes);
 app.use(globalRoutes.product, productRoutes);
 
 app.listen(process.env.PORT || 8000, () => {
-	console.log(process.env.PORT);
-	console.log(`Server running at port 8000`);
+	logger.info(`Server connected at porst : ${process.env.PORT}`);
 });
