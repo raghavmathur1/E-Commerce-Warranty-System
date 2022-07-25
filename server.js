@@ -9,6 +9,12 @@ const passport = require("passport");
 const localauth = require("./Middlewares/localauth");
 const session = require("cookie-session");
 const connectDb = require("./Database/database");
+
+/*Module for uploading file */
+const fileupload = require("express-fileupload");
+/*file upload */
+app.use(fileupload());
+
 dotenv.config({
 	path: "./utils/config.env",
 });

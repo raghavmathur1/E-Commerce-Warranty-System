@@ -12,6 +12,7 @@ const projectSecret = process.env.PROJECT_SECRET;
 
 exports.addProduct = async (req, res, next) => {
 	try {
+		console.log(req.files);
 		const auth =
 			"Basic " +
 			Buffer.from(projectId + ":" + projectSecret).toString("base64");
@@ -24,8 +25,9 @@ exports.addProduct = async (req, res, next) => {
 				authorization: auth,
 			},
 		});
-		const respose = await client.add(JSON.stringify(req.body));
-
+		const filesAdded = await client.add(req.files.file.data);
+		console.log(filesAdded);
+		const response = await client.add(JSON.stringify(req.body));
 		const product = new Product(req.body);
 		await product.save();
 		res.status(200).json({
