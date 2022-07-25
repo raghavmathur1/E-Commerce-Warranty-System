@@ -1,8 +1,8 @@
 const passport = require("passport");
-const Consumer = require("../Models/consumer");
+const Consumer = require("../Models/Consumer/consumer");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
-const Retailer = require("../Models/retailer");
+const Retailer = require("../Models/Retailer/retailer");
 
 passport.use(
 	"consumer-local",

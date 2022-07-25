@@ -1,7 +1,8 @@
-const { sendError } = require("../Error/error");
+const { sendError } = require("../../Error/error");
 const passport = require("passport");
 
-/*
+/*	
+	@route: Public
 	@desc: Login For Consumers
 	@access: Private
 */
@@ -25,6 +26,7 @@ exports.consumerLogin = async (req, res, next) => {
 };
 
 /*
+	@route: Public
 	@desc: Login For Retailer
 	@access: Private
 */

@@ -8,6 +8,7 @@ const logFormat = printf(({ level, message, label, timestamp, stack }) => {
 	}`;
 });
 
+//Logger function to log based on different label
 const logger = createLogger({
 	format: combine(
 		format.colorize(),

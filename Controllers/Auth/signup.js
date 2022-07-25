@@ -1,7 +1,7 @@
-const Consumer = require("../Models/consumer");
-const Retailer = require("../Models/retailer");
-const { sendError } = require("../Error/error");
-const { encrypt } = require("../Helpers/helper");
+const Consumer = require("../../Models/Consumer/consumer");
+const Retailer = require("../../Models/Retailer/retailer");
+const { sendError } = require("../../Error/error");
+const { encrypt } = require("../../Helper/auth");
 const passport = require("passport");
 /*
 	@desc: Signup For Consumers

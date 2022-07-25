@@ -38,22 +38,25 @@ app.use(passport.session());
 
 //Import all route files
 const globalRoutes = require("./Routes/globalRoutes");
-
-const consumerRoutes = require("./Routes/consumerRoutes");
-const retailerRoutes = require("./Routes/retailerRoutes");
-const productRoutes = require("./Routes/productRoutes");
+const consumerRoutes = require("./Routes/Consumer/consumerRoutes");
+const retailerRoutes = require("./Routes/Retailer/retailerRoutes");
+const productRoutes = require("./Routes/Product/productRoutes");
 const userRoutes = require("./Routes/userRoutes");
-const signupRoutes = require("./Routes/signupRoutes");
-const loginRoutes = require("./Routes/loginRoutes");
-// const { connect } = require("http2");
+const signupRoutes = require("./Routes/Auth/signupRoutes");
+const loginRoutes = require("./Routes/Auth/loginRoutes");
+
+
 //Using all the routes
 app.use(globalRoutes.signup, signupRoutes);
 app.use(globalRoutes.login, loginRoutes);
-app.use(globalRoutes.api + globalRoutes.consumer, consumerRoutes);
-app.use(globalRoutes.api + globalRoutes.retailer, retailerRoutes);
+app.use(globalRoutes.INITIAL_URL + globalRoutes.consumer, consumerRoutes);
+app.use(globalRoutes.INITIAL_URL + globalRoutes.retailer, retailerRoutes);
 app.use(globalRoutes.user, userRoutes);
 app.use(globalRoutes.product, productRoutes);
 
+
+
+//Listen to port 8000
 app.listen(process.env.PORT || 8000, () => {
 	logger.info(`Server connected at porst : ${process.env.PORT}`);
 });

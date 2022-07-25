@@ -1,6 +1,6 @@
-const Consumer = require("../Models/consumer");
-const { sendError } = require("../Error/error");
-const { encrypt } = require("../Helpers/helper");
+const Consumer = require("../../Models/Consumer/consumer");
+const { sendError } = require("../../Error/error");
+const { encrypt } = require("../../Helper/auth");
 const passport = require("passport");
 
 /*
@@ -20,6 +20,12 @@ exports.updateConsumerProfile = async (req, res, next) => {
 			data: consumer,
 		});
 	} catch (err) {
-		sendError(res, next, err, "Error", "Update Profile Error");
+		sendError(
+			res,
+			next,
+			err,
+			"Error in updateConsumerProfile",
+			"Update Profile Error"
+		);
 	}
 };
