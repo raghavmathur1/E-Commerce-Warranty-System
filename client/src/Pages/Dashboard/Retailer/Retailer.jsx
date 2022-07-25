@@ -25,7 +25,7 @@ export default function Retailer() {
 						<Route path="/add" element={<Products />}></Route>
 						<Route path="/profile" element={<Profile />}></Route>
 						<Route
-							path="/manage"
+							path="/manage/*"
 							element={<ManageProduct />}
 						></Route>
 						<Route

@@ -1,17 +1,10 @@
 import React from "react";
 import { Routes, Route, BrowserRouter, useNavigate } from "react-router-dom";
+import classes from "./topbar.module.css";
 function Topbar() {
 	const navigate = useNavigate();
 	return (
-		<div
-			style={{
-				display: "flex",
-				margin: "20px 0 0 0",
-				width: "50%",
-				justifyContent: "space-around",
-				right: "0",
-			}}
-		>
+		<div className={classes["topbar"]}>
 			<div className="link" onClick={() => navigate("/")}>
 				Home
 			</div>

@@ -24,7 +24,7 @@ function Sidebar() {
 				padding="0vh 0vw 0vh 0vw"
 				margin="0 0 0 30px"
 				width="18vw"
-				height="80vh"
+				height="75vh"
 				minWidth="225px"
 			>
 				{isConsumer && (
@@ -39,7 +39,7 @@ function Sidebar() {
 					<div>
 						<Sidebarlink text="My Products" link="products" />
 						<Sidebarlink text="Add Products" link="add" />
-						<Sidebarlink text="Manage Products" link="manage" />
+						{/* <Sidebarlink text="Manage Products" link="manage" /> */}
 						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="Repair Requests" link="repair" />
 						<Sidebarlink text="Transactions" link="money" />

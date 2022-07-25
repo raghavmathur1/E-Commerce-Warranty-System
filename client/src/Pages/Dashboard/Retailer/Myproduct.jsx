@@ -28,7 +28,13 @@ export default function Myproduct() {
 		console.log(data);
 		return (
 			<Content heading="My Products">
-				<div style={{ display: "flex", flexWrap: "wrap" }}>
+				<div
+					style={{
+						display: "flex",
+						flexWrap: "wrap",
+						justifyContent: "space-between",
+					}}
+				>
 					{data.map((product) => (
 						<Product
 							key={product._id}

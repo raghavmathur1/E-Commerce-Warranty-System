@@ -121,13 +121,16 @@ function Products() {
 					</datalist>
 					<UilPostcard />
 				</Input>
-				<input
+				<Input
+					heading="Upload Product Image"
 					type="file"
 					placeholder="Upload"
 					onChange={(e) => saveFile(e)}
 					width="48%"
-				></input>
-				<UilImageUpload />
+					accept="image/*"
+				>
+					<UilImageUpload />
+				</Input>
 				<button
 					className="button"
 					style={{

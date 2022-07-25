@@ -15,6 +15,7 @@
 	width: 40vw;
 	height: 100%;
 	background-color: #000;
+	position: relative;
 }
 
 .right{
@@ -49,3 +50,50 @@
 	cursor: pointer;
 }
 
+.black{
+	background-color: #000;
+	opacity: 0.5;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.conPhoto{
+	height: 100%;
+	width: 100%;
+	background: url("https://img.freepik.com/free-photo/isolated-shot-woman-uses-smartphone-application-enjoys-browsing-social-media-creats-news-content-makes-online-order-wears-spectacles-casual-jumper-poses-beige-studio-wall_273609-44111.jpg?w=2000&t=st=1658755502~exp=1658756102~hmac=4d2edd39169d543e26b58ca5674229fcb753ccc51427ddc080f51d05bdc6b663");
+	background-size:cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.retPhoto{
+	height: 100%;
+	width: 100%;
+	background: url("https://img.freepik.com/free-photo/businessman-black-suit-makes-thumb-up-sign_114579-18993.jpg?w=2000&t=st=1658754712~exp=1658755312~hmac=fc77c5df683ca49431e56974fa36107ceab5eca748f3af8386786352eeedba3b");
+	background-size:cover;
+	background-position: 40% 50%;
+	background-repeat: no-repeat;
+
+
+}
+
+#loginCard{
+	width: 27vw;
+}
+
+@media screen and (max-width: 768px){
+	.left{
+		display: none;
+	}
+	.right{
+		width: 100%;
+		height: 100%;
+	}
+
+	#loginCard{
+		width: 80vw;
+	}
+}

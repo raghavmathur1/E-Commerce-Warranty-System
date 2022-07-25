@@ -9,7 +9,11 @@ function Content(props) {
 		paddingTop: "20px",
 	};
 	return (
-		<Card margin="30px 0 30px 0" padding="0px 30px 0 30px" minHeight="90vh">
+		<Card
+			margin="30px 0 30px 0"
+			padding="0px 30px 2vh 30px"
+			minHeight="83vh"
+		>
 			<div style={style}>{props.heading}</div>
 			{props.children}
 		</Card>

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import Input from "../../Components/Input";
 import classes from "./signup.module.css";
 import Card from "../../Components/Card";
-import validator from "validator";
-import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import { UilUser } from "@iconscout/react-unicons";
 import { UilPhone } from "@iconscout/react-unicons";
 import { UilEnvelope } from "@iconscout/react-unicons";
@@ -14,9 +12,10 @@ import { UilCompass } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
 import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 import { UilGold } from "@iconscout/react-unicons";
-
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
+import { signup } from "../../Actions/Signup";
+import { Navigate } from "react-router-dom";
 function Signup(props) {
+	const navigate = useNavigate();
 	const [password, setPassword] = useState("");
 	const [rePassword, setRePassword] = useState("");
 	const [phone, setPhone] = useState("");
@@ -28,7 +27,7 @@ function Signup(props) {
 	const [address, setAddress] = useState("");
 	const [gst, setGST] = useState("");
 	const [pan, setPAN] = useState("");
-	const submitSignup = () => {
+	const submitSignup = async () => {
 		const data = {
 			firstName: firstName,
 			lastName: lastName,
@@ -39,22 +38,14 @@ function Signup(props) {
 			city: city,
 			password: password,
 		};
-		const link = api_endpoint + "/api/signup/" + props.user;
 		if (props.user === "retailer") {
 			data.gst = gst;
 			data.pan = pan;
 		}
-		const validateEmail = email;
-		if (validator.isEmail(validateEmail)) {
-			if (password === rePassword && password !== "") {
-				axios
-					.post(link, data)
-					.then((response) => console.log(response.data));
-			} else {
-				console.log("Password Mismatch");
-			}
-		} else {
-			console.log("Error");
+		const response = await signup(data, props.user, rePassword);
+		console.log(response.status);
+		if (response.success === true) {
+			navigate("/" + props.user + "/login", { replace: true });
 		}
 	};
 

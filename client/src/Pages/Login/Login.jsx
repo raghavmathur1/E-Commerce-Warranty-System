@@ -26,15 +26,24 @@ function Login(props) {
 
 	return (
 		<div className={`full ${classes.page}`}>
-			<div className={classes["left"]}></div>
+			<div className={classes["left"]}>
+				<div className={classes["black"]}></div>
+				{props.user === "consumer" && (
+					<div className={classes["conPhoto"]}></div>
+				)}
+
+				{props.user === "retailer" && (
+					<div className={classes["retPhoto"]}></div>
+				)}
+			</div>
 			<div className={classes["right"]}>
 				<Card
 					padding="11vh 3vw 4vh 3vw"
 					margin="0 0 0 0px"
-					width="25vw"
 					blue="true"
 					blueText="Login"
-					minWidth="200px"
+					minWidth="250px"
+					id={classes["loginCard"]}
 				>
 					<div className={`${classes.signupCard}`}>
 						<Input
