@@ -35,13 +35,13 @@ passport.use(
 			passwordField: "password",
 		},
 		(email, password, done) => {
-			Retailer.findOne({ email: email }, (err, consumer) => {
+			Retailer.findOne({ email: email }, (err, retailer) => {
 				if (err) throw err;
-				if (!consumer) return done(null, false);
-				bcrypt.compare(password, consumer.password, (err, result) => {
+				if (!retailer) return done(null, false);
+				bcrypt.compare(password, retailer.password, (err, result) => {
 					if (err) throw err;
 					if (result === true) {
-						return done(null, consumer);
+						return done(null, retailer);
 					} else {
 						return done(null, false);
 					}
@@ -58,11 +58,11 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (user, done) {
 	if (user.type === "consumer") {
 		Consumer.findById(user._id, (err, consumer) => {
-			done(err, consumer);
+			done(null, consumer);
 		});
 	} else if (user.type === "retailer") {
 		Retailer.findById(user._id, (err, retailer) => {
-			done(err, retailer);
+			done(null, retailer);
 		});
 	}
 });

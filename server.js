@@ -25,13 +25,10 @@ app.use(express.json());
 //Connect to mongodb
 connectDb();
 
-
 //Initialize Passport
 app.use(session({ secret: "secret" }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 //Import all route files
 const globalRoutes = require("./Routes/globalRoutes");
@@ -42,7 +39,7 @@ const productRoutes = require("./Routes/productRoutes");
 const userRoutes = require("./Routes/userRoutes");
 const signupRoutes = require("./Routes/signupRoutes");
 const loginRoutes = require("./Routes/loginRoutes");
-const { connect } = require("http2");
+// const { connect } = require("http2");
 //Using all the routes
 app.use(globalRoutes.signup, signupRoutes);
 app.use(globalRoutes.login, loginRoutes);

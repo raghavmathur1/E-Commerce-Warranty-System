@@ -6,24 +6,19 @@ export const login = async (email, password, user) => {
 		//Validate email address
 		if (!validator.isEmail(email)) return false;
 		const url = process.env.REACT_APP_API_ENDPOINT + "/api/login/" + user;
-		const config = {
-			headers: {
-				"Content-Type": "application/json",
-				withCredentials: true,
-			},
-		};
-		const response = await axios.post(
-			url,
-			{
+		const response = await axios({
+			method: "POST",
+			data: {
 				email: email,
 				password: password,
 			},
-			config
-		);
-        console.log(response.data["success"]);
-
-        return response.data["success"];
-
+			withCredentials: true,
+			headers: {
+				"Content-Type": "application/json",
+			},
+			url: url,
+		});
+		return response.data;
 	} catch (error) {
 		console.log(error);
 		return false;

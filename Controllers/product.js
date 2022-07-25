@@ -24,10 +24,7 @@ exports.addProduct = async (req, res, next) => {
 				authorization: auth,
 			},
 		});
-		// console.log(req.body);
-		client.add(JSON.stringify(req.body)).then((res) => {
-			console.log(res);
-		});
+		const respose = await client.add(JSON.stringify(req.body));
 
 		const product = new Product(req.body);
 		await product.save();

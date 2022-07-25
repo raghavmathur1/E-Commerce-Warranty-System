@@ -16,7 +16,6 @@ function Login(props) {
 	};
 
 	useEffect(() => {
-		console.log("hitting here");
 		if (localAuth === true) {
 			window.open("/", "_self");
 		} else if (localAuth === false) {

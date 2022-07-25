@@ -7,7 +7,7 @@ const { getData, logoutFunc } = require("../Controllers/user");
 
 //Assigning routes
 
-router.route(userData).get(checkAuthenticated, getData);
+router.route(userData).get(getData);
 router.route(logout).get(logoutFunc);
 
 module.exports = router;
