@@ -19,14 +19,22 @@ function Products() {
 	const [price, setPrice] = useState("");
 	const [discount, setDiscount] = useState("");
 	const [warranty, setWarranty] = useState("");
-	const [file, setFile] = useState("");
+	const [file, setFile] = useState();
 	const [fileName, setFileName] = useState("");
 	const saveFile = (e) => {
 		setFile(e.target.files[0]);
-		setFileName(e.target.files[0].name);
 	};
 	const addProduct = async () => {
 		const link = api_endpoint + "/api/products/add";
+		const formData = new FormData();
+		formData.append("productName", productName);
+		formData.append("serialNo", serialNo);
+		formData.append("description", description);
+		formData.append("price", price);
+		formData.append("discount", discount);
+		formData.append("warranty", warranty);
+		formData.append("retailer", userObject._id);
+		formData.append("file", file);
 		const productDetails = {
 			productName: productName,
 			serialNo: serialNo,
@@ -35,12 +43,11 @@ function Products() {
 			discount: discount,
 			warranty: warranty,
 			file: file,
-			fileName: fileName,
 			retailer: userObject._id,
 		};
 		const response = await axios({
 			method: "POST",
-			data: productDetails,
+			data: formData,
 			withCredentials: true,
 			url: link,
 		});
@@ -114,15 +121,13 @@ function Products() {
 					</datalist>
 					<UilPostcard />
 				</Input>
-				<Input
-					heading="Photo"
+				<input
 					type="file"
 					placeholder="Upload"
-					update={setFile}
+					onChange={(e) => saveFile(e)}
 					width="48%"
-				>
-					<UilImageUpload />
-				</Input>
+				></input>
+				<UilImageUpload />
 				<button
 					className="button"
 					style={{
