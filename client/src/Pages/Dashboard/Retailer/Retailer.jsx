@@ -1,10 +1,12 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "../../../Components/Sidebar";
 import Products from "./AddProduct";
 import classes from "../dashboard.module.css";
 import Profile from "../../../Components/Profile";
 import Myproduct from "./Myproduct";
+import ViewWarranty from "./ViewWarranty";
+import ManageProduct from "./ManageProduct";
 export default function Retailer() {
 	return (
 		<div className={classes["dashboard"]}>
@@ -13,9 +15,12 @@ export default function Retailer() {
 			</div>
 			<div className={classes["right"]}>
 				<Routes>
+					<Route path="/" element={<Navigate to="./products" />} />
 					<Route path="/products" element={<Myproduct />}></Route>
 					<Route path="/add" element={<Products />}></Route>
 					<Route path="/profile" element={<Profile />}></Route>
+					<Route path="/manage" element={<ManageProduct />}></Route>
+					<Route path="/warranty" element={<ViewWarranty />}></Route>
 				</Routes>
 			</div>
 		</div>

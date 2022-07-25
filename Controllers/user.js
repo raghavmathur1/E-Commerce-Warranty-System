@@ -1,8 +1,9 @@
 const { sendError } = require("../Error/error");
 /*
-	@desc: Get Data of user Logged In
+	@desc: Get Data of user logged In
 	@access: Private
 */
+
 exports.getData = async (req, res, next) => {
 	try {
 		res.status(200).send(req.user);

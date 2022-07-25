@@ -56,5 +56,13 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (user, done) {
-	done(null, user);
+	if (user.type === "consumer") {
+		Consumer.findById(user._id, (err, consumer) => {
+			done(err, consumer);
+		});
+	} else if (user.type === "retailer") {
+		Retailer.findById(user._id, (err, retailer) => {
+			done(err, retailer);
+		});
+	}
 });

@@ -6,15 +6,23 @@ const mainUserRoutes = "/user";
 const api = "/api";
 const id = "/:id";
 
+//Signup Routes
+const signup = api + "/signup";
+
+//Login Routes
+const login = api + "/login";
+
 //User Routes
 const user = api + "/user";
-const consumer = api + "/consumer";
-const retailer = api + "/retailer";
 const userData = "/data";
 const logout = "/logout";
-const signup = "/signup";
-const login = "/auth/login";
-const update = "update";
+const update = "/update";
+
+//Consumer Routes
+const consumer = "/consumer";
+
+//Retailer Routes
+const retailer = "/retailer";
 
 //Product Routes
 const product = api + "/products";
@@ -38,4 +46,5 @@ module.exports = {
 	retmy,
 	id,
 	update,
+	api,
 };

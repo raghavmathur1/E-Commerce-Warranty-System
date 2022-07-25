@@ -8,6 +8,7 @@ import { UilWrench } from "@iconscout/react-unicons";
 import { UilAngleRightB } from "@iconscout/react-unicons";
 import { UilSignout } from "@iconscout/react-unicons";
 import { UilPlusCircle } from "@iconscout/react-unicons";
+import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 function Sidebarlink(props) {
 	let a = useParams();
 	const link = a["*"];
@@ -39,6 +40,10 @@ function Sidebarlink(props) {
 				color={color}
 				className={classes["blueicon"]}
 			/>
+		);
+	if (props.link === "money")
+		icon = (
+			<UilMoneyWithdraw color={color} className={classes["blueicon"]} />
 		);
 	if (props.link === "add")
 		icon = <UilPlusCircle color={color} className={classes["blueicon"]} />;

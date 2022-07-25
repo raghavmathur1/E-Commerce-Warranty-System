@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { signup, login } = require("./globalRoutes");
+const { update, id } = require("./globalRoutes");
 
 //Import functions from controller
-const { retailerSignup, retailerLogin } = require("../Controllers/retailer");
+const { updateRetailerProfile } = require("../Controllers/retailer");
+const { checkAuthenticatedRetailer } = require("../helpers/helper");
+//Assigning routes to functions
 
-//Assigning routes
-router.route(signup).post(retailerSignup);
-router.route(login).post(retailerLogin);
-
+router
+	.route(update + id)
+	.put(checkAuthenticatedRetailer, updateRetailerProfile);
 module.exports = router;

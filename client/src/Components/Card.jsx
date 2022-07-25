@@ -12,6 +12,7 @@ function Card(props) {
 				minWidth: props.minWidth,
 				minHeight: props.minHeight,
 			}}
+			id={props.id}
 		>
 			{props.blue === "true" && (
 				<div className="topblue">{props.blueText}</div>

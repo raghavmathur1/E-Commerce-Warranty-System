@@ -39,17 +39,16 @@ function Signup(props) {
 			city: city,
 			password: password,
 		};
-		const post = "/api/" + props.user;
+		const link = "/api/signup/" + props.user;
 		if (props.user === "retailer") {
 			data.gst = gst;
 			data.pan = pan;
 		}
-		console.log(data);
 		const validateEmail = email;
 		if (validator.isEmail(validateEmail)) {
 			if (password === rePassword && password !== "") {
 				axios
-					.post(api_endpoint + post + "/signup", data)
+					.post(link, data)
 					.then((response) => console.log(response.data));
 			} else {
 				console.log("Password Mismatch");

@@ -13,7 +13,7 @@ function Login(props) {
 	const [password, setPassword] = useState("");
 	const [localAuth, setLocalAuth] = useState(null);
 	const submitLogin = () => {
-		const post = "/api/" + props.user;
+		const link = api_endpoint + "/api/login/" + props.user;
 		const validateEmail = email;
 		if (validator.isEmail(validateEmail)) {
 			axios({
@@ -23,7 +23,7 @@ function Login(props) {
 					password: password,
 				},
 				withCredentials: true,
-				url: api_endpoint + post + "/auth/login",
+				url: link,
 			}).then((response) => setLocalAuth(response.data));
 		} else {
 			console.log("Error");

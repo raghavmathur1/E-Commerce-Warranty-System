@@ -16,6 +16,7 @@ const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function Profile() {
 	const isConsumer = useContext(userObjectContext)[5];
 	const userObject = useContext(userObjectContext)[0];
+	const updateUser = useContext(userObjectContext)[2];
 	const [phone, setPhone] = useState(userObject.phone);
 	const [firstName, setFirstName] = useState(userObject.firstName);
 	const [lastName, setLastName] = useState(userObject.lastName);
@@ -39,13 +40,21 @@ function Profile() {
 			data.gst = gst;
 			data.pan = pan;
 		}
-		const post = "/api/" + userObject.type + "/update/" + userObject._id;
+		const link =
+			api_endpoint +
+			"/api/" +
+			userObject.type +
+			"/update/" +
+			userObject._id;
 		const response = await axios({
 			method: "put",
-			url: api_endpoint + post,
+			url: link,
 			data: data,
+			withCredentials: true,
 		});
-		console.log(response.data);
+		if (response.data.success) {
+			updateUser(response.data.data);
+		}
 	};
 	return (
 		<Content heading={"Manage Profile"}>
@@ -91,7 +100,6 @@ function Profile() {
 					heading="Email Address"
 					type="text"
 					placeholder="Enter Email"
-					update={setEmail}
 					value={email}
 					width="48%"
 				>

@@ -71,6 +71,11 @@ code {
   font-size: 25px;
 }
 
+.red{
+  background-color: #f03b62;
+  border: 2px solid #f03b62;
+}
+
 input button{
   display: none;
 }
@@ -78,3 +83,4 @@ input button{
 ::-webkit-file-upload-button{
   display: none;
 }
+

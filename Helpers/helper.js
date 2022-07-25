@@ -6,6 +6,27 @@ const encrypt = async (text) => {
 	return hashedText;
 };
 
+const checkAuthenticated = (req, res, next) => {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+};
+
+const checkAuthenticatedConsumer = (req, res, next) => {
+	if (req.isAuthenticated() && req.user.type === "consumer") {
+		return next();
+	}
+};
+
+const checkAuthenticatedRetailer = (req, res, next) => {
+	if (req.isAuthenticated() && req.user.type === "retailer") {
+		return next();
+	}
+};
+
 module.exports = {
 	encrypt,
+	checkAuthenticatedConsumer,
+	checkAuthenticatedRetailer,
+	checkAuthenticated,
 };

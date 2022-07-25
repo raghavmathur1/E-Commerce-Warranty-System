@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Product from "./Product";
+import Product from "../../../Components/Product";
+import classes from "../../../Components/products.module.css";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function AllProducts() {
 	const [products, setProducts] = useState([]);
@@ -13,14 +14,11 @@ function AllProducts() {
 	useEffect(() => {
 		getProducts();
 	}, []);
-	useEffect(() => {
-		console.log(products.data);
-	}, [products]);
 	if (products.length === 0) {
 		return <div>AllProducts</div>;
 	} else {
 		return (
-			<div>
+			<div className={classes["productContainer"]}>
 				{products.data.map((product) => (
 					<Product key={product._id} data={product} />
 				))}

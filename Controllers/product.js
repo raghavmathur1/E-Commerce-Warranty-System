@@ -1,6 +1,10 @@
 const { json } = require("express");
 const Product = require("../models/product");
 const { sendError } = require("../Error/error");
+const ipfsClient = require("ipfs-http-client");
+const projectId = process.env.PROJECT_ID;
+const projectSecret = process.env.PROJECT_SECRET;
+
 /*
 	@desc: Add Product 
 	@access: Private
@@ -8,6 +12,23 @@ const { sendError } = require("../Error/error");
 
 exports.addProduct = async (req, res, next) => {
 	try {
+		const auth =
+			"Basic " +
+			Buffer.from(projectId + ":" + projectSecret).toString("base64");
+
+		const client = ipfsClient.create({
+			host: "ipfs.infura.io",
+			port: 5001,
+			protocol: "https",
+			headers: {
+				authorization: auth,
+			},
+		});
+		// console.log(req.body);
+		client.add(JSON.stringify(req.body)).then((res) => {
+			console.log(res);
+		});
+
 		const product = new Product(req.body);
 		await product.save();
 		res.status(200).json({
@@ -15,13 +36,14 @@ exports.addProduct = async (req, res, next) => {
 			message: "Product Added to DB",
 		});
 	} catch (err) {
-		sendError(res, next, err, "Error", "Product Add Error");
+		console.log(err);
+		// sendError(res, next, err, "Error", "Product Add Error");
 	}
 };
 
 /*
 
-	@desc: Get Product by Id
+	@desc: Get all Products
 	access: Private
 */
 exports.getAllProducts = async (req, res, next) => {
@@ -44,7 +66,6 @@ exports.getAllProducts = async (req, res, next) => {
 
 exports.retailerProducts = async (req, res, next) => {
 	try {
-		console.log(req.params.id);
 		const products = await Product.find();
 		const result = products.filter(
 			(product) =>
@@ -56,7 +77,6 @@ exports.retailerProducts = async (req, res, next) => {
 			data: result,
 		});
 	} catch (err) {
-		console.log(err);
-		// sendError(res, next, err, "Error", "Retailer Product get Error");
+		sendError(res, next, err, "Error", "Retailer Product get Error");
 	}
 };

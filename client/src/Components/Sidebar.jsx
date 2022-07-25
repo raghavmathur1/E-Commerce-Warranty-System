@@ -29,7 +29,7 @@ function Sidebar() {
 			>
 				{isConsumer && (
 					<div>
-						<Sidebarlink text="My Products" link="products" />
+						<Sidebarlink text="My Orders" link="products" />
 						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="View Warranty" link="warranty" />
 						<Sidebarlink text="Request Repair" link="repair" />
@@ -38,10 +38,12 @@ function Sidebar() {
 				{!isConsumer && (
 					<div>
 						<Sidebarlink text="My Products" link="products" />
-						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="Add Products" link="add" />
 						<Sidebarlink text="Manage Products" link="manage" />
+						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="Repair Requests" link="repair" />
+						<Sidebarlink text="Transactions" link="money" />
+						<Sidebarlink text="View Warranty" link="warranty" />
 					</div>
 				)}
 				<a href={api_endpoint + "/api/user/logout"}>

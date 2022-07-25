@@ -1,6 +1,6 @@
 const logger = require("../Logger/logger");
 //Custom module for handling errors
-const sendError = async (res, next, err, consoleMsg, responseMsg) => {
+exports.sendError = async (res, next, err, consoleMsg, responseMsg) => {
 	logger.error(new Error(err));
 	logger.error(consoleMsg);
 	return res.status(400).json({
@@ -8,5 +8,3 @@ const sendError = async (res, next, err, consoleMsg, responseMsg) => {
 		messege: responseMsg,
 	});
 };
-
-module.exports = sendError;

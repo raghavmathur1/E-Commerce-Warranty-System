@@ -1,0 +1,104 @@
+.cardBack{
+	width: 100%;
+	height: 200px;
+	border-radius: 8px;
+	position: relative;
+}
+
+.warrantyHeading{
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+
+.warrantyHeadingShield{
+	right: 0;
+	display: flex;
+	align-items: center;
+	color: #fff;
+	font-weight: 400;
+	font-size: 14px;
+
+}
+
+.warrantyHeading svg{
+	margin: 0 0 0 5px;
+	color: #fff;
+}
+
+.warrantyText{
+	color: #fff;
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.warrantyDetails{
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.second{
+	letter-spacing: 3px;
+	color: #fff;
+}
+
+.productDetails{
+	font-size: 20px;
+	margin:0 20px ;
+	margin-top: 20px;
+	letter-spacing: 0.5px;
+}
+
+.productHeading{
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.productText{
+	font-size: 13px;
+	font-weight: 400;
+	margin-top: 5px;
+}
+
+.bolder{
+	font-weight: 500;
+}
+
+.warrantySmall{
+	font-weight: 400;
+	margin-top: 5px;
+	color: white;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+}
+
+.warrantySmall svg{
+	color: white;
+	margin-right: 2px;
+}
+
+/* #warCard{
+	transform: scale(2);
+} */
+
+.expire{
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	color: #D13356;
+	position: absolute;
+	right: 20px;
+}
+.expire svg{
+	color: #D13356;
+	margin-right: 5px;
+}

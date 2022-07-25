@@ -11,7 +11,7 @@ import { UilFileInfoAlt } from "@iconscout/react-unicons";
 import axios from "axios";
 import { userObjectContext } from "../../../Context";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
-function Products() {
+function ManageProducts() {
 	const userObject = useContext(userObjectContext)[0];
 	const [productName, setProductName] = useState("");
 	const [serialNo, setSerialNo] = useState("");
@@ -46,7 +46,7 @@ function Products() {
 		});
 	};
 	return (
-		<Content heading={"Add Products"}>
+		<Content heading={"Manage Product"}>
 			<div
 				style={{
 					display: "flex",
@@ -123,20 +123,34 @@ function Products() {
 				>
 					<UilImageUpload />
 				</Input>
-				<button
-					className="button"
-					style={{
-						margin: "20px 0",
-						fontSize: "18px",
-						padding: "10px 35px",
-					}}
-					onClick={addProduct}
-				>
-					Add Product
-				</button>
+				<div style={{ display: "flex" }}>
+					<button
+						className="button"
+						style={{
+							margin: "20px 0",
+							fontSize: "18px",
+							padding: "10px 35px",
+						}}
+						onClick={addProduct}
+					>
+						Update
+					</button>
+
+					<button
+						className="button red"
+						style={{
+							margin: "20px 20px",
+							fontSize: "18px",
+							padding: "10px 35px",
+						}}
+						onClick={addProduct}
+					>
+						Remove
+					</button>
+				</div>
 			</div>
 		</Content>
 	);
 }
 
-export default React.memo(Products);
+export default React.memo(ManageProducts);
