@@ -2,35 +2,21 @@ import React, { useState, useEffect } from "react";
 import Input from "../../Components/Input";
 import classes from "./login.module.css";
 import Card from "../../Components/Card";
-import validator from "validator";
-import axios from "axios";
+import { login } from "../../Actions/Login";
 import { UilEnvelope } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
 
-const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function Login(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [localAuth, setLocalAuth] = useState(null);
-	const submitLogin = () => {
-		const link = api_endpoint + "/api/login/" + props.user;
-		const validateEmail = email;
-		if (validator.isEmail(validateEmail)) {
-			axios({
-				method: "POST",
-				data: {
-					email: email,
-					password: password,
-				},
-				withCredentials: true,
-				url: link,
-			}).then((response) => setLocalAuth(response.data));
-		} else {
-			console.log("Error");
-		}
+	const submitLogin = async () => {
+		const isLoginSuccess = await login(email, password, props.user);
+		setLocalAuth(isLoginSuccess);
 	};
 
 	useEffect(() => {
+		console.log("hitting here");
 		if (localAuth === true) {
 			window.open("/", "_self");
 		} else if (localAuth === false) {

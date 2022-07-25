@@ -39,7 +39,7 @@ function Signup(props) {
 			city: city,
 			password: password,
 		};
-		const link = "/api/signup/" + props.user;
+		const link = api_endpoint + "/api/signup/" + props.user;
 		if (props.user === "retailer") {
 			data.gst = gst;
 			data.pan = pan;
