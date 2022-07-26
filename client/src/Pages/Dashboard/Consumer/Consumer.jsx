@@ -8,6 +8,7 @@ import MyOrders from "./Orders/MyOrders";
 import Buy from "./Buy/Buy";
 import AllProducts from "./AllProducts";
 import Cart from "./Cart/Cart";
+import Repair from "./Repair";
 export default function Consumer() {
 	return (
 		<div>
@@ -38,6 +39,11 @@ export default function Consumer() {
 							exact
 							path="/products"
 							element={<MyOrders />}
+						></Route>
+						<Route
+							exact
+							path="/repair"
+							element={<Repair />}
 						></Route>
 						<Route exact path="/cart" element={<Cart />}></Route>
 					</Routes>
