@@ -5,6 +5,7 @@ import Card from "../../Components/Card";
 import { login } from "../../Actions/Login";
 import { UilEnvelope } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
+import Topbar from "../../Components/Topbar";
 
 function Login(props) {
 	const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ function Login(props) {
 
 	return (
 		<div className={`full ${classes.page}`}>
+			<Topbar />
 			<div className={classes["left"]}>
 				<div className={classes["black"]}></div>
 				{props.user === "consumer" && (

@@ -43,7 +43,6 @@ function Sidebar() {
 						<Sidebarlink text="Add Products" link="add" />
 						{/* <Sidebarlink text="Manage Products" link="manage" /> */}
 						<Sidebarlink text="Manage Profile" link="profile" />
-						<Sidebarlink text="Repair Requests" link="repair" />
 						<Sidebarlink text="Transactions" link="money" />
 						<Sidebarlink text="View Warranty" link="warranty" />
 					</div>

@@ -5,9 +5,6 @@ function Topbar() {
 	const navigate = useNavigate();
 	return (
 		<div className={classes["topbar"]}>
-			<div className="link" onClick={() => navigate("/")}>
-				Home
-			</div>
 			<div className="link" onClick={() => navigate("/consumer/login")}>
 				Consumer Login
 			</div>
@@ -19,9 +16,6 @@ function Topbar() {
 			</div>
 			<div className="link" onClick={() => navigate("/retailer/signup")}>
 				Retailer Signup{" "}
-			</div>
-			<div className="link" onClick={() => navigate("/dashboard")}>
-				Dashboard{" "}
 			</div>
 		</div>
 	);

@@ -14,6 +14,7 @@ import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 import { UilGold } from "@iconscout/react-unicons";
 import { signup } from "../../Actions/Signup";
 import { Navigate } from "react-router-dom";
+import Topbar from "../../Components/Topbar";
 function Signup(props) {
 	const navigate = useNavigate();
 	const [password, setPassword] = useState("");
@@ -51,6 +52,7 @@ function Signup(props) {
 
 	return (
 		<div className={`full ${classes.page}`}>
+			<Topbar />
 			<Card
 				padding="11vh 4vw 4vh 4vw"
 				margin="0 0 0 0px"

@@ -8,6 +8,7 @@ import Myproduct from "./Myproduct";
 import ViewWarranty from "./ViewWarranty";
 import ManageProduct from "./ManageProduct";
 import Topbar from "../../../Components/Topbar";
+import Transactions from "./Transactions/Transactions";
 export default function Retailer() {
 	return (
 		<div>
@@ -24,6 +25,7 @@ export default function Retailer() {
 						<Route path="/products" element={<Myproduct />}></Route>
 						<Route path="/add" element={<Products />}></Route>
 						<Route path="/profile" element={<Profile />}></Route>
+						<Route path="/money" element={<Transactions />}></Route>
 						<Route
 							path="/manage/*"
 							element={<ManageProduct />}
