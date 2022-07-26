@@ -72,14 +72,16 @@ function Products() {
 					<UilPackage />
 				</Input>
 				<Input
-					heading="Product Serial Number"
-					type="text"
-					placeholder="Enter Serial Number"
-					update={setSerialNo}
+					heading="Upload Product Image"
+					type="file"
+					placeholder="Upload"
+					onChange={(e) => saveFile(e)}
 					width="48%"
+					accept="image/*"
 				>
-					<UilDialpad />
+					<UilImageUpload />
 				</Input>
+
 				<Input
 					heading="Description"
 					type="text"
@@ -107,30 +109,7 @@ function Products() {
 				>
 					<UilPercentage />
 				</Input>
-				<Input
-					heading="Digital Warranty Included"
-					type="text"
-					placeholder="Yes/No"
-					update={setWarranty}
-					list="options"
-					width="48%"
-				>
-					<datalist id="options">
-						<option>Yes</option>
-						<option>No</option>
-					</datalist>
-					<UilPostcard />
-				</Input>
-				<Input
-					heading="Upload Product Image"
-					type="file"
-					placeholder="Upload"
-					onChange={(e) => saveFile(e)}
-					width="48%"
-					accept="image/*"
-				>
-					<UilImageUpload />
-				</Input>
+
 				<button
 					className="button"
 					style={{

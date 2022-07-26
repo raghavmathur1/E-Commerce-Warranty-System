@@ -6,7 +6,6 @@ const { sendError } = require("../Error/error");
 
 exports.getData = async (req, res, next) => {
 	try {
-		// console.log(req);
 		res.status(200).send(req.user);
 	} catch (err) {
 		sendError(res, next, err, "Error", "Login Error");

@@ -24,15 +24,17 @@ function Sidebar() {
 				padding="0vh 0vw 0vh 0vw"
 				margin="0 0 0 30px"
 				width="18vw"
-				height="75vh"
+				height="80vh"
 				minWidth="225px"
 			>
 				{isConsumer && (
 					<div>
+						<Sidebarlink text="Buy Products" link="shop" />
 						<Sidebarlink text="My Orders" link="products" />
 						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="View Warranty" link="warranty" />
 						<Sidebarlink text="Request Repair" link="repair" />
+						<Sidebarlink text="Cart" link="cart" />
 					</div>
 				)}
 				{!isConsumer && (

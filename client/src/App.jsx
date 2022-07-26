@@ -5,11 +5,10 @@ import Login from "./Pages/Login/Login";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Landing from "./Pages/Landing/Landing";
 import Topbar from "./Components/Topbar";
-import Buy from "./Pages/Dashboard/Consumer/Buy";
 function App() {
 	return (
 		<BrowserRouter>
-			<Topbar />
+			{/* <Topbar /> */}
 			<Routes>
 				<Route path="/" element={<Landing />}></Route>
 				<Route path="/dashboard/*" element={<Dashboard />}></Route>
@@ -29,7 +28,6 @@ function App() {
 					path="/retailer/login"
 					element={<Login user="retailer" />}
 				></Route>
-				<Route path="/buy/*" element={<Buy />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);

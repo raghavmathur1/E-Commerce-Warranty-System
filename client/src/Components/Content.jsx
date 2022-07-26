@@ -12,7 +12,8 @@ function Content(props) {
 		<Card
 			margin="30px 0 30px 0"
 			padding="0px 30px 2vh 30px"
-			minHeight="83vh"
+			minHeight="88vh"
+			id={props.id}
 		>
 			<div style={style}>{props.heading}</div>
 			{props.children}

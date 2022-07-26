@@ -64,14 +64,15 @@ function ManageProducts() {
 				>
 					<UilPackage />
 				</Input>
+
 				<Input
-					heading="Product Serial Number"
-					type="text"
-					placeholder="Enter Serial Number"
-					update={setSerialNo}
+					heading="Photo"
+					type="file"
+					placeholder="Upload"
+					update={setFile}
 					width="48%"
 				>
-					<UilDialpad />
+					<UilImageUpload />
 				</Input>
 				<Input
 					heading="Description"
@@ -99,29 +100,6 @@ function ManageProducts() {
 					width="48%"
 				>
 					<UilPercentage />
-				</Input>
-				<Input
-					heading="Digital Warranty Included"
-					type="text"
-					placeholder="Yes/No"
-					update={setWarranty}
-					list="options"
-					width="48%"
-				>
-					<datalist id="options">
-						<option>Yes</option>
-						<option>No</option>
-					</datalist>
-					<UilPostcard />
-				</Input>
-				<Input
-					heading="Photo"
-					type="file"
-					placeholder="Upload"
-					update={setFile}
-					width="48%"
-				>
-					<UilImageUpload />
 				</Input>
 				<div style={{ display: "flex" }}>
 					<button

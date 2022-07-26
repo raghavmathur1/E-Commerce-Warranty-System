@@ -102,3 +102,14 @@
 	color: #D13356;
 	margin-right: 5px;
 }
+
+.warrantyContainer{
+	display: flex;
+	flex-wrap: wrap;
+	
+}
+
+.warrantyContainer > div{
+margin: 10px;
+	
+}

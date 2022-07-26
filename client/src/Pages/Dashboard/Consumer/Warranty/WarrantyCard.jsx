@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Card from "../../../Components/Card";
+import Card from "../../../../Components/Card";
 import classes from "./warranty.module.css";
 import { UilShield } from "@iconscout/react-unicons";
 import { UilClock } from "@iconscout/react-unicons";
@@ -7,12 +7,7 @@ import { UilHourglass } from "@iconscout/react-unicons";
 
 function WarrantyCard(props) {
 	return (
-		<Card
-			width="310px"
-			margin="0 0px 0 0"
-			height="380px"
-			id={classes["warCard"]}
-		>
+		<Card width="310px" height="380px" id={classes["warCard"]}>
 			<div className={classes["cardBack"]} style={props.style}>
 				<div className={classes["warrantyHeading"]}>
 					<div className={classes["warrantyHeadingShield"]}>

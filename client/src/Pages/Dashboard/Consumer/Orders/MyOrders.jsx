@@ -1,5 +1,5 @@
 import React from "react";
-import Content from "../../../Components/Content";
+import Content from "../../../../Components/Content";
 import Order from "./Order";
 import classes from "./order.module.css";
 

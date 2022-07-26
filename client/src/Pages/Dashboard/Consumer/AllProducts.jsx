@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../../../Components/Product";
 import classes from "../../../Components/products.module.css";
-import Topbar from "../../../Components/Topbar";
+import Content from "../../../Components/Content";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function AllProducts() {
 	const [products, setProducts] = useState([]);
@@ -19,11 +19,13 @@ function AllProducts() {
 		return <div>AllProducts</div>;
 	} else {
 		return (
-			<div className={classes["productContainer"]}>
-				{products.data.map((product) => (
-					<Product key={product._id} data={product} />
-				))}
-			</div>
+			<Content heading="Buy Products" id={classes["productCard"]}>
+				<div className={classes["productContainer"]}>
+					{products.data.map((product) => (
+						<Product key={product._id} data={product} />
+					))}
+				</div>
+			</Content>
 		);
 	}
 }

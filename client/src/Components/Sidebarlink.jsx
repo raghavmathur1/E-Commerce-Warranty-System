@@ -9,6 +9,8 @@ import { UilAngleRightB } from "@iconscout/react-unicons";
 import { UilSignout } from "@iconscout/react-unicons";
 import { UilPlusCircle } from "@iconscout/react-unicons";
 import { UilMoneyWithdraw } from "@iconscout/react-unicons";
+import { UilShoppingBag } from "@iconscout/react-unicons";
+import { UilShoppingCartAlt } from "@iconscout/react-unicons";
 function Sidebarlink(props) {
 	let a = useParams();
 	const link = a["*"];
@@ -27,6 +29,12 @@ function Sidebarlink(props) {
 		icon = <UilUserCircle color={color} className={classes["blueicon"]} />;
 	if (props.link === "repair")
 		icon = <UilWrench color={color} className={classes["blueicon"]} />;
+	if (props.link === "shop")
+		icon = <UilShoppingBag color={color} className={classes["blueicon"]} />;
+	if (props.link === "cart")
+		icon = (
+			<UilShoppingCartAlt color={color} className={classes["blueicon"]} />
+		);
 	if (props.link === "warranty")
 		icon = (
 			<UilFilesLandscapesAlt

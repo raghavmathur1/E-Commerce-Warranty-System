@@ -1,27 +1,29 @@
 .productContainer{
 	display: flex;
   	align-items: center;
-  	justify-content: center;
+  	/* justify-content: center; */
 	flex-wrap: wrap;
-	flex-direction: row-reverse	;
-  	width: 100%;
+	/* flex-direction: row-reverse	; */
   	height: 100%;
-	margin-top: 50px;
+	margin: 0px auto;
+	margin-top: 20px;
 }
 
-#productCard{
+.product{
+	width: 200px;
+	height: 389px;
+	padding: 0 20px;
+	border: 0.5px solid #C4C4C4;
 	display: flex;
-  	align-items: center;
-  	justify-content: center;
-  	background-color: #fff;
-	transform: scale(0.5);
+	flex-direction: column;
 	position: relative;
+	margin: 10px 10px;
+	border-radius: 6px;
 }
-
 .productImage{
 	margin:22.5px 0 10px 0;
-	width:230px;
-	height: 230px;
+	width:200px;
+	height: 200px;
 	background: url("https://www.apple.com/v/macbook-pro-13/m/images/overview/hero_endframe__bsza6x4fldiq_large_2x.jpg");
 	background-size: cover;
 	background-position: center center;
@@ -82,7 +84,7 @@
 	align-items: center;
 	justify-content: space-between;
 	font-weight: 500;
-	width: 230px;
+	width: 200px;
 }
 
 .bottom-blue svg{
@@ -111,4 +113,9 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+}
+
+#productCard{
+	/* box-shadow: none; */
+	width: 70vw;
 }

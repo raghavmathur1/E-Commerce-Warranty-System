@@ -27,12 +27,11 @@ export default function Myproduct() {
 	} else {
 		console.log(data);
 		return (
-			<Content heading="My Products">
+			<Content heading="My Products" id={classes["productCard"]}>
 				<div
 					style={{
 						display: "flex",
 						flexWrap: "wrap",
-						justifyContent: "space-between",
 					}}
 				>
 					{data.map((product) => (

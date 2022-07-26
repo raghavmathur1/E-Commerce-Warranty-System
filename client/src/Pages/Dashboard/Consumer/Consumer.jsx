@@ -3,9 +3,11 @@ import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import Sidebar from "../../../Components/Sidebar";
 import classes from "../dashboard.module.css";
 import Profile from "../../../Components/Profile";
-import Warranty from "./Warranty";
-import MyOrders from "./MyOrders";
-import Topbar from "../../../Components/Topbar";
+import Warranty from "./Warranty/Warranty";
+import MyOrders from "./Orders/MyOrders";
+import Buy from "./Buy/Buy";
+import AllProducts from "./AllProducts";
+import Cart from "./Cart/Cart";
 export default function Consumer() {
 	return (
 		<div>
@@ -15,10 +17,13 @@ export default function Consumer() {
 				</div>
 				<div className={classes["right"]}>
 					<Routes>
+						<Route path="/" element={<Navigate to="./shop" />} />
+						<Route path="/shop/*" element={<Buy />}></Route>
 						<Route
-							path="/"
-							element={<Navigate to="./products" />}
-						/>
+							exact
+							path="/shop"
+							element={<AllProducts />}
+						></Route>
 						<Route
 							exact
 							path="/profile"
@@ -34,6 +39,7 @@ export default function Consumer() {
 							path="/products"
 							element={<MyOrders />}
 						></Route>
+						<Route exact path="/cart" element={<Cart />}></Route>
 					</Routes>
 				</div>
 			</div>

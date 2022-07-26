@@ -6,7 +6,7 @@ function Landing() {
 	const userObject = useContext(userObjectContext)[0];
 	const navigate = useNavigate();
 	if (userObject.type === "consumer") {
-		return <AllProducts />;
+		return navigate("/dashboard", { replace: true });
 	} else if (userObject.type === "retailer") {
 		navigate("/dashboard", { replace: true });
 	} else {

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Content from "../../../Components/Content";
+import Content from "../../../../Components/Content";
 import WarrantyCard from "./WarrantyCard";
 import classes from "./warranty.module.css";
-let blue = require("../../../assets/blue.jpg");
-let purple = require("../../../assets/purple.jpg");
-let red = require("../../../assets/red.jpg");
+let blue = require("../../../../assets/blue.jpg");
+let purple = require("../../../../assets/purple.jpg");
+let red = require("../../../../assets/red.jpg");
+
 function Warranty() {
 	const [backgrounds, setBackground] = useState([red, blue, purple]);
 	const backgroundStyle1 = {
@@ -24,14 +25,7 @@ function Warranty() {
 	};
 	return (
 		<Content heading="View Warranty">
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "space-between",
-					flexWrap: "wrap",
-					marginTop: "15px",
-				}}
-			>
+			<div className={classes["warrantyContainer"]}>
 				<WarrantyCard style={backgroundStyle1} />
 				<WarrantyCard style={backgroundStyle2} />
 				<WarrantyCard style={backgroundStyle3} />

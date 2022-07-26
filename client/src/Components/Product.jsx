@@ -7,20 +7,14 @@ import { useNavigate } from "react-router-dom";
 function Product(props) {
 	const navigate = useNavigate();
 	const buyPage = () => {
-		navigate("./buy/" + props.data._id);
+		navigate("../shop/" + props.data._id);
 	};
 
 	const manageProduct = () => {
 		navigate("../manage/" + props.data._id);
 	};
 	return (
-		<Card
-			width="230px"
-			height="389px"
-			margin="20px 10px"
-			id="productCard"
-			padding="0 20px"
-		>
+		<div className={classes["product"]}>
 			<div className={classes["productImage"]}></div>
 			<div className={classes["productName"]}>
 				{props.data.productName}
@@ -58,7 +52,7 @@ function Product(props) {
 					</div>
 				</div>
 			)}
-		</Card>
+		</div>
 	);
 }
 
