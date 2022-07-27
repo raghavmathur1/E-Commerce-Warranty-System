@@ -17,7 +17,8 @@ const user = INITIAL_URL + "/user";
 const userData = "/data";
 const logout = "/logout";
 const update = "/update";
-
+const updateCartRoute = "/updateCart";
+const getCartRoute = "/getCart";
 //Consumer Routes
 const consumer = "/consumer";
 
@@ -47,4 +48,6 @@ module.exports = {
 	id,
 	update,
 	INITIAL_URL,
+	updateCartRoute,
+	getCartRoute,
 };

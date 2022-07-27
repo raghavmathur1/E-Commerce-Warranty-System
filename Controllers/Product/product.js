@@ -12,7 +12,7 @@ const {
 	readInMarket,
 } = require("../../Contract/MarketPlace/MarketPlace");
 const https = require("https");
-const product = require("../../models/Product/product");
+const cartSchema = require("../../Models/Product/cart");
 /*
 	@desc: Add Product 
 	@access: Private
@@ -160,7 +160,6 @@ exports.retailerProducts = async (req, res, next) => {
 
 exports.getProductByID = async (req, res, next) => {
 	try {
-		console.log("Reaching here");
 		const productID = req.params.id;
 		//Fetch the product details from the blockchain
 		const productData = await readInProductNFT(
@@ -194,5 +193,46 @@ exports.getProductByID = async (req, res, next) => {
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "Retailer Product get Error");
+	}
+};
+
+/*
+	@desc: Update the cart
+	@access: Private
+*/
+exports.updateCart = async (req, res, next) => {
+	try {
+		const cartString = req.cartString;
+		const consumerEmail = req.user.email;
+
+		//Save in the database
+		await cartSchema.create({
+			email: consumerEmail,
+			cartInfo: cartString,
+		});
+
+		return res.status(200).json({
+			success: true,
+			message: "Cart updated successfully",
+		});
+	} catch (err) {
+		sendError(res, next, err, "Error", "Updating cart error");
+	}
+};
+/*
+	@desc: Get the cart string
+	@access: Private
+*/
+exports.getCartInfo = async (req, res, next) => {
+	try {
+		const cartString = await cartSchema.findOne({ email: req.user.email });
+		if (!cartString) cartStirng = "[]";
+		return res.status(200).json({
+			success: true,
+			message: "Cart string fetched successfully!",
+			data: cartString,
+		});
+	} catch (err) {
+		sendError(res, next, err, "Error", "Error fetching cart details!");
 	}
 };
