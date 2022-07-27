@@ -2,7 +2,11 @@ const Consumer = require("../../Models/Consumer/consumer");
 const Retailer = require("../../Models/Retailer/retailer");
 const { sendError } = require("../../Error/error");
 const { encrypt } = require("../../Helper/auth");
-const passport = require("passport");
+const {
+	writeInMarket,
+	readInMarket,
+	marketContract,
+} = require("../../Contract/MarketPlace/MarketPlace");
 /*
 	@desc: Signup For Consumers
 	@access: Private
@@ -18,6 +22,11 @@ exports.consumerSignup = async (req, res, next) => {
 				if (!consumer) {
 					req.body.password = await encrypt(req.body.password);
 					new Consumer(req.body).save();
+					//Save to the blockchain
+					//Save to blockchain
+					await writeInMarket(
+						marketContract.methods.registerCustomer(req.body.email)
+					);
 					res.status(200).json({
 						success: true,
 						message: "Added to DB",
@@ -50,9 +59,14 @@ exports.retailerSignup = async (req, res, next) => {
 				if (!consumer) {
 					req.body.password = await encrypt(req.body.password);
 					new Retailer(req.body).save();
+
+					//Save to blockchain
+					await writeInMarket(
+						marketContract.methods.registerRetailer(req.body.email)
+					);
 					res.status(200).json({
 						success: true,
-						message: "Added to DB",
+						message: "Retailer registered successfully!",
 					});
 				} else {
 					res.status(409).send({

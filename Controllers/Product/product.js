@@ -1,6 +1,17 @@
 const Product = require("../../models/Product/product");
 const { sendError } = require("../../Error/error");
 const { uploadMetadataToIPFS, uploadFileToIPFS } = require("../../Helper/ipfs");
+const {
+	productNFTContract,
+	writeInProductNFT,
+	readInProductNFT,
+} = require("../../Contract/ProductNFT/ProductNFT");
+const {
+	marketContract,
+	writeInMarket,
+	readInMarket,
+} = require("../../Contract/MarketPlace/MarketPlace");
+const https = require("https");
 /*
 	@desc: Add Product 
 	@access: Private
@@ -9,15 +20,32 @@ const { uploadMetadataToIPFS, uploadFileToIPFS } = require("../../Helper/ipfs");
 exports.addProduct = async (req, res, next) => {
 	try {
 		const fileURL = await uploadFileToIPFS(req.files.file);
-		console.log(fileURL);
 		const productInfo = req.body;
 		productInfo["fileURl"] = fileURL;
 
 		//Add product meta data to ipfs
 		const productURL = await uploadMetadataToIPFS(productInfo);
 		console.log(productURL);
-		//const product = new Product(req.body);
-		//await product.save();
+		//Register the product in the blockchain
+		await writeInProductNFT(
+			productNFTContract.methods.introduceProduct(
+				productURL,
+				req.user.email
+			)
+		);
+		//Get the product id
+		const productID = await readInProductNFT(
+			productNFTContract.methods.getProductID(productURL.toString())
+		);
+		console.log(productID, req.user.email);
+		//Register the product to the retailer and market in blockchain
+		await writeInMarket(
+			marketContract.methods.addProductToRetailer(
+				productID,
+				req.user.email
+			)
+		);
+
 		return res.status(200).json({
 			success: true,
 			message: "Product details uploaded successfully!",
@@ -40,6 +68,7 @@ exports.addProduct = async (req, res, next) => {
 */
 exports.getAllProducts = async (req, res, next) => {
 	try {
+		console.log("here");
 		const products = await Product.find();
 		res.status(200).json({
 			success: true,
@@ -58,15 +87,39 @@ exports.getAllProducts = async (req, res, next) => {
 
 exports.retailerProducts = async (req, res, next) => {
 	try {
-		const products = await Product.find();
-		const result = products.filter(
-			(product) =>
-				JSON.stringify(product.retailer) ===
-				JSON.stringify(req.params.id)
+		//Read the products from the blockchain
+		const result = await readInMarket(
+			marketContract.methods.getRetailerProduct(req.user.email)
 		);
+
+		//Get all the data from url
+		const data = [];
+		for (var i = 0; i < result.length; i++) {
+			const productData = await readInProductNFT(
+				productNFTContract.methods.getProductDetailsURL(result[i])
+			);
+			await new Promise((resolve, reject) => {
+				https
+					.get(productData.productURL, function (res) {
+						var body = "";
+
+						res.on("data", function (chunk) {
+							body += chunk;
+						});
+
+						res.on("end", function () {
+							var res = JSON.parse(body);
+							data.push(res);
+							resolve("Success");
+						});
+					})
+					.on("error", function (e) {});
+			});
+		}
+		console.log(data);
 		res.status(200).json({
 			success: true,
-			data: result,
+			data: data,
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "Retailer Product get Error");
