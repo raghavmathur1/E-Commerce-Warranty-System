@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { all, add, retmy, id, product } = require("../globalRoutes");
+const {
+	all,
+	add,
+	retmy,
+	id,
+	product,
+	updateCartRoute,
+	getCartRoute,
+} = require("../globalRoutes");
 const passport = require("passport");
 const {
 	checkAuthenticatedRetailer,
@@ -13,6 +21,8 @@ const {
 	getAllProducts,
 	retailerProducts,
 	getProductByID,
+	updateCart,
+	getCartInfo,
 } = require("../../Controllers/Product/product");
 
 //Assigning routes
@@ -20,5 +30,7 @@ router.route(add).post(checkAuthenticatedRetailer, addProduct);
 router.route(all).get(getAllProducts);
 router.route(retmy + id).get(checkAuthenticatedRetailer, retailerProducts);
 router.route(id).get(getProductByID);
+router.route(updateCartRoute).post(updateCart);
+router.route(getCartRoute).get(getCartInfo);
 
 module.exports = router;
