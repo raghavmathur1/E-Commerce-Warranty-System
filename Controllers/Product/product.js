@@ -11,6 +11,12 @@ const {
 	writeInMarket,
 	readInMarket,
 } = require("../../Contract/MarketPlace/MarketPlace");
+
+const {
+	productWarrantyContract,
+	writeInWarrantyNFT,
+	readInWarrantyNFT,
+} = require("../../Contract/ProductWarranty/ProductWarrantyNFT");
 const https = require("https");
 const cartSchema = require("../../Models/Product/cart");
 const { response } = require("express");
@@ -175,7 +181,7 @@ exports.getProductByID = async (req, res, next) => {
 		const productData = await readInProductNFT(
 			productNFTContract.methods.getProductDetailsURL(productID)
 		);
-
+		
 		let data;
 		await new Promise((resolve, reject) => {
 			https
@@ -259,5 +265,43 @@ exports.getCartInfo = async (req, res, next) => {
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "Error fetching cart details!");
+	}
+};
+/*
+	@desc: Buy a product
+	@access: Private
+*/
+
+exports.buyProduct = async (req, rex, next) => {
+	try {
+		const { productID, price } = req.body;
+		const consumerEmail = req.user.email;
+		const retailerEmail = await readInProductNFT(
+			productNFTContract.methods.getProductRetailerEmail(productID)
+		);
+		//Issue the warranty of the product first
+		await writeInWarrantyNFT(
+			productWarrantyContract.methods.issueWarranty(
+				productID,
+				consumerEmail,
+				365
+			)
+		);
+		//call the buy function into the product marketplace
+		await writeInMarket(
+			marketContract.methods.buyProduct(
+				productID,
+				retailerEmail,
+				consumerEmail,
+				price,
+				price
+			)
+		);
+		return res.status(200).json({
+			success: true,
+			message: "Product buying successfull!",
+		});
+	} catch (err) {
+		sendError(res, next, err, "Error", "Error buying a product!");
 	}
 };

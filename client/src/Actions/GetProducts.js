@@ -12,7 +12,7 @@ export const getProducts = async (productId) => {
 		});
 		// const products = JSON.parse(response.data.data);
 		console.log(response.data);
-		return response.data.data;
+		return response.data;
 	} catch (error) {
 		console.log(error);
 		return {};
