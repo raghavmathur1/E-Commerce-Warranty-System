@@ -5,7 +5,6 @@ import Login from "./Pages/Login/Login";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Landing from "./Pages/Landing/Landing";
 import Topbar from "./Components/Topbar";
-import { toast } from "wc-toast";
 function App() {
 	return (
 		<BrowserRouter>

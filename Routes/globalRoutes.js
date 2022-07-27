@@ -27,6 +27,7 @@ const retailer = "/retailer";
 
 //Product Routes
 const product = INITIAL_URL + "/products";
+const details = "/details";
 const add = "/add";
 const all = "/all";
 const retmy = "/retmy";
@@ -50,4 +51,5 @@ module.exports = {
 	INITIAL_URL,
 	updateCartRoute,
 	getCartRoute,
+	details,
 };

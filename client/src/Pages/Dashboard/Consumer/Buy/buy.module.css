@@ -152,7 +152,7 @@
 
 #cartButton{
 	font-size:15px;
-	width: 10vw;
+	width: 100%;
 	min-width: 120px;
 	padding: 10px;
 }

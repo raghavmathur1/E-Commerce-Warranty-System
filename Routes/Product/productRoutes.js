@@ -8,6 +8,7 @@ const {
 	product,
 	updateCartRoute,
 	getCartRoute,
+	details,
 } = require("../globalRoutes");
 const passport = require("passport");
 const {
@@ -29,7 +30,7 @@ const {
 router.route(add).post(checkAuthenticatedRetailer, addProduct);
 router.route(all).get(getAllProducts);
 router.route(retmy + id).get(checkAuthenticatedRetailer, retailerProducts);
-router.route(id).get(getProductByID);
+router.route(details + id).get(getProductByID);
 router.route(updateCartRoute).post(updateCart);
 router.route(getCartRoute).get(getCartInfo);
 

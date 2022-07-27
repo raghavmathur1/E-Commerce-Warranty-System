@@ -80,11 +80,13 @@
 
 
 .test{
-	margin-top: 20px;
+	padding: 10px 0;
 	display: flex;
 	height: 100px;
 	border-bottom: 1px solid #c4c4c4;
 	width: 100%;
+	position: relative;
+	align-items: center;
 }
 
 .allitems{
@@ -197,7 +199,23 @@
 }
 
 
+.delete{
+	position: absolute; 
+	right: 20px;
+	color: #fc3c3c;
+	font-weight: 600	;
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	cursor: pointer;
+}	
+
+.delete svg{
+	fill: #fc3c3c;
+	margin-right: 5px;
+	transform: scale(0.9);
+}
+
 @media screen and (max-width: 768px){
 	
 }
-
