@@ -1,4 +1,5 @@
 const Product = require("../../models/Product/product");
+const mongoose = require("mongoose");
 const { sendError } = require("../../Error/error");
 const { uploadMetadataToIPFS, uploadFileToIPFS } = require("../../Helper/ipfs");
 const {
@@ -19,6 +20,7 @@ const {
 } = require("../../Contract/ProductWarranty/ProductWarrantyNFT");
 const https = require("https");
 const cartSchema = require("../../Models/Product/cart");
+const retailerSchema = require("../../Models/Retailer/retailer");
 const { response } = require("express");
 /*
 	@desc: Add Product 
@@ -167,9 +169,7 @@ exports.retailerProducts = async (req, res, next) => {
 
 exports.getProductByID = async (req, res, next) => {
 	try {
-		console.log("reaching");
 		const productID = req.params.id;
-		console.log(productID);
 		if (productID === null || productID === undefined) {
 			return res.status(400).json({
 				success: false,
@@ -181,7 +181,7 @@ exports.getProductByID = async (req, res, next) => {
 		const productData = await readInProductNFT(
 			productNFTContract.methods.getProductDetailsURL(productID)
 		);
-		
+
 		let data;
 		await new Promise((resolve, reject) => {
 			https
@@ -202,10 +202,14 @@ exports.getProductByID = async (req, res, next) => {
 					throw e;
 				});
 		});
-		console.log(data);
+		const retailerDetails = await retailerSchema.findById({
+			_id: mongoose.Types.ObjectId(data.retailer),
+		});
+
 		return res.status(200).json({
 			success: true,
 			data: data,
+			retailerDetail: retailerDetails,
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "Retailer Product get Error");
