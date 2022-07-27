@@ -13,6 +13,7 @@ const {
 } = require("../../Contract/MarketPlace/MarketPlace");
 const https = require("https");
 const cartSchema = require("../../Models/Product/cart");
+const { response } = require("express");
 /*
 	@desc: Add Product 
 	@access: Private
@@ -160,7 +161,16 @@ exports.retailerProducts = async (req, res, next) => {
 
 exports.getProductByID = async (req, res, next) => {
 	try {
+		console.log("reaching");
 		const productID = req.params.id;
+		console.log(productID);
+		if (productID === null || productID === undefined) {
+			return res.status(400).json({
+				success: false,
+				errMessage: "Product ID is required",
+			});
+		}
+		// return res.status(200).json({});
 		//Fetch the product details from the blockchain
 		const productData = await readInProductNFT(
 			productNFTContract.methods.getProductDetailsURL(productID)
@@ -202,14 +212,29 @@ exports.getProductByID = async (req, res, next) => {
 */
 exports.updateCart = async (req, res, next) => {
 	try {
-		const cartString = req.cartString;
+		const cartString = req.body.cartString;
 		const consumerEmail = req.user.email;
-
+		console.log(cartString);
+		// console.log("Asd");
 		//Save in the database
-		await cartSchema.create({
-			email: consumerEmail,
-			cartInfo: cartString,
-		});
+		let result = await cartSchema.findOne({ email: consumerEmail });
+		if (!result) {
+			const newCart = await cartSchema.create({
+				email: consumerEmail,
+				cartInfo: cartString,
+			});
+			await newCart.save();
+			console.log(newCart);
+		} else {
+			const newCart = await cartSchema.findOneAndUpdate(
+				{ email: consumerEmail },
+				{ cartInfo: cartString },
+				{
+					new: true,
+				}
+			);
+			console.log(newCart);
+		}
 
 		return res.status(200).json({
 			success: true,
@@ -225,12 +250,12 @@ exports.updateCart = async (req, res, next) => {
 */
 exports.getCartInfo = async (req, res, next) => {
 	try {
-		const cartString = await cartSchema.findOne({ email: req.user.email });
-		if (!cartString) cartStirng = "[]";
+		let cartString = await cartSchema.findOne({ email: req.user.email });
+		let finalString = cartString === null ? "[]" : cartString.cartInfo;
 		return res.status(200).json({
 			success: true,
 			message: "Cart string fetched successfully!",
-			data: cartString,
+			data: finalString,
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "Error fetching cart details!");

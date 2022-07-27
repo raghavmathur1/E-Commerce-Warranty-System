@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../Components/Input";
 import classes from "./signup.module.css";
 import Card from "../../Components/Card";
@@ -13,11 +13,13 @@ import { UilKeySkeleton } from "@iconscout/react-unicons";
 import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 import { UilGold } from "@iconscout/react-unicons";
 import { signup } from "../../Actions/Signup";
+import Loader from "react-js-loader";
 import { Navigate } from "react-router-dom";
-// import { toast } from "wc-toast";
 import Topbar from "../../Components/Topbar";
+import { toast } from "wc-toast";
 function Signup(props) {
 	const navigate = useNavigate();
+	const [style, setStyle] = useState({ display: "none" });
 	const [password, setPassword] = useState("");
 	const [rePassword, setRePassword] = useState("");
 	const [phone, setPhone] = useState("");
@@ -29,8 +31,8 @@ function Signup(props) {
 	const [address, setAddress] = useState("");
 	const [gst, setGST] = useState("");
 	const [pan, setPAN] = useState("");
-	// toast.success("Signup Successful");
 	const submitSignup = async () => {
+		setStyle({ display: "flex" });
 		const data = {
 			firstName: firstName,
 			lastName: lastName,
@@ -46,12 +48,15 @@ function Signup(props) {
 			data.pan = pan;
 		}
 		const response = await signup(data, props.user, rePassword);
+		setStyle({ display: "none" });
 		console.log(response.status);
 		if (response.success === true) {
+			toast.success("Signup Successful");
 			navigate("/" + props.user + "/login", { replace: true });
+		} else {
+			toast.error("Signup unsuccessful");
 		}
 	};
-
 	return (
 		<div className={`full ${classes.page}`}>
 			<Topbar />
@@ -169,15 +174,24 @@ function Signup(props) {
 					>
 						<UilKeySkeleton />
 					</Input>
+
 					<button
 						className="button"
 						style={{
-							margin: "20px auto 0 auto",
+							margin: "20px auto",
 							fontSize: "18px",
 							padding: "10px 35px",
 						}}
 						onClick={submitSignup}
 					>
+						<div className="loader" style={style}>
+							<Loader
+								type="spinner-default"
+								bgColor={"#FFFFFF"}
+								color={"#FFFFFF"}
+								size={30}
+							/>
+						</div>
 						Register
 					</button>
 				</div>
