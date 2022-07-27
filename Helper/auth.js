@@ -10,7 +10,7 @@ const checkAuthenticated = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		return next();
 	}
-};
+};6
 
 const checkAuthenticatedConsumer = (req, res, next) => {
 	if (req.isAuthenticated() && req.user.type === "consumer") {

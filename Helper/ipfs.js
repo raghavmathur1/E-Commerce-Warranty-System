@@ -6,7 +6,7 @@ const ipfsClient = require("ipfs-http-client");
 const auth =
 	"Basic " +
 	Buffer.from(
-		process.env.PROJECT_ID + ":" + process.env.PROJECT_SECRET
+		process.env.INFURA_PROJECT_ID + ":" + process.env.INFURA_PROJECT_SECRET
 	).toString("base64");
 
 //IPFS Client

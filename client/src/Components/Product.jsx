@@ -15,7 +15,12 @@ function Product(props) {
 	};
 	return (
 		<div className={classes["product"]}>
-			<div className={classes["productImage"]}></div>
+			<div
+				className={classes["productImage"]}
+				style={{
+					backgroundImage: `url(${props.data.fileURl})`,
+				}}
+			></div>
 			<div className={classes["productName"]}>
 				{props.data.productName}
 			</div>
