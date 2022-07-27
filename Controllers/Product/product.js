@@ -12,6 +12,7 @@ const {
 	readInMarket,
 } = require("../../Contract/MarketPlace/MarketPlace");
 const https = require("https");
+const product = require("../../models/Product/product");
 /*
 	@desc: Add Product 
 	@access: Private
@@ -144,6 +145,50 @@ exports.retailerProducts = async (req, res, next) => {
 		}
 		console.log(data);
 		res.status(200).json({
+			success: true,
+			data: data,
+		});
+	} catch (err) {
+		sendError(res, next, err, "Error", "Retailer Product get Error");
+	}
+};
+
+/*
+	@desc: Get Product detail using productID
+	access: Private
+*/
+
+exports.getProductByID = async (req, res, next) => {
+	try {
+		console.log("Reaching here");
+		const productID = req.params.id;
+		//Fetch the product details from the blockchain
+		const productData = await readInProductNFT(
+			productNFTContract.methods.getProductDetailsURL(productID)
+		);
+
+		let data;
+		await new Promise((resolve, reject) => {
+			https
+				.get(productData.productURL, function (res) {
+					var body = "";
+
+					res.on("data", function (chunk) {
+						body += chunk;
+					});
+
+					res.on("end", function () {
+						var res = JSON.parse(body);
+						data = res;
+						resolve("Success");
+					});
+				})
+				.on("error", function (e) {
+					throw e;
+				});
+		});
+		console.log(data);
+		return res.status(200).json({
 			success: true,
 			data: data,
 		});
