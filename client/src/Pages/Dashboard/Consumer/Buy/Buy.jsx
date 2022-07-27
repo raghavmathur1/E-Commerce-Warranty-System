@@ -3,6 +3,7 @@ import Card from "../../../../Components/Card";
 import classes from "./buy.module.css";
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../../../../Components/Footer";
+import axios from "axios";
 function Buy() {
 	const parameters = useParams();
 	const productId = parameters["*"];
@@ -36,7 +37,16 @@ function Buy() {
 		localStorage.setItem("cart", JSON.stringify(cart));
 		navigate("../cart", { replace: true });
 	};
+	const getData = async () => {
+		const res = await axios({
+			method: "GET",
+			withCredentials: true,
+			url: `http://localhost:8000/api/products/${productId}`,
+		});
+		return res;
+	};
 	useEffect(() => {
+		const res = getData();
 		if (checkCart()) setCartText("Remove");
 		else setCartText("Add to Cart");
 	}, []);
