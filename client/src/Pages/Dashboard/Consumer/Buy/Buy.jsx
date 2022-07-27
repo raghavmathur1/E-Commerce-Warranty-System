@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Card from "../../../../Components/Card";
 import classes from "./buy.module.css";
 import { useParams, useNavigate } from "react-router-dom";
-import Footer from "../../../../Components/Footer";
 import axios from "axios";
 function Buy() {
 	const parameters = useParams();
@@ -47,8 +46,8 @@ function Buy() {
 	};
 	useEffect(() => {
 		const res = getData();
-		if (checkCart()) setCartText("Remove");
-		else setCartText("Add to Cart");
+		// if (checkCart()) setCartText("Remove");
+		// else setCartText("Add to Cart");
 	}, []);
 	return (
 		<div className={classes["buyContainer"]}>
@@ -106,4 +105,4 @@ function Buy() {
 		</div>
 	);
 }
-export default Buy;
+export default React.memo(Buy);

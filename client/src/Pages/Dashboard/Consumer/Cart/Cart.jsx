@@ -4,7 +4,13 @@ import Content from "../../../../Components/Content";
 import classes from "./cart.module.css";
 import CartItems from "./CartItems";
 function Cart() {
-	const cart = JSON.parse(localStorage.getItem("cart"));
+	const getCart = () => {
+		let cart = localStorage.getItem("cart");
+		if (cart === null) cart = [];
+		else cart = JSON.parse(cart);
+		return cart;
+	};
+	const cart = getCart();
 	console.log(cart);
 	return (
 		<Content id={classes["offCard"]}>

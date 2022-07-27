@@ -14,6 +14,7 @@ import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 import { UilGold } from "@iconscout/react-unicons";
 import { signup } from "../../Actions/Signup";
 import { Navigate } from "react-router-dom";
+// import { toast } from "wc-toast";
 import Topbar from "../../Components/Topbar";
 function Signup(props) {
 	const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Signup(props) {
 	const [address, setAddress] = useState("");
 	const [gst, setGST] = useState("");
 	const [pan, setPAN] = useState("");
+	// toast.success("Signup Successful");
 	const submitSignup = async () => {
 		const data = {
 			firstName: firstName,
