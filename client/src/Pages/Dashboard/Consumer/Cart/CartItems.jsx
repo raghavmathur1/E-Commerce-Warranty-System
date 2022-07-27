@@ -1,18 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./cart.module.css";
 import { UilTrashAlt } from "@iconscout/react-unicons";
 import { updateCart } from "../../../../Actions/Cart";
 import { getProducts } from "../../../../Actions/GetProducts";
 import { toast } from "wc-toast";
+import { userObjectContext } from "../../../../Context";
 function CartItems(props) {
 	const [product, setProduct] = useState(null);
+	const price = useContext(userObjectContext)[6];
+	const setPrice = useContext(userObjectContext)[7];
 	useEffect(() => {
 		getProducts(props.id).then((res) => {
 			console.log(res);
 			setProduct(res.data);
 		});
 	}, []);
-
+	useEffect(() => {
+		if (product !== null) {
+			setPrice(
+				parseInt(price) +
+					parseInt(
+						product.price -
+							(parseInt(product.price) *
+								parseInt(product.discount)) /
+								100
+					)
+			);
+		}
+	}, [product]);
+	// props.setPrice(props.price + product.price);
 	const removeFromCart = () => {
 		let id = props.id;
 		let filteredCart = props.cart.filter((item) => {
@@ -30,7 +46,7 @@ function CartItems(props) {
 				style={{
 					backgroundColor: "#f3f4f6",
 					margin: "8px auto",
-					width:"98%"
+					width: "98%",
 				}}
 			></div>
 		);

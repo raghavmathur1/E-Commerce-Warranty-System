@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "../../../../Components/Card";
 import Content from "../../../../Components/Content";
 import classes from "./cart.module.css";
 import CartItems from "./CartItems";
 import { getCart, updateCart } from "../../../../Actions/Cart";
+import { userObjectContext } from "../../../../Context";
 function Cart() {
 	const [cart, setCart] = useState([]);
+	const price = useContext(userObjectContext)[6];
 	useEffect(() => {
 		getCart().then((res) => {
 			setCart(res);
@@ -43,17 +45,17 @@ function Cart() {
 						<div className={classes["orderDet"]}>
 							<div className={classes["priceOrder"]}>
 								<span>Price</span>
-								<span>50000</span>
+								<span>{price}</span>
 							</div>
 							<div className={classes["priceOrder"]}>
 								<span>Delivery Charge</span>
-								<span>50000</span>
+								<span>0</span>
 							</div>
 						</div>
 						<div className={classes["down"]}>
 							<div className={classes["downOrder"]}>
 								<span>Total Price: </span>
-								<span>50000</span>
+								<span>{price}</span>
 							</div>
 						</div>
 					</Card>

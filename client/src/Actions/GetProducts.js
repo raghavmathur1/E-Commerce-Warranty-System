@@ -11,7 +11,7 @@ export const getProducts = async (productId) => {
 			url: url,
 		});
 		// const products = JSON.parse(response.data.data);
-		console.log(response.data);
+		// console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.log(error);
