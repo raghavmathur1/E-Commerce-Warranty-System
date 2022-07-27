@@ -68,8 +68,38 @@ exports.addProduct = async (req, res, next) => {
 */
 exports.getAllProducts = async (req, res, next) => {
 	try {
-		console.log("here");
-		const products = await Product.find();
+		const products = await readInMarket(
+			marketContract.methods.getMarketProducts()
+		);
+		//Get all the data from url
+		const data = [];
+		for (var i = 0; i < result.length; i++) {
+			const productData = await readInProductNFT(
+				productNFTContract.methods.getProductDetailsURL(result[i])
+			);
+			await new Promise((resolve, reject) => {
+				https
+					.get(productData.productURL, function (res) {
+						var body = "";
+
+						res.on("data", function (chunk) {
+							body += chunk;
+						});
+
+						res.on("end", function () {
+							var res = JSON.parse(body);
+							data.push(res);
+							resolve("Success");
+						});
+					})
+					.on("error", function (e) {});
+			});
+		}
+		console.log(data);
+		res.status(200).json({
+			success: true,
+			data: data,
+		});
 		res.status(200).json({
 			success: true,
 			data: products,
