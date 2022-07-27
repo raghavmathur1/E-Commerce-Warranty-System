@@ -10,6 +10,7 @@ import Content from "../../../../Components/Content";
 function Buy() {
 	const [cart, setCart] = useState([]);
 	const [item, setItem] = useState(null);
+	const [retailerDetails, setRetailerDetails] = useState(null);
 	const parameters = useParams();
 	const productId = parameters["*"];
 	const navigate = useNavigate();
@@ -20,7 +21,8 @@ function Buy() {
 			setCart(res);
 		});
 		getProducts(productId).then((res) => {
-			setItem(res);
+			setItem(res.data);
+			setRetailerDetails(res.retailerDetail);
 		});
 	}, []);
 
@@ -76,7 +78,8 @@ function Buy() {
 						className={classes["photo"]}
 						style={{
 							backgroundImage: `url(${item.fileURl})`,
-							backgroundSize: "cover",
+							backgroundSize: "contain",
+							backgroundRepeat: "no-repeat",
 						}}
 					></div>
 					<div className={classes["buttons"]}>
@@ -121,13 +124,14 @@ function Buy() {
 					<div className={classes["seller"]}>
 						Seller Name:{" "}
 						<span className={classes["sellerText"]}>
-							Aaditya Pal
+							{retailerDetails.firstName}{" "}
+							{retailerDetails.lastName}
 						</span>
 					</div>
 					<div className={classes["seller"]}>
 						Email:{" "}
 						<span className={classes["sellerText"]}>
-							aadityapal.info@gmail.com
+							{retailerDetails.email}
 						</span>
 					</div>
 				</Card>
