@@ -68,7 +68,7 @@ exports.addProduct = async (req, res, next) => {
 */
 exports.getAllProducts = async (req, res, next) => {
 	try {
-		const products = await readInMarket(
+		const result = await readInMarket(
 			marketContract.methods.getMarketProducts()
 		);
 		//Get all the data from url
@@ -88,7 +88,7 @@ exports.getAllProducts = async (req, res, next) => {
 
 						res.on("end", function () {
 							var res = JSON.parse(body);
-							data.push(res);
+							data.push({ data: res, productID: result[i] });
 							resolve("Success");
 						});
 					})
@@ -96,13 +96,9 @@ exports.getAllProducts = async (req, res, next) => {
 			});
 		}
 		console.log(data);
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			data: data,
-		});
-		res.status(200).json({
-			success: true,
-			data: products,
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "All Product get Error");
@@ -139,7 +135,7 @@ exports.retailerProducts = async (req, res, next) => {
 
 						res.on("end", function () {
 							var res = JSON.parse(body);
-							data.push(res);
+							data.push({ data: res, productID: result[i] });
 							resolve("Success");
 						});
 					})

@@ -6,37 +6,34 @@ import { UilShoppingCartAlt } from "@iconscout/react-unicons";
 import { useNavigate } from "react-router-dom";
 function Product(props) {
 	const navigate = useNavigate();
+	const data = props.data.data;
+	const productID = props.data.productID;
 	const buyPage = () => {
-		navigate("../shop/" + props.data._id);
+		navigate("../shop/" + productID);
 	};
 
 	const manageProduct = () => {
-		navigate("../manage/" + props.data._id);
+		navigate("../manage/" + productID);
 	};
 	return (
 		<div className={classes["product"]}>
 			<div
 				className={classes["productImage"]}
 				style={{
-					backgroundImage: `url(${props.data.fileURl})`,
+					backgroundImage: `url(${data.fileURl})`,
 				}}
 			></div>
-			<div className={classes["productName"]}>
-				{props.data.productName}
-			</div>
+			<div className={classes["productName"]}>{data.productName}</div>
 			<div className={classes["productDescription"]}>
-				{props.data.description}
+				{data.description}
 			</div>
 			{!(props.manage === "true") && (
 				<div className={classes["bottom"]}>
 					<div className={classes["price"]}>
-						₹
-						{(props.data.price * (100 - props.data.discount)) / 100}
-						<span className={classes["strike"]}>
-							₹{props.data.price}
-						</span>
+						₹{(data.price * (100 - data.discount)) / 100}
+						<span className={classes["strike"]}>₹{data.price}</span>
 						<span className={classes["discount"]}>
-							{props.data.discount}% off
+							{data.discount}% off
 						</span>
 					</div>
 				</div>
@@ -50,7 +47,7 @@ function Product(props) {
 
 			{props.manage === "true" && (
 				<div className={classes["bottom-blue"]} onClick={manageProduct}>
-					<div className={classes["price"]}>₹ {props.data.price}</div>
+					<div className={classes["price"]}>₹ {data.price}</div>
 					<div className={classes["align"]}>
 						<UilEdit size={15} />
 						Manage
