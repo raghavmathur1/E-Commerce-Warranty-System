@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../../../../Components/Card";
 import classes from "./buy.module.css";
 import { useParams, useNavigate } from "react-router-dom";
-import { getProducts } from "../../../../Actions/GetProducts";
+import { getProducts } from "../../../../Actions/Products";
 import { toast } from "wc-toast";
 import { getCart, updateCart } from "../../../../Actions/Cart";
 import Loader from "react-js-loader";

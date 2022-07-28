@@ -3,6 +3,7 @@ import Card from "../../../../Components/Card";
 import Content from "../../../../Components/Content";
 import classes from "./cart.module.css";
 import CartItems from "./CartItems";
+import { buyProducts } from "../../../../Actions/Products";
 import { getCart, updateCart } from "../../../../Actions/Cart";
 import { userObjectContext } from "../../../../Context";
 function Cart() {
@@ -13,7 +14,9 @@ function Cart() {
 			setCart(res);
 		});
 	}, []);
-
+	const callBuyProduct = async () => {
+		await buyProducts();
+	};
 	if (cart === null || cart === undefined) {
 		return <div>Loading...</div>;
 	}
@@ -59,7 +62,12 @@ function Cart() {
 							</div>
 						</div>
 					</Card>
-					<button className={classes["submit"]}>Checkout</button>
+					<button
+						className={classes["submit"]}
+						onClick={callBuyProduct}
+					>
+						Checkout
+					</button>
 				</div>
 			</div>
 		</Content>

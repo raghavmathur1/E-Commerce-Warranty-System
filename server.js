@@ -45,7 +45,6 @@ const userRoutes = require("./Routes/userRoutes");
 const signupRoutes = require("./Routes/Auth/signupRoutes");
 const loginRoutes = require("./Routes/Auth/loginRoutes");
 
-
 //Using all the routes
 app.use(globalRoutes.signup, signupRoutes);
 app.use(globalRoutes.login, loginRoutes);
@@ -53,8 +52,6 @@ app.use(globalRoutes.INITIAL_URL + globalRoutes.consumer, consumerRoutes);
 app.use(globalRoutes.INITIAL_URL + globalRoutes.retailer, retailerRoutes);
 app.use(globalRoutes.user, userRoutes);
 app.use(globalRoutes.product, productRoutes);
-
-
 
 //Listen to port 8000
 app.listen(process.env.PORT || 8000, () => {

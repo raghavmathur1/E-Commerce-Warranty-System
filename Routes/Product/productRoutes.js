@@ -9,6 +9,7 @@ const {
 	updateCartRoute,
 	getCartRoute,
 	details,
+	buyProductRoute,
 } = require("../globalRoutes");
 const passport = require("passport");
 const {
@@ -24,6 +25,7 @@ const {
 	getProductByID,
 	updateCart,
 	getCartInfo,
+	buyProduct,
 } = require("../../Controllers/Product/product");
 
 //Assigning routes
@@ -33,5 +35,6 @@ router.route(retmy + id).get(checkAuthenticatedRetailer, retailerProducts);
 router.route(details + id).get(getProductByID);
 router.route(updateCartRoute).post(updateCart);
 router.route(getCartRoute).get(getCartInfo);
+router.route(buyProductRoute).post(buyProduct);
 
 module.exports = router;

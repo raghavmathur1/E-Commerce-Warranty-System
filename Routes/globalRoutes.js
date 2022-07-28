@@ -31,6 +31,7 @@ const details = "/details";
 const add = "/add";
 const all = "/all";
 const retmy = "/retmy";
+const buyProductRoute = "/buyProducts";
 //Export Statement
 module.exports = {
 	mainUserRoutes,
@@ -52,4 +53,5 @@ module.exports = {
 	updateCartRoute,
 	getCartRoute,
 	details,
+	buyProductRoute,
 };

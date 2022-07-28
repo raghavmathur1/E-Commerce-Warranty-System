@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import classes from "./cart.module.css";
 import { UilTrashAlt } from "@iconscout/react-unicons";
 import { updateCart } from "../../../../Actions/Cart";
-import { getProducts } from "../../../../Actions/GetProducts";
+import { getProducts } from "../../../../Actions/Products";
 import { toast } from "wc-toast";
 import { userObjectContext } from "../../../../Context";
 function CartItems(props) {
@@ -11,7 +11,6 @@ function CartItems(props) {
 	const setPrice = useContext(userObjectContext)[7];
 	useEffect(() => {
 		getProducts(props.id).then((res) => {
-			console.log(res);
 			setProduct(res.data);
 		});
 	}, []);

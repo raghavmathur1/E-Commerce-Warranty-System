@@ -2,6 +2,8 @@ const Product = require("../../models/Product/product");
 const mongoose = require("mongoose");
 const { sendError } = require("../../Error/error");
 const { uploadMetadataToIPFS, uploadFileToIPFS } = require("../../Helper/ipfs");
+const Vonage = require("@vonage/server-sdk");
+const mailer = require("nodemailer");
 const {
 	productNFTContract,
 	writeInProductNFT,
@@ -276,31 +278,77 @@ exports.getCartInfo = async (req, res, next) => {
 	@access: Private
 */
 
-exports.buyProduct = async (req, rex, next) => {
+exports.buyProduct = async (req, res, next) => {
 	try {
 		const { productID, price } = req.body;
 		const consumerEmail = req.user.email;
 		const retailerEmail = await readInProductNFT(
 			productNFTContract.methods.getProductRetailerEmail(productID)
 		);
-		//Issue the warranty of the product first
-		await writeInWarrantyNFT(
-			productWarrantyContract.methods.issueWarranty(
-				productID,
-				consumerEmail,
-				365
-			)
-		);
-		//call the buy function into the product marketplace
-		await writeInMarket(
-			marketContract.methods.buyProduct(
-				productID,
-				retailerEmail,
-				consumerEmail,
-				price,
-				price
-			)
-		);
+		
+		const vonage = new Vonage({
+			apiKey: process.env.VONAGE_API_KEY,
+			apiSecret: process.env.VONAGE_SECRET,
+		});
+		const from = "Vonage APIs";
+		const to = "917903966014";
+		const text =
+			"PLEASE DO NOT SHARE THIS!.Your warrany id is 90880. The digital version of it is send to you in mail.  You can check it in your dashboard by searching with the warranty Id";
+		let smtpProtocol = mailer.createTransport({
+			host: "smtp.sendgrid.net",
+			port: 587,
+			auth: {
+				user: "apikey",
+				pass: "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",
+			},
+		});
+
+		var mailoption = {
+			from: "raghav3501@gmail.com",
+			to: "aadityapal.info@gmail.com",
+			subject: "Test Mail",
+			html: "Good Morning!",
+		};
+		smtpProtocol.sendMail(mailoption, function (err, response) {
+			if (err) {
+				throw err;
+				console.log(err);
+			}
+			console.log("Message Sent" + response.message);
+			smtpProtocol.close();
+		});
+		// vonage.message.sendSms(from, to, text, (err, responseData) => {
+		// 	if (err) {
+		// 		console.log(err);
+		// 	} else {
+		// 		if (responseData.messages[0]["status"] === "0") {
+		// 			console.log("Message sent successfully.");
+		// 		} else {
+		// 			console.log(
+		// 				`Message failed with error: ${responseData.messages[0]["error-text"]}`
+		// 			);
+		// 		}
+		// 	}
+		// });
+
+		// //Issue the warranty of the product first
+		// await writeInWarrantyNFT(
+		// 	productWarrantyContract.methods.issueWarranty(
+		// 		productID,
+		// 		consumerEmail,
+		// 		365
+		// 	)
+		// );
+		// //call the buy function into the product marketplace
+		// await writeInMarket(
+		// 	marketContract.methods.buyProduct(
+		// 		productID,
+		// 		retailerEmail,
+		// 		consumerEmail,
+		// 		price,
+		// 		price
+		// 	)
+		// );
 		return res.status(200).json({
 			success: true,
 			message: "Product buying successfull!",
