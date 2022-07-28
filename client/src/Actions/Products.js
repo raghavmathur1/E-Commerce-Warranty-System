@@ -18,7 +18,7 @@ export const getProducts = async (productId) => {
 		return {};
 	}
 };
-export const buyProducts = async (productId,price) => {
+export const buyProducts = async (productDetails) => {
 	try {
 		const url =
 			process.env.REACT_APP_API_ENDPOINT + "/api/products/buyProducts";
@@ -26,10 +26,7 @@ export const buyProducts = async (productId,price) => {
 			method: "POST",
 			withCredentials: true,
 			url: url,
-			data: {
-				productId,
-				price,
-			},
+			data: { data: productDetails },
 		});
 		// const products = JSON.parse(response.data.data);
 		// console.log(response.data);
@@ -37,5 +34,42 @@ export const buyProducts = async (productId,price) => {
 	} catch (error) {
 		console.log(error);
 		return false;
+	}
+};
+
+export const getUserProductDetails = async () => {
+	try {
+		const url =
+			process.env.REACT_APP_API_ENDPOINT +
+			"/api/products/getUserProducts";
+		const response = await axios({
+			method: "GET",
+			withCredentials: true,
+			url: url,
+		});
+		// const products = JSON.parse(response.data.data);
+		// console.log(response.data);
+		return response;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+};
+
+export const getAllWarranty = async () => {
+	try {
+		const url =
+			process.env.REACT_APP_API_ENDPOINT + "/api/products/getAllWarranty";
+		const response = await axios({
+			method: "GET",
+			withCredentials: true,
+			url: url,
+		});
+		// const products = JSON.parse(response.data.data);
+		// console.log(response.data);
+		return response;
+	} catch (error) {
+		console.log(error);
+		return null;
 	}
 };

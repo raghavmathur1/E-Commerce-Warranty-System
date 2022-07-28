@@ -24,6 +24,7 @@ const https = require("https");
 const cartSchema = require("../../Models/Product/cart");
 const retailerSchema = require("../../Models/Retailer/retailer");
 const { response } = require("express");
+const product = require("../../models/Product/product");
 /*
 	@desc: Add Product 
 	@access: Private
@@ -280,80 +281,200 @@ exports.getCartInfo = async (req, res, next) => {
 
 exports.buyProduct = async (req, res, next) => {
 	try {
-		const { productID, price } = req.body;
-		const consumerEmail = req.user.email;
-		const retailerEmail = await readInProductNFT(
-			productNFTContract.methods.getProductRetailerEmail(productID)
-		);
-		
-		const vonage = new Vonage({
-			apiKey: process.env.VONAGE_API_KEY,
-			apiSecret: process.env.VONAGE_SECRET,
-		});
-		const from = "Vonage APIs";
-		const to = "917903966014";
-		const text =
-			"PLEASE DO NOT SHARE THIS!.Your warrany id is 90880. The digital version of it is send to you in mail.  You can check it in your dashboard by searching with the warranty Id";
-		let smtpProtocol = mailer.createTransport({
-			host: "smtp.sendgrid.net",
-			port: 587,
-			auth: {
-				user: "apikey",
-				pass: "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",
-			},
-		});
+		const productDetails = req.body.data;
+		for (let i = 0; i < productDetails.length; i++) {
+			const { productId, retailerEmail, price } = productDetails[i];
+			const consumerEmail = req.user.email;
+			console.log(productId, retailerEmail, price, consumerEmail);
+			//Issue the warranty of the product first
+			await writeInWarrantyNFT(
+				productWarrantyContract.methods.issueWarranty(
+					productId,
+					consumerEmail,
+					365
+				)
+			);
+			//Get the warranty ID
+			const warrantyID = await readInWarrantyNFT(
+				productWarrantyContract.methods.getWarrantyAgainstProductID(
+					productId
+				)
+			).warrantyID;
+			//call the buy function into the product marketplace
+			await writeInMarket(
+				marketContract.methods.buyProduct(
+					productId,
+					retailerEmail,
+					consumerEmail,
+					price,
+					price
+				)
+			);
+			const vonage = new Vonage({
+				apiKey: process.env.VONAGE_API_KEY,
+				apiSecret: process.env.VONAGE_SECRET,
+			});
+			const from = "Vonage APIs";
+			const to = "917903966014";
+			const text = `PLEASE DO NOT SHARE THIS!.Your warrany id is ${warrantyID}. The digital version of it is send to you in mail.  You can check it in your dashboard by searching with the warranty Id`;
+			let smtpProtocol = mailer.createTransport({
+				host: "smtp.sendgrid.net",
+				port: 587,
+				auth: {
+					user: "apikey",
+					pass: "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",
+				},
+			});
 
-		var mailoption = {
-			from: "raghav3501@gmail.com",
-			to: "aadityapal.info@gmail.com",
-			subject: "Test Mail",
-			html: "Good Morning!",
-		};
-		smtpProtocol.sendMail(mailoption, function (err, response) {
-			if (err) {
-				throw err;
-				console.log(err);
-			}
-			console.log("Message Sent" + response.message);
-			smtpProtocol.close();
-		});
-		// vonage.message.sendSms(from, to, text, (err, responseData) => {
-		// 	if (err) {
-		// 		console.log(err);
-		// 	} else {
-		// 		if (responseData.messages[0]["status"] === "0") {
-		// 			console.log("Message sent successfully.");
-		// 		} else {
-		// 			console.log(
-		// 				`Message failed with error: ${responseData.messages[0]["error-text"]}`
-		// 			);
-		// 		}
-		// 	}
-		// });
+			var mailoption = {
+				from: "raghav3501@gmail.com",
+				to: "aadityapal.info@gmail.com",
+				subject: "Test Mail",
+				html: `div>Your warrany id is ${warrantyID}</div`,
+			};
+			smtpProtocol.sendMail(mailoption, function (err, response) {
+				if (err) {
+					throw err;
+					console.log(err);
+				}
+				console.log("Message Sent" + response.message);
+				smtpProtocol.close();
+			});
+			vonage.message.sendSms(from, to, text, (err, responseData) => {
+				if (err) {
+					console.log(err);
+				} else {
+					if (responseData.messages[0]["status"] === "0") {
+						console.log("Message sent successfully.");
+					} else {
+						console.log(
+							`Message failed with error: ${responseData.messages[0]["error-text"]}`
+						);
+					}
+				}
+			});
+		}
 
-		// //Issue the warranty of the product first
-		// await writeInWarrantyNFT(
-		// 	productWarrantyContract.methods.issueWarranty(
-		// 		productID,
-		// 		consumerEmail,
-		// 		365
-		// 	)
-		// );
-		// //call the buy function into the product marketplace
-		// await writeInMarket(
-		// 	marketContract.methods.buyProduct(
-		// 		productID,
-		// 		retailerEmail,
-		// 		consumerEmail,
-		// 		price,
-		// 		price
-		// 	)
-		// );
 		return res.status(200).json({
 			success: true,
 			message: "Product buying successfull!",
 		});
 	} catch (err) {
 		sendError(res, next, err, "Error", "Error buying a product!");
+	}
+};
+/*
+	@desc: Get all products of a user
+	@access: Private
+*/
+exports.getAllUserProducts = async (req, res, next) => {
+	try {
+		const consumerEmail = req.user.email;
+		const consumerProducts = await readInMarket(
+			marketContract.methods.getCustomerProduct(consumerEmail)
+		);
+		const data = [];
+		for (let i = 0; i < consumerProducts.length; i++) {
+			const productData = await readInProductNFT(
+				productNFTContract.methods.getProductDetailsURL(
+					consumerProducts[i]
+				)
+			);
+
+			await new Promise((resolve, reject) => {
+				https
+					.get(productData.productURL, function (res) {
+						var body = "";
+
+						res.on("data", function (chunk) {
+							body += chunk;
+						});
+
+						res.on("end", async () => {
+							var res = JSON.parse(body);
+							const retailer = await retailerSchema.findById({
+								_id: mongoose.Types.ObjectId(res.retailer),
+							});
+							data.push({
+								data: res,
+								productID: consumerProducts[i],
+								retailer: retailer,
+							});
+							resolve("Success");
+						});
+					})
+					.on("error", function (e) {});
+			});
+		}
+		console.log(data);
+		return res.status(200).json({
+			success: true,
+			data: data,
+		});
+	} catch (error) {
+		sendError(res, next, err, "Error", "Error in fetching user product!");
+	}
+};
+
+/* 
+	@desc: Get warranty of a product
+	@access: Private
+*/
+exports.getAllWarranty = async (req, res, next) => {
+	try {
+		const consumerEmail = req.user.email;
+		const consumerProducts = await readInMarket(
+			marketContract.methods.getCustomerProduct(consumerEmail)
+		);
+		const data = [];
+		for (let i = 0; i < consumerProducts.length; i++) {
+			const productData = await readInProductNFT(
+				productNFTContract.methods.getProductDetailsURL(
+					consumerProducts[i]
+				)
+			);
+			const warrantyDetails = await readInWarrantyNFT(
+				productWarrantyContract.methods.getWarrantyAgainstProductID(
+					consumerProducts[i]
+				)
+			);
+			await new Promise((resolve, reject) => {
+				https
+					.get(productData.productURL, function (res) {
+						var body = "";
+
+						res.on("data", function (chunk) {
+							body += chunk;
+						});
+
+						res.on("end", async () => {
+							var res = JSON.parse(body);
+							const retailer = await retailerSchema.findById({
+								_id: mongoose.Types.ObjectId(res.retailer),
+							});
+							data.push({
+								data: res,
+								productID: consumerProducts[i],
+								retailer: retailer,
+								warranty: warrantyDetails,
+							});
+							resolve("Success");
+						});
+					})
+					.on("error", function (e) {});
+			});
+		}
+		return res.status(200).json({
+			success: true,
+			data: data,
+		});
+	} catch (error) {
+		sendError(
+			res,
+			next,
+			err,
+			"Error",
+			"Error in fetching productWarranty!"
+		);
 	}
 };

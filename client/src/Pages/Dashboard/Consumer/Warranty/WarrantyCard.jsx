@@ -6,6 +6,11 @@ import { UilClock } from "@iconscout/react-unicons";
 import { UilHourglass } from "@iconscout/react-unicons";
 
 function WarrantyCard(props) {
+	const product = props.item.data;
+	const productID = props.item.productID;
+	const retailer = props.item.retailer;
+	const warranty = props.item.warranty;
+
 	return (
 		<Card width="310px" height="380px" id={classes["warCard"]}>
 			<div className={classes["cardBack"]} style={props.style}>
@@ -14,7 +19,7 @@ function WarrantyCard(props) {
 						Warranty Card <UilShield size={20} />
 					</div>
 					<div className={classes["warrantyText"]}>
-						Macbook Pro 14 Inch
+						{product.productName}
 					</div>
 				</div>
 				<div className={classes["warrantyDetails"]}>
@@ -27,7 +32,7 @@ function WarrantyCard(props) {
 					<div
 						className={classes[("warrantyHeadingShield", "second")]}
 					>
-						0000 0000 0000 0001
+						{warranty[0]}
 					</div>
 				</div>
 			</div>
@@ -35,15 +40,17 @@ function WarrantyCard(props) {
 				<div className={classes["productHeading"]}>Description</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Product Name: </span>
-					Macbook Pro 14 Inch
+					{product.productName}
 				</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Product ID:</span> 1234
-					5678
+					{productID}
 				</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Retailer: </span>
-					Aaditya Pal
+					{retailer.firstName}
+					{}
+					{retailer.lastName}
 				</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Date Issued:</span> 14

@@ -32,6 +32,8 @@ const add = "/add";
 const all = "/all";
 const retmy = "/retmy";
 const buyProductRoute = "/buyProducts";
+const getUserProducts = "/getUserProducts";
+const getAllWarrantyRoute = "/getAllWarranty";
 //Export Statement
 module.exports = {
 	mainUserRoutes,
@@ -54,4 +56,6 @@ module.exports = {
 	getCartRoute,
 	details,
 	buyProductRoute,
+	getUserProducts,
+	getAllWarrantyRoute,
 };
