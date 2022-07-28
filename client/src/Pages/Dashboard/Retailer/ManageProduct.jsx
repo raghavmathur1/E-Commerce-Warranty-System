@@ -69,7 +69,7 @@ function ManageProducts() {
 		}
 		if (file === undefined) formData.append("fileURl", data.fileURl);
 		else formData.append("file", file);
-		
+
 		toast.promise(
 			new Promise(async (resolve, reject) => {
 				const response = await axios({
@@ -142,7 +142,7 @@ function ManageProducts() {
 					type="number"
 					placeholder="Enter Price"
 					update={setPrice}
-					width="30%"
+					width="48%"
 					required={true}
 					value={price}
 				>
@@ -154,12 +154,12 @@ function ManageProducts() {
 					placeholder="Enter Discount Percentage"
 					update={setDiscount}
 					required={true}
-					width="30%"
+					width="48%"
 					value={discount}
 				>
 					<UilPercentage />
 				</Input>
-				<Input
+				{/* <Input
 					heading="Warranty Expiry Time (in Days)"
 					type="number"
 					placeholder="Enter Days"
@@ -169,7 +169,7 @@ function ManageProducts() {
 					value={expiry}
 				>
 					<UilCalendarAlt />
-				</Input>
+				</Input> */}
 
 				<button
 					className="button"

@@ -122,7 +122,7 @@ function Products() {
 					type="number"
 					placeholder="Enter Price"
 					update={setPrice}
-					width="30%"
+					width="48%"
 					required={true}
 				>
 					<UilInvoice />
@@ -133,11 +133,11 @@ function Products() {
 					placeholder="Enter Discount Percentage"
 					update={setDiscount}
 					required={true}
-					width="30%"
+					width="48%"
 				>
 					<UilPercentage />
 				</Input>
-				<Input
+				{/* <Input
 					heading="Warranty Expiry Time (in Days)"
 					type="number"
 					placeholder="Enter Days"
@@ -146,7 +146,7 @@ function Products() {
 					required={true}
 				>
 					<UilCalendarAlt />
-				</Input>
+				</Input> */}
 
 				<button
 					className="button"
