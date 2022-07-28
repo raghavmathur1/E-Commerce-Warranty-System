@@ -20,8 +20,7 @@ function Cart() {
 		setRetailerDetails([]);
 	}, []);
 	const callBuyProduct = async () => {
-		console.log(retailerDetails);
-		// await buyProducts();
+		await buyProducts(retailerDetails);
 	};
 	if (cart === null || cart === undefined) {
 		return <div>Loading...</div>;

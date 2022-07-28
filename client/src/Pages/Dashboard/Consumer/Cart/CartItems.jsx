@@ -11,19 +11,15 @@ function CartItems(props) {
 	const setPrice = useContext(userObjectContext)[7];
 	const cartDetails = useContext(userObjectContext)[8];
 	const setCartDetails = useContext(userObjectContext)[9];
+	const [retailer, setRetailer] = useState(null);
 	useEffect(() => {
 		getProducts(props.id).then((res) => {
-			const newArray = cartDetails;
-			newArray.push({
-				retailerEmail: res.retailerDetail.email,
-				productId: props.id,
-			});
-			setCartDetails(newArray);
 			setProduct(res.data);
+			setRetailer(res.retailerDetail);
 		});
 	}, []);
 	useEffect(() => {
-		if (product !== null) {
+		if (product !== null && retailer !== null) {
 			setPrice(
 				parseInt(price) +
 					parseInt(
@@ -33,8 +29,15 @@ function CartItems(props) {
 								100
 					)
 			);
+			const newArray = cartDetails;
+			newArray.push({
+				retailerEmail: retailer.email,
+				productId: props.id,
+				price: product.price - (product.price * product.discount) / 100,
+			});
+			setCartDetails(newArray);
 		}
-	}, [product]);
+	}, [product, retailer]);
 	// props.setPrice(props.price + product.price);
 	const removeFromCart = () => {
 		let id = props.id;
