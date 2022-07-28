@@ -9,9 +9,7 @@ export const getCart = async () => {
 			withCredentials: true,
 			url: url,
 		});
-		console.log(response);
 		const cart = JSON.parse(response.data.data);
-		console.log(cart);
 		return cart;
 	} catch (error) {
 		console.log(error);

@@ -9,6 +9,7 @@ const Context = (props) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(null);
 	const [isConsumer, setIsConsumer] = useState(null);
 	const [price, setPrice] = useState(0);
+	const [cartDetails, setCartDetails] = useState([]);
 	const updateContext = () => {
 		axios
 			.get(api_endpoint + "/api/user/data", {
@@ -28,10 +29,6 @@ const Context = (props) => {
 	}, []);
 
 	useEffect(() => {
-		console.log(price);
-	}, [price]);
-
-	useEffect(() => {
 		if (userObject.type === "consumer") {
 			setIsConsumer(true);
 		} else if (userObject.type === "retailer") {
@@ -49,6 +46,8 @@ const Context = (props) => {
 				isConsumer,
 				price,
 				setPrice,
+				cartDetails,
+				setCartDetails,
 			]}
 		>
 			{props.children}

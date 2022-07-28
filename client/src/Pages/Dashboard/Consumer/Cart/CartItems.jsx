@@ -9,8 +9,16 @@ function CartItems(props) {
 	const [product, setProduct] = useState(null);
 	const price = useContext(userObjectContext)[6];
 	const setPrice = useContext(userObjectContext)[7];
+	const cartDetails = useContext(userObjectContext)[8];
+	const setCartDetails = useContext(userObjectContext)[9];
 	useEffect(() => {
 		getProducts(props.id).then((res) => {
+			const newArray = cartDetails;
+			newArray.push({
+				retailerEmail: res.retailerDetail.email,
+				productId: props.id,
+			});
+			setCartDetails(newArray);
 			setProduct(res.data);
 		});
 	}, []);
@@ -37,6 +45,18 @@ function CartItems(props) {
 		props.setCart(filteredCart);
 		updateCart(JSON.stringify(filteredCart));
 		toast("Removed From Cart");
+		setPrice(
+			parseInt(price) -
+				parseInt(
+					product.price -
+						(parseInt(product.price) * parseInt(product.discount)) /
+							100
+				)
+		);
+		const newArray = cartDetails.filter((item) => {
+			return item.productId !== id;
+		});
+		setCartDetails(newArray);
 	};
 	if (product === null || product === undefined) {
 		return (

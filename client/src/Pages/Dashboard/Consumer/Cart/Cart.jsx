@@ -9,13 +9,19 @@ import { userObjectContext } from "../../../../Context";
 function Cart() {
 	const [cart, setCart] = useState([]);
 	const price = useContext(userObjectContext)[6];
+	const setPrice = useContext(userObjectContext)[7];
+	const retailerDetails = useContext(userObjectContext)[8];
+	const setRetailerDetails = useContext(userObjectContext)[9];
 	useEffect(() => {
 		getCart().then((res) => {
 			setCart(res);
 		});
+		setPrice(0);
+		setRetailerDetails([]);
 	}, []);
 	const callBuyProduct = async () => {
-		await buyProducts();
+		console.log(retailerDetails);
+		// await buyProducts();
 	};
 	if (cart === null || cart === undefined) {
 		return <div>Loading...</div>;
