@@ -11,6 +11,7 @@ import { UilPlusCircle } from "@iconscout/react-unicons";
 import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 import { UilShoppingBag } from "@iconscout/react-unicons";
 import { UilShoppingCartAlt } from "@iconscout/react-unicons";
+import { UilExchange } from "@iconscout/react-unicons";
 function Sidebarlink(props) {
 	let a = useParams();
 	const link = a["*"];
@@ -25,6 +26,8 @@ function Sidebarlink(props) {
 	let icon;
 	if (props.link === "products")
 		icon = <UilStore color={color} className={classes["blueicon"]} />;
+	if (props.link === "transfer")
+		icon = <UilExchange color={color} className={classes["blueicon"]} />;
 	if (props.link === "profile")
 		icon = <UilUserCircle color={color} className={classes["blueicon"]} />;
 	if (props.link === "repair")

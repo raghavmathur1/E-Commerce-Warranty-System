@@ -25,6 +25,7 @@ const Input = (props) => {
 					value={props.value}
 					list={props.list}
 					accept={props.accept}
+					style={{ color: props.color }}
 				/>
 			</div>
 		</div>

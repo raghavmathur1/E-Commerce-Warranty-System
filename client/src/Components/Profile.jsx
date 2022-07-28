@@ -102,6 +102,7 @@ function Profile() {
 					type="text"
 					placeholder="Enter Email"
 					value={email}
+					color="rgb(171 171 171)"
 					width="48%"
 				>
 					<UilEnvelope />

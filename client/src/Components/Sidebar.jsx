@@ -34,6 +34,7 @@ function Sidebar() {
 						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="View Warranty" link="warranty" />
 						<Sidebarlink text="Request Repair" link="repair" />
+						<Sidebarlink text="Transfer" link="transfer" />
 						<Sidebarlink text="Cart" link="cart" />
 					</div>
 				)}

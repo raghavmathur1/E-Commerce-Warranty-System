@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Content from "../../../Components/Content";
 import Input from "../../../Components/Input";
 import { UilPostcard } from "@iconscout/react-unicons";
@@ -8,43 +9,94 @@ import { UilImageUpload } from "@iconscout/react-unicons";
 import { UilInvoice } from "@iconscout/react-unicons";
 import { UilPackage } from "@iconscout/react-unicons";
 import { UilFileInfoAlt } from "@iconscout/react-unicons";
+import { UilCalendarAlt } from "@iconscout/react-unicons";
+
+import { toast } from "wc-toast";
 import axios from "axios";
+import { getProducts } from "../../../Actions/Products";
 import { userObjectContext } from "../../../Context";
+import Load from "../../../Components/Load";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function ManageProducts() {
+	const parameters = useParams();
+	const productId = parameters["*"];
+
 	const userObject = useContext(userObjectContext)[0];
 	const [productName, setProductName] = useState("");
-	const [serialNo, setSerialNo] = useState("");
+	const [expiry, setExpiryTime] = useState("");
 	const [description, setDescription] = useState("");
-	const [price, setPrice] = useState("");
-	const [discount, setDiscount] = useState("");
-	const [warranty, setWarranty] = useState("");
-	const [file, setFile] = useState("");
-	const [fileName, setFileName] = useState("");
+	const [price, setPrice] = useState();
+	const [discount, setDiscount] = useState();
+	const [file, setFile] = useState();
+	const [data, setData] = useState(null);
 	const saveFile = (e) => {
 		setFile(e.target.files[0]);
-		setFileName(e.target.files[0].name);
 	};
-	const addProduct = async () => {
-		const link = api_endpoint + "/api/products/add";
-		const productDetails = {
-			productName: productName,
-			serialNo: serialNo,
-			description: description,
-			price: price,
-			discount: discount,
-			warranty: warranty,
-			file: file,
-			fileName: fileName,
-			retailer: userObject._id,
-		};
-		const response = await axios({
-			method: "POST",
-			data: productDetails,
-			withCredentials: true,
-			url: link,
+
+	useEffect(() => {
+		getProducts(productId).then((res) => {
+			setProductName(res.data.productName);
+			setDescription(res.data.description);
+			setPrice(res.data.price);
+			setDiscount(res.data.discount);
+			setExpiryTime(res.data.expiryTime);
+			setData(res.data);
 		});
+	}, []);
+
+	const updateProduct = async () => {
+		const link = api_endpoint + `/api/products/update/${productId}`;
+		const formData = new FormData();
+		formData.append("productName", productName);
+		formData.append("description", description);
+		formData.append("price", price);
+		formData.append("expiryTime", expiry);
+		formData.append("discount", discount);
+		formData.append("retailer", userObject._id);
+		if (!(productName && description && price && discount && expiry)) {
+			toast.error("Please fill all the fields");
+			return;
+		}
+
+		if (discount > 100 || discount < 0) {
+			toast.error("Discount should be between 0 and 100");
+			return;
+		}
+
+		if (expiry < 1) {
+			toast.error("Expiry time should be greater than 1");
+			return;
+		}
+		if (file === undefined) formData.append("URl", data.fileURl);
+		else formData.append("file", file);
+
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ", " + pair[1]);
+		}
+
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				const response = await axios({
+					method: "PUT",
+					data: formData,
+					withCredentials: true,
+					url: link,
+				});
+				if (response.data.success === true)
+					resolve("Successfully Updated Product");
+				else reject("Something went wrong");
+			}),
+			{
+				loading: "Updating Product",
+				success: "Product Updated Successfully!",
+				error: "Could not Update Product",
+			}
+		);
 	};
+
+	if (productName === "") {
+		return <Load heading="Manage Product" />;
+	}
 	return (
 		<Content heading={"Manage Product"}>
 			<div
@@ -60,72 +112,80 @@ function ManageProducts() {
 					type="text"
 					placeholder="Enter Product Name"
 					update={setProductName}
+					value={productName}
 					width="48%"
+					required={true}
 				>
 					<UilPackage />
 				</Input>
-
 				<Input
-					heading="Photo"
+					heading="Upload Product Image(Otherwise it will be same)"
 					type="file"
 					placeholder="Upload"
-					update={setFile}
+					onChange={(e) => saveFile(e)}
 					width="48%"
+					accept="image/*"
+					required={true}
 				>
 					<UilImageUpload />
 				</Input>
+
 				<Input
 					heading="Description"
 					type="text"
 					placeholder="Enter Description"
 					update={setDescription}
+					value={description}
 					width="100%"
+					required={true}
 				>
 					<UilFileInfoAlt />
 				</Input>
 				<Input
 					heading="Price"
-					type="text"
+					type="number"
 					placeholder="Enter Price"
 					update={setPrice}
-					width="48%"
+					width="30%"
+					required={true}
+					value={price}
 				>
 					<UilInvoice />
 				</Input>
 				<Input
 					heading="Discount"
-					type="text"
+					type="number"
 					placeholder="Enter Discount Percentage"
 					update={setDiscount}
-					width="48%"
+					required={true}
+					width="30%"
+					value={discount}
 				>
 					<UilPercentage />
 				</Input>
-				<div style={{ display: "flex" }}>
-					<button
-						className="button"
-						style={{
-							margin: "20px 0",
-							fontSize: "18px",
-							padding: "10px 35px",
-						}}
-						onClick={addProduct}
-					>
-						Update
-					</button>
+				<Input
+					heading="Warranty Expiry Time (in Days)"
+					type="number"
+					placeholder="Enter Days"
+					update={setExpiryTime}
+					width="30%"
+					required={true}
+					value={expiry}
+				>
+					<UilCalendarAlt />
+				</Input>
 
-					<button
-						className="button red"
-						style={{
-							margin: "20px 20px",
-							fontSize: "18px",
-							padding: "10px 35px",
-						}}
-						onClick={addProduct}
-					>
-						Remove
-					</button>
-				</div>
+				<button
+					className="button"
+					style={{
+						margin: "20px 0",
+						fontSize: "18px",
+						padding: "10px 35px",
+					}}
+					onClick={updateProduct}
+				>
+					Update Product
+				</button>
 			</div>
 		</Content>
 	);

@@ -8,6 +8,7 @@ import { getCart, updateCart } from "../../../../Actions/Cart";
 import { userObjectContext } from "../../../../Context";
 import Load from "../../../../Components/Load";
 import { toast } from "wc-toast";
+import Empty from "../../../../Components/Empty";
 function Cart() {
 	const [cart, setCart] = useState([]);
 	const price = useContext(userObjectContext)[6];
@@ -41,6 +42,10 @@ function Cart() {
 	};
 	if (cart === null || cart === undefined) {
 		return <Load heading="Cart" />;
+	}
+
+	if (cart.length === 0) {
+		return <Empty heading="Cart Items" message={"Cart is Empty"} />;
 	}
 	return (
 		<Content id={classes["offCard"]}>

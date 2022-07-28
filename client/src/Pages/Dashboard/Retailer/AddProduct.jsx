@@ -10,17 +10,18 @@ import { UilPackage } from "@iconscout/react-unicons";
 import { UilFileInfoAlt } from "@iconscout/react-unicons";
 import axios from "axios";
 import { userObjectContext } from "../../../Context";
+import { toast } from "wc-toast";
+import { UilCalendarAlt } from "@iconscout/react-unicons";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function Products() {
 	const userObject = useContext(userObjectContext)[0];
 	const [productName, setProductName] = useState("");
-	const [serialNo, setSerialNo] = useState("");
+	const [expiry, setExpiryTime] = useState("");
 	const [description, setDescription] = useState("");
-	const [price, setPrice] = useState("");
-	const [discount, setDiscount] = useState("");
-	const [warranty, setWarranty] = useState("");
+	const [price, setPrice] = useState();
+	const [discount, setDiscount] = useState();
+	const [warranty, setWarranty] = useState();
 	const [file, setFile] = useState();
-	const [fileName, setFileName] = useState("");
 	const saveFile = (e) => {
 		setFile(e.target.files[0]);
 	};
@@ -28,29 +29,51 @@ function Products() {
 		const link = api_endpoint + "/api/products/add";
 		const formData = new FormData();
 		formData.append("productName", productName);
-		formData.append("serialNo", serialNo);
 		formData.append("description", description);
 		formData.append("price", price);
+		formData.append("expiryTime", expiry);
 		formData.append("discount", discount);
-		formData.append("warranty", warranty);
 		formData.append("retailer", userObject._id);
 		formData.append("file", file);
-		const productDetails = {
-			productName: productName,
-			serialNo: serialNo,
-			description: description,
-			price: price,
-			discount: discount,
-			warranty: warranty,
-			file: file,
-			retailer: userObject._id,
-		};
-		const response = await axios({
-			method: "POST",
-			data: formData,
-			withCredentials: true,
-			url: link,
-		});
+		if (
+			!(productName && description && price && discount && expiry && file)
+		) {
+			toast.error("Please fill all the fields");
+			return;
+		}
+
+		if (discount > 100 || discount < 0) {
+			toast.error("Discount should be between 0 and 100");
+			return;
+		}
+
+		if (file === undefined) {
+			toast.error("Please upload a file");
+			return;
+		}
+
+		if (expiry < 1) {
+			toast.error("Expiry time should be greater than 1");
+			return;
+		}
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				const response = await axios({
+					method: "POST",
+					data: formData,
+					withCredentials: true,
+					url: link,
+				});
+				if (response.data.success === true) {
+					resolve("Successfully Added Product");
+				} else reject("Something went wrong");
+			}),
+			{
+				loading: "Adding Product",
+				success: "Product Added Successfully",
+				error: "Could not Add Product",
+			}
+		);
 	};
 	return (
 		<Content heading={"Add Products"}>
@@ -68,6 +91,7 @@ function Products() {
 					placeholder="Enter Product Name"
 					update={setProductName}
 					width="48%"
+					required={true}
 				>
 					<UilPackage />
 				</Input>
@@ -78,6 +102,7 @@ function Products() {
 					onChange={(e) => saveFile(e)}
 					width="48%"
 					accept="image/*"
+					required={true}
 				>
 					<UilImageUpload />
 				</Input>
@@ -88,26 +113,39 @@ function Products() {
 					placeholder="Enter Description"
 					update={setDescription}
 					width="100%"
+					required={true}
 				>
 					<UilFileInfoAlt />
 				</Input>
 				<Input
 					heading="Price"
-					type="text"
+					type="number"
 					placeholder="Enter Price"
 					update={setPrice}
-					width="48%"
+					width="30%"
+					required={true}
 				>
 					<UilInvoice />
 				</Input>
 				<Input
 					heading="Discount"
-					type="text"
+					type="number"
 					placeholder="Enter Discount Percentage"
 					update={setDiscount}
-					width="48%"
+					required={true}
+					width="30%"
 				>
 					<UilPercentage />
+				</Input>
+				<Input
+					heading="Warranty Expiry Time (in Days)"
+					type="number"
+					placeholder="Enter Days"
+					update={setExpiryTime}
+					width="30%"
+					required={true}
+				>
+					<UilCalendarAlt />
 				</Input>
 
 				<button

@@ -4,6 +4,7 @@ import classes from "./warranty.module.css";
 import { UilShield } from "@iconscout/react-unicons";
 import { UilClock } from "@iconscout/react-unicons";
 import { UilHourglass } from "@iconscout/react-unicons";
+import QRCode from "react-qr-code";
 const correctFormat = (time) => {
 	let m = [
 		"January",
@@ -53,6 +54,13 @@ const checkExpired = (expiryTime) => {
 	return false;
 };
 
+const createId = (warrantyId) => {
+	let size = 10;
+	size -= warrantyId.toString().length;
+	const result = "0".repeat(size) + warrantyId;
+	return result;
+};
+
 function WarrantyCard(props) {
 	const product = props.item.data;
 	const productID = props.item.productID;
@@ -62,6 +70,8 @@ function WarrantyCard(props) {
 	const expiryTime = getExpiry(warranty[2], warranty[4]);
 	const expiryString = correctFormat(expiryTime);
 	const expired = checkExpired(expiryTime);
+	const warrantyId = createId(warranty[0]);
+	// console.log("00000000" + warranty[0]);
 	return (
 		<Card width="310px" height="380px" id={classes["warCard"]}>
 			<div className={classes["cardBack"]} style={props.style}>
@@ -73,6 +83,9 @@ function WarrantyCard(props) {
 						{product.productName}
 					</div>
 				</div>
+				<div className={classes["qrcode"]}>
+					<QRCode value={warrantyId} size={40} />
+				</div>
 				<div className={classes["warrantyDetails"]}>
 					<div className={classes["warrantySmall"]}>
 						<UilClock size={15} /> Valid Till:
@@ -83,7 +96,7 @@ function WarrantyCard(props) {
 					<div
 						className={classes[("warrantyHeadingShield", "second")]}
 					>
-						{warranty[0]}
+						Id: {warrantyId}
 					</div>
 				</div>
 			</div>
@@ -94,13 +107,13 @@ function WarrantyCard(props) {
 					{product.productName}
 				</div>
 				<div className={classes["productText"]}>
-					<span className={classes["bolder"]}>Product ID:</span> 1234
+					<span className={classes["bolder"]}>Product ID:</span>
 					{productID}
 				</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Retailer: </span>
 					{retailer.firstName}
-					{}
+
 					{retailer.lastName}
 				</div>
 				<div className={classes["productText"]}>
