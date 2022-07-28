@@ -1,9 +1,16 @@
-import React from "react";
+import { React, setState, useState } from "react";
 import Content from "../../../../Components/Content";
 import Input from "../../../../Components/Input";
 import { UilEnvelope } from "@iconscout/react-unicons";
 import { UilCreditCardSearch } from "@iconscout/react-unicons";
+import { transferProduct } from "../../../../Actions/Products";
 function Transfer() {
+	const [toEmail, setToEmail] = useState("");
+	const [productID, setProductID] = useState(0);
+	const onSubmit = () => {
+		console.log(toEmail, productID);
+		transferProduct(toEmail, productID).then((res) => {});
+	};
 	return (
 		<Content heading="Transfer Product">
 			<div
@@ -19,15 +26,17 @@ function Transfer() {
 					type="text"
 					placeholder="Enter Recipient Email"
 					width="60%"
+					update={setToEmail}
 				>
 					<UilEnvelope />
 				</Input>
 
 				<Input
-					heading="Warranty Id"
+					heading="Product Id"
 					type="text"
 					placeholder="Enter Product Id"
 					width="35%"
+					update={setProductID}
 				>
 					<UilCreditCardSearch />
 				</Input>
@@ -38,6 +47,7 @@ function Transfer() {
 						fontSize: "18px",
 						padding: "10px 35px",
 					}}
+					onClick={onSubmit}
 				>
 					Transfer Product
 				</button>

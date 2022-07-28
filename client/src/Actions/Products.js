@@ -73,3 +73,43 @@ export const getAllWarranty = async () => {
 		return null;
 	}
 };
+
+export const verifyWarranty = async (productID) => {
+	try {
+		const url =
+			process.env.REACT_APP_API_ENDPOINT +
+			`/api/products/checkWarranty/${productID}`;
+		const response = await axios({
+			method: "GET",
+			withCredentials: true,
+			url: url,
+		});
+		console.log(response);
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+};
+
+export const transferProduct = async (toEmail, productID) => {
+	try {
+		const url =
+			process.env.REACT_APP_API_ENDPOINT +
+			`/api/products/transferProduct`;
+		const response = await axios({
+			method: "POST",
+			withCredentials: true,
+			url: url,
+			data: {
+				toEmail: toEmail,
+				productID: productID,
+			},
+		});
+		console.log(response);
+		return true;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+};

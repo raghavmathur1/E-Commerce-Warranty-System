@@ -67,13 +67,9 @@ function ManageProducts() {
 			toast.error("Expiry time should be greater than 1");
 			return;
 		}
-		if (file === undefined) formData.append("URl", data.fileURl);
+		if (file === undefined) formData.append("fileURl", data.fileURl);
 		else formData.append("file", file);
-
-		for (var pair of formData.entries()) {
-			console.log(pair[0] + ", " + pair[1]);
-		}
-
+		
 		toast.promise(
 			new Promise(async (resolve, reject) => {
 				const response = await axios({
