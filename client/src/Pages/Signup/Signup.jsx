@@ -33,6 +33,17 @@ function Signup(props) {
 	const [pan, setPAN] = useState("");
 	const submitSignup = async () => {
 		setStyle({ display: "flex" });
+		console.log(
+			password,
+			rePassword,
+			phone,
+			firstName,
+			lastName,
+			email,
+			city,
+			pincode,
+			address
+		);
 		if (
 			!(
 				password &&
@@ -60,6 +71,7 @@ function Signup(props) {
 			city: city,
 			password: password,
 		};
+
 		if (props.user === "retailer") {
 			if (!gst || !pan) {
 				toast.error("Please fill all the fields");

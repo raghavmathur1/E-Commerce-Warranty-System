@@ -1,10 +1,21 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import Content from "../../../../Components/Content";
 import Transfer from "./Transfer";
 import classes from "./transactions.module.css";
 import Card from "../../../../Components/Card";
-import { UilMoneyStack } from "@iconscout/react-unicons";
+import { getBankBalance, getTransactions } from "../../../../Actions/Retailer";
 function Transactions() {
+	const [balance, setBalance] = useState(-1);
+	const [transactions, setTransactions] = useState(null);
+	useEffect(() => {
+		getTransactions().then((res) => {
+			console.log(res);
+		});
+		getBankBalance().then((res) => {
+			console.log(res);
+		});
+	}, []);
+
 	return (
 		<Content id={classes["offCard"]}>
 			<div className={classes["cartContainer"]}>
@@ -14,15 +25,6 @@ function Transactions() {
 							<span>Transaction Summary</span>
 						</div>
 						<div className={classes["allitems"]}>
-							{/* {cart.map((item) => (
-								<CartItems
-									key={item}
-									id={item}
-									setCart={setCart}
-									cart={cart}
-								/>
-							))} */}
-
 							<Transfer />
 						</div>
 					</Card>
