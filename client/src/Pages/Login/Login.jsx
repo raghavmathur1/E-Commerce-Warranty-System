@@ -6,14 +6,31 @@ import { login } from "../../Actions/Login";
 import { UilEnvelope } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
 import Topbar from "../../Components/Topbar";
+import { toast } from "wc-toast";
 
 function Login(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [localAuth, setLocalAuth] = useState(null);
 	const submitLogin = async () => {
-		const isLoginSuccess = await login(email, password, props.user);
-		setLocalAuth(isLoginSuccess);
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				const isLoginSuccess = await login(email, password, props.user);
+				if (isLoginSuccess === false) {
+					reject("Login Failed");
+				} else {
+					setLocalAuth(isLoginSuccess);
+					resolve("Login Successful");
+				}
+			}),
+			{
+				loading: "Authenticating...",
+				success: "Authentication success!",
+				error: "Authentication failed!",
+			}
+		);
+		// const isLoginSuccess = await login(email, password, props.user);
+		// setLocalAuth(isLoginSuccess);
 	};
 
 	useEffect(() => {

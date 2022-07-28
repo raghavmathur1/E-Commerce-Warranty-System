@@ -103,6 +103,21 @@
 	margin-right: 5px;
 }
 
+
+.valid{
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	color: #6EC195;
+	position: absolute;
+	right: 20px;
+}
+.valid svg{
+	color: #6EC195;
+	margin-right: 5px;
+}
+
+
 .warrantyContainer{
 	display: flex;
 	flex-wrap: wrap;

@@ -328,9 +328,9 @@ exports.buyProduct = async (req, res, next) => {
 
 			var mailoption = {
 				from: "raghav3501@gmail.com",
-				to: "aadityapal.info@gmail.com",
+				to: "raghavmath3501@gmail.com",
 				subject: "Test Mail",
-				html: `div>Your warrany id is ${warrantyID}</div`,
+				html: `<div>Your warrany id is ${warrantyID}</div>`,
 			};
 			smtpProtocol.sendMail(mailoption, function (err, response) {
 				if (err) {

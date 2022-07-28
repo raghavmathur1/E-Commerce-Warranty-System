@@ -47,15 +47,21 @@ function Signup(props) {
 			data.gst = gst;
 			data.pan = pan;
 		}
-		const response = await signup(data, props.user, rePassword);
-		setStyle({ display: "none" });
-		console.log(response.status);
-		if (response.success === true) {
-			toast.success("Signup Successful");
-			navigate("/" + props.user + "/login", { replace: true });
-		} else {
-			toast.error("Signup unsuccessful");
-		}
+		let response;
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				response = await signup(data, props.user, rePassword);
+				if (response.success === true) {
+					resolve("Successfully Signed Up");
+					navigate("/" + props.user + "/login", { replace: true });
+				} else reject("Something went wrong");
+			}),
+			{
+				loading: "Signing Up",
+				success: "Signed Up Successfully",
+				error: "Could not Signup",
+			}
+		);
 	};
 	return (
 		<div className={`full ${classes.page}`}>

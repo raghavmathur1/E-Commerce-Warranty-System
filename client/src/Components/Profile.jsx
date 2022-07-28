@@ -11,7 +11,7 @@ import { UilMoneyWithdraw } from "@iconscout/react-unicons";
 import { UilGold } from "@iconscout/react-unicons";
 import { userObjectContext } from "../Context";
 import axios from "axios";
-
+import { toast } from "wc-toast";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function Profile() {
 	const isConsumer = useContext(userObjectContext)[5];
@@ -53,8 +53,9 @@ function Profile() {
 			withCredentials: true,
 		});
 		if (response.data.success) {
+			toast.success("Profile Updated Successfully");
 			updateUser(response.data.data);
-		}
+		} else toast.error("Could Not Update Profile");
 	};
 	return (
 		<Content heading={"Manage Profile"}>

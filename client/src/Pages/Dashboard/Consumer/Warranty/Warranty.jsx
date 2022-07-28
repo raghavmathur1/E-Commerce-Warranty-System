@@ -3,6 +3,8 @@ import Content from "../../../../Components/Content";
 import WarrantyCard from "./WarrantyCard";
 import classes from "./warranty.module.css";
 import { getAllWarranty } from "../../../../Actions/Products";
+import Load from "../../../../Components/Load";
+import Empty from "../../../../Components/Empty";
 let blue = require("../../../../assets/blue.jpg");
 let purple = require("../../../../assets/purple.jpg");
 let red = require("../../../../assets/red.jpg");
@@ -35,7 +37,15 @@ function Warranty() {
 	];
 
 	if (warrantyDetails == null) {
-		return <div>Loading....</div>;
+		return <Load heading="View Warranty" />;
+	}
+	if (warrantyDetails.length === 0) {
+		return (
+			<Empty
+				heading="View Warranty"
+				message="No Warranties for Products"
+			/>
+		);
 	}
 	return (
 		<Content heading="View Warranty">
@@ -43,6 +53,7 @@ function Warranty() {
 				{warrantyDetails.map((item) => {
 					return (
 						<WarrantyCard
+							key={item.productID}
 							style={backgroundArr[parseInt(item.productID) % 3]}
 							item={item}
 						/>

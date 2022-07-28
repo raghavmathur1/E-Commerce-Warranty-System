@@ -21,6 +21,7 @@ export const signup = async (data, user, rePassword) => {
 				},
 				url: url,
 			});
+			console.log(response.data);
 			return response.data;
 		}
 	} catch (error) {

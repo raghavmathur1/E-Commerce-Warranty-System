@@ -3,6 +3,8 @@ import Content from "../../../../Components/Content";
 import Order from "./Order";
 import classes from "./order.module.css";
 import { getUserProductDetails } from "../../../../Actions/Products";
+import Load from "../../../../Components/Load";
+import Empty from "../../../../Components/Empty";
 function MyOrders() {
 	const [products, setProducts] = useState(null);
 	useEffect(() => {
@@ -12,7 +14,10 @@ function MyOrders() {
 	}, []);
 
 	if (products === null) {
-		return <div>Not loaded....</div>;
+		return <Load heading="My Orders" />;
+	}
+	if (products.length === 0) {
+		return <Empty heading="My Orders" message="No Orders Found" />;
 	}
 	return (
 		<Content heading="My Orders">

@@ -6,6 +6,8 @@ import CartItems from "./CartItems";
 import { buyProducts } from "../../../../Actions/Products";
 import { getCart, updateCart } from "../../../../Actions/Cart";
 import { userObjectContext } from "../../../../Context";
+import Load from "../../../../Components/Load";
+import { toast } from "wc-toast";
 function Cart() {
 	const [cart, setCart] = useState([]);
 	const price = useContext(userObjectContext)[6];
@@ -20,10 +22,25 @@ function Cart() {
 		setRetailerDetails([]);
 	}, []);
 	const callBuyProduct = async () => {
-		await buyProducts(retailerDetails);
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				const response = await buyProducts(retailerDetails);
+				if (response === true) {
+					resolve("Successfully Purchased");
+					setCart([]);
+					updateCart(JSON.stringify([]));
+					setPrice(0);
+				} else reject("Something went wrong");
+			}),
+			{
+				loading: "Purchase Pending...",
+				success: "Products Bought",
+				error: "Could not complete Purchase",
+			}
+		);
 	};
 	if (cart === null || cart === undefined) {
-		return <div>Loading...</div>;
+		return <Load heading="Cart" />;
 	}
 	return (
 		<Content id={classes["offCard"]}>
@@ -71,7 +88,7 @@ function Cart() {
 						className={classes["submit"]}
 						onClick={callBuyProduct}
 					>
-						Checkout
+						Overall Price
 					</button>
 				</div>
 			</div>
