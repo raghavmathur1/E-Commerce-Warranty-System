@@ -23,7 +23,6 @@ const {
 const https = require("https");
 const cartSchema = require("../../Models/Product/cart");
 const retailerSchema = require("../../Models/Retailer/retailer");
-const { response } = require("express");
 const product = require("../../models/Product/product");
 /*
 	@desc: Add Product 
@@ -73,7 +72,51 @@ exports.addProduct = async (req, res, next) => {
 		);
 	}
 };
+/*
+	@desc: Update a product 
+	@access: Private
+*/
 
+exports.updateProduct = async (req, res, next) => {
+	try {
+		console.log("reaching");
+		//Fetch the productID
+		const productID = req.params.id;
+		let fileURL, productInfo, productURL;
+
+		//Fetch the productInfo
+		productInfo = req.body;
+		if (req.files != null && req.files.file != null) {
+			fileURL = await uploadFileToIPFS(req.files.file);
+			productInfo["fileURl"] = fileURL;
+		}
+
+		//Add product meta data to ipfs
+		productURL = await uploadMetadataToIPFS(productInfo);
+
+		//Update the product in the blockchain
+		await writeInProductNFT(
+			productNFTContract.methods.updateProductDetails(
+				productID,
+				productURL,
+				req.user.email
+			)
+		);
+
+		return res.status(200).json({
+			success: true,
+			message: "Product details updated successfully!",
+		});
+	} catch (err) {
+		sendError(
+			res,
+			next,
+			err,
+			"Error in updateProduct function",
+			"Error updating product details. Please try again!"
+		);
+	}
+};
 /*
 	@route: 
 	@desc: Get all Products available in the market
@@ -285,7 +328,12 @@ exports.buyProduct = async (req, res, next) => {
 		for (let i = 0; i < productDetails.length; i++) {
 			const { productId, retailerEmail, price } = productDetails[i];
 			const consumerEmail = req.user.email;
-			console.log(productId, retailerEmail, price, consumerEmail);
+			console.log(
+				productId,
+				retailerEmail,
+				parseInt(price),
+				consumerEmail
+			);
 			//Issue the warranty of the product first
 			await writeInWarrantyNFT(
 				productWarrantyContract.methods.issueWarranty(
@@ -295,11 +343,12 @@ exports.buyProduct = async (req, res, next) => {
 				)
 			);
 			//Get the warranty ID
-			const warrantyID = await readInWarrantyNFT(
+			const warranty = await readInWarrantyNFT(
 				productWarrantyContract.methods.getWarrantyAgainstProductID(
 					productId
 				)
-			).warrantyID;
+			);
+			const warrantyID = warranty[0];
 			//call the buy function into the product marketplace
 			await writeInMarket(
 				marketContract.methods.buyProduct(
@@ -469,6 +518,151 @@ exports.getAllWarranty = async (req, res, next) => {
 			data: data,
 		});
 	} catch (error) {
+		sendError(
+			res,
+			next,
+			err,
+			"Error",
+			"Error in fetching productWarranty!"
+		);
+	}
+};
+
+/* 
+	@desc: Get warranty for a particular ID
+	@access: Private
+*/
+exports.getWarrantyById = async (req, res, next) => {
+	try {
+		const productID = req.params.id;
+		const productData = await readInProductNFT(
+			productNFTContract.methods.getProductDetailsURL(productID)
+		);
+
+		const warrantyDetails = await readInWarrantyNFT(
+			productWarrantyContract.methods.getWarrantyAgainstProductID(
+				productID
+			)
+		);
+		console.log(warrantyDetails);
+		let data = null;
+		await new Promise((resolve, reject) => {
+			https
+				.get(productData.productURL, function (res) {
+					var body = "";
+
+					res.on("data", function (chunk) {
+						body += chunk;
+					});
+
+					res.on("end", async () => {
+						var res = JSON.parse(body);
+						const retailer = await retailerSchema.findById({
+							_id: mongoose.Types.ObjectId(res.retailer),
+						});
+
+						(data = {
+							data: res,
+							productID: productID,
+							retailer: retailer,
+							warranty: warrantyDetails,
+						}),
+							resolve("Success");
+					});
+				})
+				.on("error", function (e) {});
+		});
+		return res.status(200).json({
+			success: true,
+			data: data,
+		});
+	} catch (err) {
+		sendError(
+			res,
+			next,
+			err,
+			"Error",
+			"Error in fetching productWarranty!"
+		);
+	}
+};
+
+/* 
+	@desc: Transfer a product from one person to another
+	@access: Private
+*/
+
+exports.transferProduct = async (req, res, next) => {
+	try {
+		//Fetch the from and to emails
+		const fromEmail = req.user.email;
+		const toEmail = req.body.toEmail;
+		const productID = req.body.productID;
+
+		//Fetch warranty ID from productID
+		const warranty = await readInWarrantyNFT(
+			productWarrantyContract.methods.getWarrantyAgainstProductID(
+				productID
+			)
+		);
+		console.log(warranty[0]);
+		//Transfer from the market first
+		await writeInMarket(
+			marketContract.methods.transferProduct(
+				fromEmail,
+				toEmail,
+				productID
+			)
+		);
+		//Transfer the warranty NFT
+		await writeInWarrantyNFT(
+			productWarrantyContract.methods.changeWarrantyOwner(
+				warranty[0],
+				fromEmail,
+				toEmail
+			)
+		);
+		//return response
+		return res.status(200).json({
+			success: true,
+			message: "Product exchanged successfully!",
+		});
+	} catch (err) {
+		sendError(res, next, err, "Error", "Error in transfering warranty!");
+	}
+};
+
+/* 
+	@desc: Get warranty for a productID
+	@access: Private
+*/
+exports.getWarrantyByProductID = async (req, res, next) => {
+	try {
+		const productID = req.params.id;
+
+		//Fetch the warranty
+		const warranty = await readInWarrantyNFT(
+			productWarrantyContract.methods.getWarrantyAgainstProductID(
+				productID
+			)
+		);
+		if (warranty[3] != req.user.email) {
+			return res.status(401).json({
+				success: false,
+				data: false,
+				message: "You don't own this product!",
+			});
+		}
+		//Check if warranty is valid or not
+		const isValidWarranty = await readInWarrantyNFT(
+			productWarrantyContract.methods.isExpired(warranty[0])
+		);
+
+		return res.status(200).json({
+			success: true,
+			data: isValidWarranty,
+		});
+	} catch (err) {
 		sendError(
 			res,
 			next,

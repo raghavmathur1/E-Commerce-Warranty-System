@@ -1,5 +1,10 @@
-exports.PRODUCT_WARRANTY_ADDRESS = "0x1D3f598f3FA4E8F12ED5b240B0e29C7BA612Edc5";
+exports.PRODUCT_WARRANTY_ADDRESS = "0x7aDC614085e31d6179911c870408a536424d3B0D";
 exports.PRODUCT_WARRANTY_ABI = [
+	{
+		inputs: [],
+		stateMutability: "nonpayable",
+		type: "constructor",
+	},
 	{
 		anonymous: false,
 		inputs: [
@@ -96,6 +101,25 @@ exports.PRODUCT_WARRANTY_ABI = [
 	{
 		inputs: [
 			{
+				internalType: "address",
+				name: "owner",
+				type: "address",
+			},
+		],
+		name: "balanceOf",
+		outputs: [
+			{
+				internalType: "uint256",
+				name: "",
+				type: "uint256",
+			},
+		],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
 				internalType: "uint256",
 				name: "warrantyID",
 				type: "uint256",
@@ -114,145 +138,6 @@ exports.PRODUCT_WARRANTY_ABI = [
 		name: "changeWarrantyOwner",
 		outputs: [],
 		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "uint256",
-				name: "productID",
-				type: "uint256",
-			},
-			{
-				internalType: "string",
-				name: "userEmail",
-				type: "string",
-			},
-			{
-				internalType: "uint256",
-				name: "durationDays",
-				type: "uint256",
-			},
-		],
-		name: "issueWarranty",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "address",
-				name: "from",
-				type: "address",
-			},
-			{
-				internalType: "address",
-				name: "to",
-				type: "address",
-			},
-			{
-				internalType: "uint256",
-				name: "tokenId",
-				type: "uint256",
-			},
-		],
-		name: "safeTransferFrom",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "address",
-				name: "from",
-				type: "address",
-			},
-			{
-				internalType: "address",
-				name: "to",
-				type: "address",
-			},
-			{
-				internalType: "uint256",
-				name: "tokenId",
-				type: "uint256",
-			},
-			{
-				internalType: "bytes",
-				name: "data",
-				type: "bytes",
-			},
-		],
-		name: "safeTransferFrom",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "address",
-				name: "operator",
-				type: "address",
-			},
-			{
-				internalType: "bool",
-				name: "approved",
-				type: "bool",
-			},
-		],
-		name: "setApprovalForAll",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "address",
-				name: "from",
-				type: "address",
-			},
-			{
-				internalType: "address",
-				name: "to",
-				type: "address",
-			},
-			{
-				internalType: "uint256",
-				name: "tokenId",
-				type: "uint256",
-			},
-		],
-		name: "transferFrom",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [],
-		stateMutability: "nonpayable",
-		type: "constructor",
-	},
-	{
-		inputs: [
-			{
-				internalType: "address",
-				name: "owner",
-				type: "address",
-			},
-		],
-		name: "balanceOf",
-		outputs: [
-			{
-				internalType: "uint256",
-				name: "",
-				type: "uint256",
-			},
-		],
-		stateMutability: "view",
 		type: "function",
 	},
 	{
@@ -429,6 +314,29 @@ exports.PRODUCT_WARRANTY_ABI = [
 		type: "function",
 	},
 	{
+		inputs: [
+			{
+				internalType: "uint256",
+				name: "productID",
+				type: "uint256",
+			},
+			{
+				internalType: "string",
+				name: "userEmail",
+				type: "string",
+			},
+			{
+				internalType: "uint256",
+				name: "durationDays",
+				type: "uint256",
+			},
+		],
+		name: "issueWarranty",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
 		inputs: [],
 		name: "name",
 		outputs: [
@@ -458,6 +366,75 @@ exports.PRODUCT_WARRANTY_ABI = [
 			},
 		],
 		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "address",
+				name: "from",
+				type: "address",
+			},
+			{
+				internalType: "address",
+				name: "to",
+				type: "address",
+			},
+			{
+				internalType: "uint256",
+				name: "tokenId",
+				type: "uint256",
+			},
+		],
+		name: "safeTransferFrom",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "address",
+				name: "from",
+				type: "address",
+			},
+			{
+				internalType: "address",
+				name: "to",
+				type: "address",
+			},
+			{
+				internalType: "uint256",
+				name: "tokenId",
+				type: "uint256",
+			},
+			{
+				internalType: "bytes",
+				name: "data",
+				type: "bytes",
+			},
+		],
+		name: "safeTransferFrom",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "address",
+				name: "operator",
+				type: "address",
+			},
+			{
+				internalType: "bool",
+				name: "approved",
+				type: "bool",
+			},
+		],
+		name: "setApprovalForAll",
+		outputs: [],
+		stateMutability: "nonpayable",
 		type: "function",
 	},
 	{
@@ -509,6 +486,29 @@ exports.PRODUCT_WARRANTY_ABI = [
 			},
 		],
 		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "address",
+				name: "from",
+				type: "address",
+			},
+			{
+				internalType: "address",
+				name: "to",
+				type: "address",
+			},
+			{
+				internalType: "uint256",
+				name: "tokenId",
+				type: "uint256",
+			},
+		],
+		name: "transferFrom",
+		outputs: [],
+		stateMutability: "nonpayable",
 		type: "function",
 	},
 ];

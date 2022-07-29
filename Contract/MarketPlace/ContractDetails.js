@@ -1,5 +1,10 @@
-exports.MARKET_PLACE_ADDRESS = "0xe6C162aFe10F053151241994d345d497F87c113E";
+exports.MARKET_PLACE_ADDRESS = "0xA076E59e06Fb0aF1850311eA2F5321c251eA3231";
 exports.MARKET_PLACE_ABI = [
+	{
+		inputs: [],
+		stateMutability: "nonpayable",
+		type: "constructor",
+	},
 	{
 		inputs: [
 			{
@@ -50,73 +55,6 @@ exports.MARKET_PLACE_ABI = [
 		outputs: [],
 		stateMutability: "nonpayable",
 		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "string",
-				name: "email",
-				type: "string",
-			},
-		],
-		name: "registerCustomer",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "string",
-				name: "email",
-				type: "string",
-			},
-		],
-		name: "registerRetailer",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "uint256",
-				name: "newRate",
-				type: "uint256",
-			},
-		],
-		name: "setRate",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [
-			{
-				internalType: "string",
-				name: "fromEmail",
-				type: "string",
-			},
-			{
-				internalType: "string",
-				name: "toEmail",
-				type: "string",
-			},
-			{
-				internalType: "uint256",
-				name: "productID",
-				type: "uint256",
-			},
-		],
-		name: "transferProduct",
-		outputs: [],
-		stateMutability: "nonpayable",
-		type: "function",
-	},
-	{
-		inputs: [],
-		stateMutability: "nonpayable",
-		type: "constructor",
 	},
 	{
 		inputs: [
@@ -206,6 +144,38 @@ exports.MARKET_PLACE_ABI = [
 		type: "function",
 	},
 	{
+		inputs: [],
+		name: "getRate",
+		outputs: [
+			{
+				internalType: "uint256",
+				name: "",
+				type: "uint256",
+			},
+		],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "string",
+				name: "retailerEmail",
+				type: "string",
+			},
+		],
+		name: "getRetailerBankBalance",
+		outputs: [
+			{
+				internalType: "uint256",
+				name: "",
+				type: "uint256",
+			},
+		],
+		stateMutability: "view",
+		type: "function",
+	},
+	{
 		inputs: [
 			{
 				internalType: "string",
@@ -253,11 +223,6 @@ exports.MARKET_PLACE_ABI = [
 					},
 					{
 						internalType: "contract DynamicArray",
-						name: "transactions",
-						type: "address",
-					},
-					{
-						internalType: "contract DynamicArray",
 						name: "products",
 						type: "address",
 					},
@@ -300,9 +265,21 @@ exports.MARKET_PLACE_ABI = [
 		name: "getRetailerTransactions",
 		outputs: [
 			{
-				internalType: "uint256[]",
+				components: [
+					{
+						internalType: "uint256",
+						name: "productID",
+						type: "uint256",
+					},
+					{
+						internalType: "uint256",
+						name: "amount",
+						type: "uint256",
+					},
+				],
+				internalType: "struct Transaction[]",
 				name: "",
-				type: "uint256[]",
+				type: "tuple[]",
 			},
 		],
 		stateMutability: "view",
@@ -357,6 +334,68 @@ exports.MARKET_PLACE_ABI = [
 			},
 		],
 		stateMutability: "view",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "string",
+				name: "email",
+				type: "string",
+			},
+		],
+		name: "registerCustomer",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "string",
+				name: "email",
+				type: "string",
+			},
+		],
+		name: "registerRetailer",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "uint256",
+				name: "newRate",
+				type: "uint256",
+			},
+		],
+		name: "setRate",
+		outputs: [],
+		stateMutability: "nonpayable",
+		type: "function",
+	},
+	{
+		inputs: [
+			{
+				internalType: "string",
+				name: "fromEmail",
+				type: "string",
+			},
+			{
+				internalType: "string",
+				name: "toEmail",
+				type: "string",
+			},
+			{
+				internalType: "uint256",
+				name: "productID",
+				type: "uint256",
+			},
+		],
+		name: "transferProduct",
+		outputs: [],
+		stateMutability: "nonpayable",
 		type: "function",
 	},
 ];
