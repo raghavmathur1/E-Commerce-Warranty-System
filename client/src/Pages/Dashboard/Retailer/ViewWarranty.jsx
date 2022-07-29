@@ -3,7 +3,7 @@ import Content from "../../../Components/Content";
 import Input from "../../../Components/Input";
 import { UilFilesLandscapesAlt } from "@iconscout/react-unicons";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
-
+import { getWarrantyById } from "../../../Actions/Products";
 import QRScan from "qrscan";
 import Load from "../../../Components/Load";
 import Loader from "react-js-loader";
@@ -47,7 +47,18 @@ function ViewWarranty() {
 	const [value, setValue] = useState("");
 	const [scan, setScan] = useState(false);
 	const [data, setData] = useState("");
-
+	const [backendCalling, setbackendCalling] = useState(false);
+	const [warrantyID, setWarratyID] = useState(0);
+	const [warranty, setWarranty] = useState(null);
+	const search = (warranty_ID) => {
+		setbackendCalling(true);
+		getWarrantyById(warranty_ID).then((res) => {
+			if (res === null) {
+				setWarranty(null);
+			} else setWarranty(res.data.data);
+			setbackendCalling(false);
+		});
+	};
 	const onFind = (info) => {
 		setValue(info);
 		setScan(false);
@@ -62,6 +73,10 @@ function ViewWarranty() {
 
 	useEffect(() => {
 		console.log(value);
+		if (value !== "") {
+			setScan(false);
+			search(value);
+		}
 	}, [value]);
 
 	const backgroundArr = [
@@ -88,6 +103,7 @@ function ViewWarranty() {
 				type="text"
 				placeholder="Enter Warranty ID"
 				width="100%"
+				update={setWarratyID}
 			>
 				<UilFilesLandscapesAlt />
 			</Input>
@@ -98,6 +114,7 @@ function ViewWarranty() {
 					fontSize: "13px",
 					padding: "10px 35px",
 				}}
+				onClick={() => search(warrantyID)}
 			>
 				View
 			</button>
@@ -146,16 +163,25 @@ function ViewWarranty() {
 					borderRadius: "6px",
 				}}
 			> */}
-			{/* <Loader
-				type="spinner-default"
-				bgColor={"#000000"}
-				color={"#000000"}
-				size={50}
-			/> */}
-			<WarrantyCard
-				item={test}
-				style={backgroundArr[parseInt(test.productID) % 3]}
-			></WarrantyCard>
+			{backendCalling ? (
+				<Loader
+					type="spinner-default"
+					bgColor={"#000000"}
+					color={"#000000"}
+					size={50}
+				/>
+			) : (
+				<div></div>
+			)}
+			{!backendCalling && warranty !== null ? (
+				<WarrantyCard
+					item={warranty}
+					style={backgroundArr[parseInt(warranty.productID) % 3]}
+				></WarrantyCard>
+			) : (
+				<div>No warranty!</div>
+			)}
+
 			{/* </div> */}
 		</Content>
 	);

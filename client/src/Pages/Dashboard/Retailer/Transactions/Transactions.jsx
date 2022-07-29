@@ -3,6 +3,7 @@ import Content from "../../../../Components/Content";
 import Transfer from "./Transfer";
 import classes from "./transactions.module.css";
 import Card from "../../../../Components/Card";
+import Load from "../../../../Components/Load";
 import { getBankBalance, getTransactions } from "../../../../Actions/Retailer";
 function Transactions() {
 	const [balance, setBalance] = useState(-1);
@@ -10,12 +11,16 @@ function Transactions() {
 	useEffect(() => {
 		getTransactions().then((res) => {
 			console.log(res);
+			setTransactions(res.data);
 		});
 		getBankBalance().then((res) => {
-			console.log(res);
+			console.log(res.data);
+			setBalance(res.data);
 		});
 	}, []);
-
+	if (balance === -1 || transactions === null) {
+		return <Load heading="Transaction summary"></Load>;
+	}
 	return (
 		<Content id={classes["offCard"]}>
 			<div className={classes["cartContainer"]}>
@@ -25,7 +30,9 @@ function Transactions() {
 							<span>Transaction Summary</span>
 						</div>
 						<div className={classes["allitems"]}>
-							<Transfer />
+							{transactions.map((item) => {
+								return <Transfer receipt={item} />;
+							})}
 						</div>
 					</Card>
 				</div>
@@ -37,7 +44,7 @@ function Transactions() {
 						<div className={classes["orderDet"]}>
 							<div className={classes["downOrder"]}>
 								{/* <UilMoneyStack /> */}
-								<span>₹10000</span>
+								<span>₹{balance}</span>
 							</div>
 						</div>
 					</Card>

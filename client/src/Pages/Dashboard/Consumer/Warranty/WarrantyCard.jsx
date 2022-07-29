@@ -62,6 +62,9 @@ const createId = (warrantyId) => {
 };
 
 function WarrantyCard(props) {
+	if (props.item === null || props.item.warranty === null) {
+		return <div>No warranty to show</div>;
+	}
 	const product = props.item.data;
 	const productID = props.item.productID;
 	const retailer = props.item.retailer;
@@ -84,7 +87,7 @@ function WarrantyCard(props) {
 					</div>
 				</div>
 				<div className={classes["qrcode"]}>
-					<QRCode value={warrantyId} size={40} />
+					<QRCode value={productID} size={40} />
 				</div>
 				<div className={classes["warrantyDetails"]}>
 					<div className={classes["warrantySmall"]}>
