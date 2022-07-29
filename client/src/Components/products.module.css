@@ -1,0 +1,120 @@
+.productContainer{
+	display: flex;
+  	align-items: center;
+  	/* justify-content: center; */
+	flex-wrap: wrap;
+	/* flex-direction: row-reverse	; */
+  	height: 100%;
+	margin: 0px auto;
+	margin-top: 20px;
+}
+
+.product{
+	width: 200px;
+	height: 389px;
+	padding: 0 20px;
+	border: 0.5px solid #C4C4C4;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	margin: 10px 10px;
+	border-radius: 6px;
+}
+.productImage{
+	margin:22.5px 0 10px 0;
+	width:200px;
+	height: 200px;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	/* background: black; */
+	border-radius: 6px;
+}
+
+.productName{
+	font-weight: 600;
+	font-size: 12px;
+}
+
+.productDescription{
+	font-size: 11px;
+	margin-top: 5px;
+}
+
+.price{
+	font-size: 15px;
+	font-weight: 600;
+	margin-top: 5px;
+	color: #333;
+	
+}
+
+.bottom{
+	position: absolute;
+	bottom: 13px;
+	display: flex;
+	align-items: center;
+}
+
+
+.strike{
+	text-decoration: line-through;
+	color: #333;
+	font-weight: 400;
+	font-size: 11px;
+	position: absolute;
+	left: 0;
+	top: -5px;
+}
+
+.discount{
+	color: #00BA88;
+	font-weight: 400;
+	font-size: 12px;
+	margin:0 5px ;
+}
+
+
+.bottom-blue{
+	color: #2974F1	;
+	position: absolute;
+	bottom: 13px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 500;
+	width: 200px;
+}
+
+.bottom-blue svg{
+	color: #2974F1	;
+	margin-right: 10px;
+}
+
+.buy{
+	color: #2974F1;
+	display: flex;
+	align-items: center;
+	position: absolute;
+	font-weight: 600;
+	right: 20px;
+	bottom:20px;
+	cursor: pointer;
+}
+
+.buy svg{
+	color: #2974F1;
+	margin-right: 5px;
+}
+
+.align{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+#productCard{
+	/* box-shadow: none; */
+	width: 70vw;
+}

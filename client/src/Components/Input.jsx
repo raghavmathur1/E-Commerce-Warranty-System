@@ -2,6 +2,13 @@ import React from "react";
 import classes from "./input.module.css";
 
 const Input = (props) => {
+	let handleFunction = (event) => {
+		props.update(event.target.value);
+	};
+
+	if (props.type === "file") {
+		handleFunction = props.onChange;
+	}
 	return (
 		<div
 			className={classes["inputParent"]}
@@ -14,8 +21,11 @@ const Input = (props) => {
 					className={classes["formInput"]}
 					type={props.type}
 					placeholder={props.placeholder}
-					onChange={(e) => props.update(e.target.value)}
+					onChange={handleFunction}
 					value={props.value}
+					list={props.list}
+					accept={props.accept}
+					style={{ color: props.color }}
 				/>
 			</div>
 		</div>

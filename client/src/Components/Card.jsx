@@ -8,8 +8,12 @@ function Card(props) {
 				padding: props.padding,
 				margin: props.margin,
 				width: props.width,
+				height: props.height,
 				minWidth: props.minWidth,
+				minHeight: props.minHeight,
 			}}
+			id={props.id}
+			onClick={props.onClick}
 		>
 			{props.blue === "true" && (
 				<div className="topblue">{props.blueText}</div>

@@ -1,0 +1,28 @@
+.dashboard{
+	display: flex;
+	position: relative;
+	top: 00px;
+}
+
+.left{
+	width: 22vw;
+	min-width: 270px;
+}
+
+.right{
+	width: 70vw;
+}
+
+@media only screen and (max-width: 650px) {
+	.left{
+		width: 0;
+		min-width: 0;
+	}
+
+	.right{
+		width: 90vw;
+		margin: 0 auto;
+	}
+	
+}
+
