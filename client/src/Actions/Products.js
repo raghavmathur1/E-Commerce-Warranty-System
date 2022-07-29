@@ -73,7 +73,24 @@ export const getAllWarranty = async () => {
 		return null;
 	}
 };
-
+export const getWarrantyById = async (warrantyID) => {
+	try {
+		const url =
+			process.env.REACT_APP_API_ENDPOINT +
+			`/api/products/getWarranty/${warrantyID}`;
+		const response = await axios({
+			method: "GET",
+			withCredentials: true,
+			url: url,
+		});
+		// const products = JSON.parse(response.data.data);
+		// console.log(response.data);
+		return response;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
+};
 export const verifyWarranty = async (productID) => {
 	try {
 		const url =

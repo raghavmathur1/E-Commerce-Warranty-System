@@ -1,26 +1,29 @@
 import React from "react";
 import classes from "./transactions.module.css";
-function Transfer() {
+function Transfer(props) {
+	const product = props.receipt.productDetails;
+	const price = props.receipt.amount;
+	const id = props.receipt.productID;
 	return (
 		<div className={classes["test"]}>
 			<div
 				style={{
-					// background: `url(${product.fileURl})`,
+					background: `url(${product.fileURl})`,
 					backgroundRepeat: "no-repeat",
-					backgroundSize: "contain",
+					backgroundSize: "cover",
 				}}
 				className={classes["photo"]}
 			></div>
 			<div className={classes["bottom"]}>
 				<div className={classes["rightHeading"]}>
-					Product Name: <span>Macbook Pro</span>
+					Product Name: <span>{product.productName}</span>
 				</div>
 				<div className={classes["rightHeading"]}>
-					Product Id: <span>0000006</span>
+					Product Id: <span>{id}</span>
 				</div>
 			</div>
 			<div className={classes["price"]}>
-				₹50000 <span>From Flipkart</span>
+				₹{price} <span>From Flipkart</span>
 			</div>
 		</div>
 	);

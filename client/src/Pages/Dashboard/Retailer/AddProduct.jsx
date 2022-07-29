@@ -15,13 +15,11 @@ import { UilCalendarAlt } from "@iconscout/react-unicons";
 const api_endpoint = process.env.REACT_APP_API_ENDPOINT;
 function Products() {
 	const userObject = useContext(userObjectContext)[0];
-	const [productName, setProductName] = useState("");
-	const [expiry, setExpiryTime] = useState("");
-	const [description, setDescription] = useState("");
+	const [productName, setProductName] = useState(null);
+	const [description, setDescription] = useState(null);
 	const [price, setPrice] = useState();
-	const [discount, setDiscount] = useState();
-	const [warranty, setWarranty] = useState();
-	const [file, setFile] = useState();
+	const [discount, setDiscount] = useState(null);
+	const [file, setFile] = useState("");
 	const saveFile = (e) => {
 		setFile(e.target.files[0]);
 	};
@@ -31,13 +29,11 @@ function Products() {
 		formData.append("productName", productName);
 		formData.append("description", description);
 		formData.append("price", price);
-		formData.append("expiryTime", expiry);
 		formData.append("discount", discount);
 		formData.append("retailer", userObject._id);
 		formData.append("file", file);
-		if (
-			!(productName && description && price && discount && expiry && file)
-		) {
+		console.log(productName, description, price, discount, file);
+		if (!(productName && description && price && discount && file)) {
 			toast.error("Please fill all the fields");
 			return;
 		}
@@ -52,10 +48,6 @@ function Products() {
 			return;
 		}
 
-		if (expiry < 1) {
-			toast.error("Expiry time should be greater than 1");
-			return;
-		}
 		toast.promise(
 			new Promise(async (resolve, reject) => {
 				const response = await axios({
