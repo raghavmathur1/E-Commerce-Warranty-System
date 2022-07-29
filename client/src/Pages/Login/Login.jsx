@@ -7,11 +7,13 @@ import { UilEnvelope } from "@iconscout/react-unicons";
 import { UilKeySkeleton } from "@iconscout/react-unicons";
 import Topbar from "../../Components/Topbar";
 import { toast } from "wc-toast";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [localAuth, setLocalAuth] = useState(null);
+	const navigate = useNavigate();
 	const submitLogin = async () => {
 		toast.promise(
 			new Promise(async (resolve, reject) => {
@@ -33,6 +35,14 @@ function Login(props) {
 		// setLocalAuth(isLoginSuccess);
 	};
 
+	const goToSignup = () => {
+		if (props.user === "consumer") {
+			navigate("/consumer/signup");
+		}
+		if (props.user === "retailer") {
+			navigate("/retailer/signup");
+		}
+	};
 	useEffect(() => {
 		if (localAuth === true) {
 			window.open("/", "_self");
@@ -44,7 +54,7 @@ function Login(props) {
 
 	return (
 		<div className={`full ${classes.page}`}>
-			<Topbar />
+			<Topbar user={props.user} />
 			<div className={classes["left"]}>
 				<div className={classes["black"]}></div>
 				{props.user === "consumer" && (
@@ -98,13 +108,16 @@ function Login(props) {
 					</div>
 					<div className={classes["text"]}>
 						Don’t have an account?{" "}
-						<span className={classes["blueText"]}>
+						<span
+							className={classes["blueText"]}
+							onClick={() => goToSignup()}
+						>
 							Sign up here
 						</span>
 					</div>
-					<div className={classes["blueTextLight"]}>
+					{/* <div className={classes["blueTextLight"]}>
 						Forgot Password
-					</div>
+					</div> */}
 				</Card>
 			</div>
 		</div>

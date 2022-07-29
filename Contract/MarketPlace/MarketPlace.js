@@ -16,10 +16,12 @@ exports.marketContract = new web3.eth.Contract(
 exports.writeInMarket = async (tx) => {
 	try {
 		console.log("Reaching here");
-		await callWriteFunction(tx, MARKET_PLACE_ADDRESS);
+		const res = await callWriteFunction(tx, MARKET_PLACE_ADDRESS);
+		return res;
 	} catch (error) {
 		console.log("Error in write market");
 		console.log(error);
+		return false;
 	}
 };
 exports.readInMarket = async (tx) => {

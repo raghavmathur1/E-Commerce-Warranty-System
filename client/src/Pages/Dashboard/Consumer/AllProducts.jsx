@@ -20,7 +20,8 @@ function AllProducts() {
 	}, []);
 	if (products === null) {
 		return <Load heading="Buy Products" />;
-	} else if (products.length === 0) {
+	} else if (products.data.length === 0) {
+		console.log(products);
 		return <Empty heading="Buy Products" message="No Products Found" />;
 	} else {
 		return (

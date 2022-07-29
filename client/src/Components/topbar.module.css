@@ -1,6 +1,6 @@
 .topbar{
 	display: flex;
-	margin: 20px 0 0 0;
+	margin: 20px 10px 0 0;
 	width: 100%;
 	justify-content: flex-end;
 	right: 0;
@@ -11,4 +11,10 @@
 .topbar > div{
 	cursor: pointer;
 	margin:0 10px;
+	background-color: #2974f1;
+	color: #fff;
+	padding: 10px 20px;
+	font-weight: 500;
+	border-radius: 6px;
 }
+

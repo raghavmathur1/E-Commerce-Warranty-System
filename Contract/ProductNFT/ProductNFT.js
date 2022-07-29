@@ -18,9 +18,11 @@ exports.productNFTContract = new web3.eth.Contract(
 
 exports.writeInProductNFT = async (tx) => {
 	try {
-		await callWriteFunction(tx, PRODUCTNFT_CONTRACT_ADDRESS);
+		const res = await callWriteFunction(tx, PRODUCTNFT_CONTRACT_ADDRESS);
+		return res;
 	} catch (error) {
 		logger.error(error);
+		return false;
 	}
 };
 exports.readInProductNFT = async (tx) => {

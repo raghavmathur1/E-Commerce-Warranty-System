@@ -76,7 +76,7 @@ function WarrantyCard(props) {
 	const warrantyId = createId(warranty[0]);
 	// console.log("00000000" + warranty[0]);
 	return (
-		<Card width="310px" height="380px" id={classes["warCard"]}>
+		<Card width="310px" height="395px" id={classes["warCard"]}>
 			<div className={classes["cardBack"]} style={props.style}>
 				<div className={classes["warrantyHeading"]}>
 					<div className={classes["warrantyHeadingShield"]}>
@@ -110,14 +110,12 @@ function WarrantyCard(props) {
 					{product.productName}
 				</div>
 				<div className={classes["productText"]}>
-					<span className={classes["bolder"]}>Product ID:</span>
+					<span className={classes["bolder"]}>Product ID:</span>{" "}
 					{productID}
 				</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Retailer: </span>
-					{retailer.firstName}
-
-					{retailer.lastName}
+					{retailer.firstName} {retailer.lastName}
 				</div>
 				<div className={classes["productText"]}>
 					<span className={classes["bolder"]}>Date Issued:</span>{" "}

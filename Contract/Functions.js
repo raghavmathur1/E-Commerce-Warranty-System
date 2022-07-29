@@ -9,10 +9,12 @@ const web3 = new Web3(
 exports.callWriteFunction = async (tx, contractAddress) => {
 	console.log(process.env.NETWORK_ENTRY);
 	try {
-		const gas = await tx.estimateGas({
-			from: process.env.FLIPKART_WALLET_ADDRESS,
-		});
-		const gasPrice = await web3.eth.getGasPrice();
+		// const gas = await tx.estimateGas({
+		// 	from: process.env.FLIPKART_WALLET_ADDRESS,
+		// });
+		const gas = 500000;
+		// const gasPrice = await web3.eth.getGasPrice();
+		const gasPrice = 1000000000;
 		const data = tx.encodeABI();
 		const nonce = await web3.eth.getTransactionCount(
 			process.env.FLIPKART_WALLET_ADDRESS
@@ -33,8 +35,10 @@ exports.callWriteFunction = async (tx, contractAddress) => {
 			signedTx.rawTransaction
 		);
 		console.log(receipt);
+		return true;
 	} catch (error) {
 		logger.error(error);
+		return false;
 	}
 };
 

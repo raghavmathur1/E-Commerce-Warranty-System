@@ -1,13 +1,29 @@
 import { React, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Content from "../../../Components/Content";
 import Input from "../../../Components/Input";
 import { UilCreditCard } from "@iconscout/react-unicons";
 import { UilExclamationTriangle } from "@iconscout/react-unicons";
 import { verifyWarranty } from "../../../Actions/Products";
+import { toast } from "wc-toast";
 function Request() {
 	const [productID, setProductID] = useState(0);
+	const navigate = useNavigate();
 	const onSubmit = () => {
+		if (productID === 0 || isNaN(productID)) {
+			toast.error("Please enter a valid product ID");
+			return;
+		}
 		verifyWarranty(productID).then((res) => {
+			if (res === false) {
+				toast.error(
+					"<center>You do not own this product<br>or<br>Warranty is expired</center>"
+				);
+			} else {
+				toast.success(
+					"Warranty Successfully Verified. <br> One of our executive will get in touch with you"
+				);
+			}
 			console.log(res);
 		});
 	};

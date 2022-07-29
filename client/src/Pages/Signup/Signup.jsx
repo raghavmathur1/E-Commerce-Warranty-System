@@ -92,6 +92,15 @@ function Signup(props) {
 			}
 		);
 	};
+
+	const goToLogin = () => {
+		if (props.user === "consumer") {
+			navigate("/consumer/login");
+		}
+		if (props.user === "retailer") {
+			navigate("/retailer/login");
+		}
+	};
 	return (
 		<div className={`full ${classes.page}`}>
 			<Topbar />
@@ -219,16 +228,18 @@ function Signup(props) {
 						}}
 						onClick={submitSignup}
 					>
-						<div className="loader" style={style}>
-							<Loader
-								type="spinner-default"
-								bgColor={"#FFFFFF"}
-								color={"#FFFFFF"}
-								size={30}
-							/>
-						</div>
+						<div className="loader" style={style}></div>
 						Register
 					</button>
+				</div>
+				<div className={classes["text"]}>
+					Already Have an Account?{" "}
+					<span
+						className={classes["blueText"]}
+						onClick={() => goToLogin()}
+					>
+						Log in here
+					</span>
 				</div>
 			</Card>
 		</div>

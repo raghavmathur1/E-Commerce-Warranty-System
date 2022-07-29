@@ -4,12 +4,25 @@ import Input from "../../../../Components/Input";
 import { UilEnvelope } from "@iconscout/react-unicons";
 import { UilCreditCardSearch } from "@iconscout/react-unicons";
 import { transferProduct } from "../../../../Actions/Products";
+import { toast } from "wc-toast";
 function Transfer() {
 	const [toEmail, setToEmail] = useState("");
 	const [productID, setProductID] = useState(0);
-	const onSubmit = () => {
+	const onSubmit = async () => {
 		console.log(toEmail, productID);
-		transferProduct(toEmail, productID).then((res) => {});
+		toast.promise(
+			new Promise(async (resolve, reject) => {
+				const response = await transferProduct(toEmail, productID);
+				console.log(response);
+				if (response === true) resolve();
+				else reject();
+			}),
+			{
+				loading: "Transfering Product",
+				success: "Transfered Successfully",
+				error: "Could not Transfer",
+			}
+		);
 	};
 	return (
 		<Content heading="Transfer Product">

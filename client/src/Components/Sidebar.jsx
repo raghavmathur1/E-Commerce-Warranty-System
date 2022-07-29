@@ -30,7 +30,7 @@ function Sidebar() {
 				{isConsumer && (
 					<div>
 						<Sidebarlink text="Buy Products" link="shop" />
-						<Sidebarlink text="My Orders" link="products" />
+						<Sidebarlink text="My Products" link="products" />
 						<Sidebarlink text="Manage Profile" link="profile" />
 						<Sidebarlink text="View Warranty" link="warranty" />
 						<Sidebarlink text="Request Repair" link="repair" />

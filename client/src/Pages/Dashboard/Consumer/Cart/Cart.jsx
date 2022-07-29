@@ -93,7 +93,7 @@ function Cart() {
 						className={classes["submit"]}
 						onClick={callBuyProduct}
 					>
-						Overall Price
+						Proceed to pay: {price}
 					</button>
 				</div>
 			</div>
