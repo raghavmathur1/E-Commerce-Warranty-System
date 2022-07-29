@@ -24,6 +24,8 @@ const consumer = "/consumer";
 
 //Retailer Routes
 const retailer = "/retailer";
+const getBalance = "/getBalance";
+const getTransactions = "/getTransactions";
 
 //Product Routes
 const product = INITIAL_URL + "/products";
@@ -34,6 +36,10 @@ const retmy = "/retmy";
 const buyProductRoute = "/buyProducts";
 const getUserProducts = "/getUserProducts";
 const getAllWarrantyRoute = "/getAllWarranty";
+const checkWarranty = "/checkWarranty";
+const transferProductRoute = "/transferProduct";
+const updateProductRoute = "/update";
+const getWarrantyRoute = "/getWarranty";
 //Export Statement
 module.exports = {
 	mainUserRoutes,
@@ -58,4 +64,10 @@ module.exports = {
 	buyProductRoute,
 	getUserProducts,
 	getAllWarrantyRoute,
+	checkWarranty,
+	transferProductRoute,
+	updateProductRoute,
+	getBalance,
+	getTransactions,
+	getWarrantyRoute,
 };
