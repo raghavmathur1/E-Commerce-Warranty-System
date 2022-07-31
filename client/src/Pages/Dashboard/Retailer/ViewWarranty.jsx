@@ -8,6 +8,8 @@ import QRScan from "qrscan";
 import Load from "../../../Components/Load";
 import Loader from "react-js-loader";
 import WarrantyCard from "../Consumer/Warranty/WarrantyCard";
+import { UilQrcodeScan } from "@iconscout/react-unicons";
+import { UilCameraSlash } from "@iconscout/react-unicons";
 let blue = require("../../../assets/blue.jpg");
 let purple = require("../../../assets/purple.jpg");
 let red = require("../../../assets/red.jpg");
@@ -128,29 +130,78 @@ function ViewWarranty() {
 			>
 				OR
 			</div>
-
-			<button
-				className="button"
+			<div
 				style={{
-					margin: "20px 0",
-					fontSize: "13px",
-					padding: "10px 35px",
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					flexWrap: "wrap",
 				}}
-				onClick={() => setScan(!scan)}
 			>
-				Open/Close Scanner
-			</button>
-			{scan === true && (
-				<BarcodeScannerComponent
-					width={300}
-					height={300}
-					onUpdate={(err, result) => {
-						if (result) setData(result.text);
-						else setData("");
+				<button
+					style={{
+						margin: "20px 20px 20px 20px",
+						fontSize: "13px",
+						padding: "10px 35px",
+						width: "400px",
+						height: "300px",
+						background: "#EFF0F6",
+						border: "none",
+						color: "#6E7191",
+						fontWeight: "600",
+						fontSize: "18px",
+						letterSpacing: "2px",
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						justifyContent: "center",
+						borderRadius: "6px",
 					}}
-				/>
-			)}
-
+					onClick={() => setScan(!scan)}
+				>
+					<UilQrcodeScan
+						style={{
+							marginRight: "10px",
+							fill: "#2974F1",
+							marginBottom: "20px",
+						}}
+						size={50}
+					/>
+					Scan the QR Code
+				</button>
+				<div
+					style={{
+						width: "400px",
+						height: "300px",
+						background: "#EFF0F6",
+						margin: "20px",
+						borderRadius: "6px",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					{scan === true ? (
+						<BarcodeScannerComponent
+							width={300}
+							height={300}
+							onUpdate={(err, result) => {
+								if (result) setData(result.text);
+								else setData("");
+							}}
+						/>
+					) : (
+						<UilCameraSlash
+							size={50}
+							style={{
+								marginRight: "10px",
+								fill: "#2974F1",
+								marginBottom: "20px",
+							}}
+						/>
+					)}
+				</div>
+			</div>
 			{/* <div
 				style={{
 					// width: "100%",
@@ -179,7 +230,7 @@ function ViewWarranty() {
 					style={backgroundArr[parseInt(warranty.productID) % 3]}
 				></WarrantyCard>
 			) : (
-				<div>No warranty!</div>
+				<div></div>
 			)}
 
 			{/* </div> */}

@@ -18,6 +18,7 @@ import { Navigate } from "react-router-dom";
 import Topbar from "../../Components/Topbar";
 import { toast } from "wc-toast";
 function Signup(props) {
+	console.log(props.user);
 	const navigate = useNavigate();
 	const [style, setStyle] = useState({ display: "none" });
 	const [password, setPassword] = useState("");
@@ -103,7 +104,7 @@ function Signup(props) {
 	};
 	return (
 		<div className={`full ${classes.page}`}>
-			<Topbar />
+			<Topbar user={props.user} />
 			<Card
 				padding="11vh 4vw 4vh 4vw"
 				margin="0 0 0 0px"

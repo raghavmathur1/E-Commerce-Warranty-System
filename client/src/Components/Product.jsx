@@ -8,6 +8,17 @@ function Product(props) {
 	const navigate = useNavigate();
 	const data = props.data.data;
 	const productID = props.data.productID;
+	let description;
+	let name = data.productName.substring(0, 60);
+	if (data.productName.length > 60) name += "...";
+	if (props.manage === "true") {
+		description = data.description.substring(0, 157);
+		if (data.description.length > 157) description += "......";
+	} else {
+		// console.log(data.descriptionn.length);
+		description = data.description.substring(0, 130);
+		if (data.description.length > 130) description += "......";
+	}
 	const buyPage = () => {
 		navigate("../shop/" + productID);
 	};
@@ -23,10 +34,8 @@ function Product(props) {
 					backgroundImage: `url(${data.fileURl})`,
 				}}
 			></div>
-			<div className={classes["productName"]}>{data.productName}</div>
-			<div className={classes["productDescription"]}>
-				{data.description}
-			</div>
+			<div className={classes["productName"]}>{name}</div>
+			<div className={classes["productDescription"]}>{description}</div>
 			{!(props.manage === "true") && (
 				<div className={classes["bottom"]}>
 					<div className={classes["price"]}>

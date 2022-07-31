@@ -65,6 +65,19 @@ function Transfer() {
 					Transfer Product
 				</button>
 			</div>
+			<div className="disclaimer">
+				<div>Disclaimer:</div>
+				<div className="message">
+					The email of the recipent should already be registered on
+					the website for a warranty transfer to take place.
+					<br />
+					<br />
+					<b>
+						Please ensure that the recipient has registered on the
+						platform.
+					</b>
+				</div>
+			</div>
 		</Content>
 	);
 }
