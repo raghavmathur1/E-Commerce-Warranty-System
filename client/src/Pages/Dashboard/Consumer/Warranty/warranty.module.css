@@ -99,6 +99,7 @@
 	color: #D13356;
 	position: absolute;
 	right: 20px;
+	margin-top: 15px;
 }
 .expire svg{
 	color: #D13356;
@@ -113,6 +114,7 @@
 	color: #6EC195;
 	position: absolute;
 	right: 20px;
+	margin-top: 15px;
 }
 .valid svg{
 	color: #6EC195;

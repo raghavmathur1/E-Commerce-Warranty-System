@@ -18,6 +18,7 @@ import { Navigate } from "react-router-dom";
 import Topbar from "../../Components/Topbar";
 import { toast } from "wc-toast";
 function Signup(props) {
+	console.log(props.user);
 	const navigate = useNavigate();
 	const [style, setStyle] = useState({ display: "none" });
 	const [password, setPassword] = useState("");
@@ -92,9 +93,18 @@ function Signup(props) {
 			}
 		);
 	};
+
+	const goToLogin = () => {
+		if (props.user === "consumer") {
+			navigate("/consumer/login");
+		}
+		if (props.user === "retailer") {
+			navigate("/retailer/login");
+		}
+	};
 	return (
 		<div className={`full ${classes.page}`}>
-			<Topbar />
+			<Topbar user={props.user} />
 			<Card
 				padding="11vh 4vw 4vh 4vw"
 				margin="0 0 0 0px"
@@ -219,16 +229,18 @@ function Signup(props) {
 						}}
 						onClick={submitSignup}
 					>
-						<div className="loader" style={style}>
-							<Loader
-								type="spinner-default"
-								bgColor={"#FFFFFF"}
-								color={"#FFFFFF"}
-								size={30}
-							/>
-						</div>
+						<div className="loader" style={style}></div>
 						Register
 					</button>
+				</div>
+				<div className={classes["text"]}>
+					Already Have an Account?{" "}
+					<span
+						className={classes["blueText"]}
+						onClick={() => goToLogin()}
+					>
+						Log in here
+					</span>
 				</div>
 			</Card>
 		</div>

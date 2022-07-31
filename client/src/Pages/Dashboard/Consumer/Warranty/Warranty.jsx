@@ -31,9 +31,9 @@ function Warranty() {
 			setOnStyle({});
 			const temp = warrantyDetails.filter((item) => {
 				console.log(item);
-				return (
-					item.data.productName.toLowerCase() === search.toLowerCase()
-				);
+				return item.data.productName
+					.toLowerCase()
+					.includes(search.toLowerCase());
 			});
 			setWarrantySearch(temp);
 		} else {
@@ -76,7 +76,7 @@ function Warranty() {
 			<Input
 				heading="Product Name"
 				type="text"
-				placeholder="Enter Warranty ID"
+				placeholder="Enter Product Name"
 				width="100%"
 				update={setSearch}
 			>

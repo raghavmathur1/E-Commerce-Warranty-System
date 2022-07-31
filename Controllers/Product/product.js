@@ -23,6 +23,7 @@ const {
 const https = require("https");
 const cartSchema = require("../../Models/Product/cart");
 const retailerSchema = require("../../Models/Retailer/retailer");
+const consumerSchema = require("../../Models/Consumer/consumer");
 const product = require("../../models/Product/product");
 /*
 	@desc: Add Product 
@@ -365,7 +366,7 @@ exports.buyProduct = async (req, res, next) => {
 			});
 			const from = "Vonage APIs";
 			const to = "917903966014";
-			const text = `PLEASE DO NOT SHARE THIS!.Your warrany id is ${warrantyID}. The digital version of it is send to you in mail.  You can check it in your dashboard by searching with the warranty Id`;
+			const text = `PLEASE DO NOT SHARE THIS!.Your warrany Details are: Warranty Id: ${warranty[0]}, Product Id: ${warranty[1]}, Duration: ${warranty[2]} Days, Retailer Email: ${retailerEmail} Days. The digital version of it is send to you in mail.  You can check it in your dashboard by searching with the warranty Id`;
 			let smtpProtocol = mailer.createTransport({
 				host: "smtp.sendgrid.net",
 				port: 587,
@@ -378,8 +379,17 @@ exports.buyProduct = async (req, res, next) => {
 			var mailoption = {
 				from: "raghav3501@gmail.com",
 				to: "raghavmath3501@gmail.com",
-				subject: "Test Mail",
-				html: `<div>Your warrany id is ${warrantyID}</div>`,
+				subject: "Warranty Mail",
+				html: `<div>
+				<h1>PLEASE DO NOT SHARE THIS!</h1>
+				Your Warranty Details are: 
+				<br>
+					Warranty Id: ${warranty[0]}<br>
+					Product Id: ${warranty[1]}<br>
+					Warranty Duration: ${warranty[2]} Days<br>
+					Retailer Email: ${retailerEmail}<br>
+				</div>
+				`,
 			};
 			smtpProtocol.sendMail(mailoption, function (err, response) {
 				if (err) {
@@ -598,7 +608,15 @@ exports.transferProduct = async (req, res, next) => {
 		const fromEmail = req.user.email;
 		const toEmail = req.body.toEmail;
 		const productID = req.body.productID;
-
+		const consumer = await consumerSchema.findOne({
+			email: toEmail,
+		});
+		if (!consumer) {
+			return res.status(400).json({
+				success: false,
+				message: "Consumer not found!",
+			});
+		}
 		//Fetch warranty ID from productID
 		const warranty = await readInWarrantyNFT(
 			productWarrantyContract.methods.getWarrantyAgainstProductID(
@@ -607,13 +625,15 @@ exports.transferProduct = async (req, res, next) => {
 		);
 		console.log(warranty[0]);
 		//Transfer from the market first
-		await writeInMarket(
+		const result = await writeInMarket(
 			marketContract.methods.transferProduct(
 				fromEmail,
 				toEmail,
 				productID
 			)
 		);
+		console.log(result);
+		if (!result) throw new Error("Execution Reverted");
 		//Transfer the warranty NFT
 		await writeInWarrantyNFT(
 			productWarrantyContract.methods.changeWarrantyOwner(

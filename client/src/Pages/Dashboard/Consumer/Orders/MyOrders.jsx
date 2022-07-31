@@ -10,20 +10,27 @@ function MyOrders() {
 	useEffect(() => {
 		getUserProductDetails().then((res) => {
 			setProducts(res.data.data);
+			// console.log(res.);
 		});
 	}, []);
 
 	if (products === null) {
-		return <Load heading="My Orders" />;
+		return <Load heading="My Products" />;
 	}
 	if (products.length === 0) {
-		return <Empty heading="My Orders" message="No Orders Found" />;
+		return <Empty heading="My Products" message="No Products Found" />;
 	}
 	return (
-		<Content heading="My Orders">
+		<Content heading="My Products">
 			<div className={classes["allOrders"]}>
 				{products.map((item) => {
-					return <Order items={item} retailer={item.retailer} />;
+					return (
+						<Order
+							key={item.productID}
+							items={item}
+							retailer={item.retailer}
+						/>
+					);
 				})}
 			</div>
 		</Content>

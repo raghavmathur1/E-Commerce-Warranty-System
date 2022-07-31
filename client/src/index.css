@@ -118,3 +118,15 @@ input button{
 .sl-spinner3 .sl-loader .sl-loader-parent{
   height: 100% !important;
 }
+
+.disclaimer{
+  font-size: 12px;
+  color: #2974F1;
+  font-weight: 500;
+  margin-top: 10px;
+  border: 2px solid #2974F1;
+  border-radius: 6px;
+  padding: 20px 20px;
+  width: 95%;
+  font-size: 14px;
+}

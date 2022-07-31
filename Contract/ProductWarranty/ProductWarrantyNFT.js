@@ -18,9 +18,11 @@ exports.productWarrantyContract = new web3.eth.Contract(
 
 exports.writeInWarrantyNFT = async (tx) => {
 	try {
-		await callWriteFunction(tx, PRODUCT_WARRANTY_ADDRESS);
+		const res = await callWriteFunction(tx, PRODUCT_WARRANTY_ADDRESS);
+		return res;
 	} catch (error) {
 		logger.error(error);
+		return false;
 	}
 };
 exports.readInWarrantyNFT = async (tx) => {
